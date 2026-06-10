@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Reto de Habilidades · Par Servicios">
+<title>Reto de Habilidades · Par Servicios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{
+  --par-green:#02A683;
+  --par-green-deep:#018068;
+  --par-green-light:#4FBFA1;
+  --par-green-pale:#D4F0E5;
+  --par-green-mist:#E8F6F0;
+  --ink:#393A4C;
+  --ink-soft:#5A5B6A;
+  --ink-muted:#828284;
+  --paper:#FFFFFF;
+  --cream:#F8F8F5;
+  --cream-warm:#FAF9F4;
+  --line:#E5E5E2;
+  --line-soft:#F0F0EC;
+  --warm:#E89B4A;
+  --warm-soft:#F5D9B8;
+  --rose:#E8857A;
+  --gold:#F2C75C;
+  --roulette:#0B1E3F;
+  --roulette-soft:#15315C;
+  --stop:#1F4E5F;
+  --stop-soft:#2E7080;
+  --field:#1A6E48;
+  --field-soft:#2A8B5E;
+  --shadow-sm:0 2px 8px rgba(57,58,76,.06);
+  --shadow:0 10px 30px rgba(57,58,76,.08);
+  --shadow-lg:0 25px 60px rgba(57,58,76,.12);
+  --r-sm:8px;
+  --r:16px;
+  --r-lg:28px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;width:100%;overflow:hidden}
+body{font-family:'Barlow',sans-serif;background:var(--cream);color:var(--ink);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.display{font-family:'Bebas Neue',sans-serif;letter-spacing:.02em;font-weight:400}
+.serif{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:64px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(248,248,245,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+.brand{display:flex;align-items:center;gap:16px}
+.brand-logo{height:38px;width:auto}
+.brand-sub{font-size:11px;color:var(--ink-muted);letter-spacing:.18em;text-transform:uppercase;padding-left:14px;border-left:1px solid var(--line)}
+.topbar-right{display:flex;align-items:center;gap:18px;font-size:12px;color:var(--ink-soft);letter-spacing:.14em;text-transform:uppercase}
+.slide-counter{font-family:'Bebas Neue';font-size:18px;letter-spacing:.12em;color:var(--ink)}
+.slide-counter .total{color:var(--ink-muted)}
+
+.progress{position:fixed;top:64px;left:0;right:0;height:2px;background:var(--line-soft);z-index:99}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--par-green),var(--par-green-light));width:0;transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+.deck{position:fixed;inset:66px 0 0 0;overflow:hidden}
+.slide{position:absolute;inset:0;padding:44px 64px 80px;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(40px);transition:opacity .5s ease,transform .5s ease,visibility 0s linear .5s;overflow-y:auto}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0);transition:opacity .6s ease,transform .6s ease,visibility 0s linear 0s}
+.slide.prev{transform:translateX(-40px)}
+.slide-inner{max-width:1280px;width:100%;margin:0 auto;flex:1;display:flex;flex-direction:column}
+.slide-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--par-green-deep);font-weight:700;margin-bottom:18px}
+.slide-tag::before{content:"";width:24px;height:1px;background:var(--par-green)}
+
+.nav-controls{position:fixed;bottom:24px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:18px;z-index:90;pointer-events:none}
+.nav-btn{pointer-events:auto;width:48px;height:48px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);transition:all .3s;box-shadow:var(--shadow-sm)}
+.nav-btn:hover:not(:disabled){background:var(--par-green);color:#fff;border-color:var(--par-green);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-btn svg{width:18px;height:18px}
+.nav-hint{pointer-events:auto;padding:10px 20px;border-radius:24px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow-sm);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 30px;background:var(--par-green);color:#fff;border-radius:100px;font-family:'Bebas Neue';font-size:16px;letter-spacing:.14em;transition:all .3s;cursor:pointer}
+.btn-primary:hover:not(:disabled){background:var(--par-green-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(2,166,131,.3)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 30px;background:var(--paper);color:var(--ink);border-radius:100px;font-family:'Bebas Neue';font-size:16px;letter-spacing:.14em;border:1px solid var(--line);transition:all .3s;cursor:pointer}
+.btn-secondary:hover{border-color:var(--par-green);color:var(--par-green-deep);transform:translateY(-2px)}
+
+.game-intro{background:radial-gradient(ellipse at top left,rgba(2,166,131,.10),transparent 50%),radial-gradient(ellipse at bottom right,rgba(232,155,74,.08),transparent 50%),var(--cream)}
+.game-intro .slide-inner{justify-content:center;align-items:center;text-align:center}
+.game-intro h1{font-size:clamp(48px,7vw,96px);color:var(--ink);margin-bottom:14px;line-height:1}
+.game-intro h1 .em{color:var(--par-green);font-family:'Cormorant Garamond';font-style:italic}
+.game-intro .lead{font-size:17px;color:var(--ink-soft);max-width:680px;margin:0 auto 28px;line-height:1.6}
+.mission-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:920px;margin:0 auto 28px;width:100%}
+@media (max-width:900px){.mission-preview{grid-template-columns:1fr}}
+.mp-card{background:var(--paper);border-radius:var(--r);padding:20px 16px;border:1px solid var(--line-soft);text-align:center;box-shadow:var(--shadow-sm)}
+.mp-num{font-family:'Bebas Neue';font-size:12px;letter-spacing:.22em;color:var(--par-green-deep);font-weight:700;margin-bottom:8px}
+.mp-card .mp-ico{width:50px;height:50px;border-radius:50%;background:var(--par-green-pale);color:var(--par-green-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.mp-card.gold .mp-ico{background:#FBE9B5;color:#7A5A11}
+.mp-card.gold .mp-num{color:#7A5A11}
+.mp-card.teal .mp-ico{background:#CFE4EA;color:var(--stop)}
+.mp-card.teal .mp-num{color:var(--stop)}
+.mp-card.field .mp-ico{background:#CFEAD8;color:var(--field)}
+.mp-card.field .mp-num{color:var(--field)}
+.mp-card .mp-ico svg{width:24px;height:24px}
+.mp-card h4{font-family:'Bebas Neue';font-size:20px;color:var(--ink);margin-bottom:6px;letter-spacing:.04em;line-height:1.1}
+.mp-card p{font-size:12px;color:var(--ink-muted);line-height:1.45;min-height:50px}
+.mp-card .mp-pts{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-soft);font-family:'Bebas Neue';font-size:16px;color:var(--par-green);letter-spacing:.04em}
+.mp-card.gold .mp-pts{color:#B58A1F}
+.mp-card.teal .mp-pts{color:var(--stop)}
+.mp-card.field .mp-pts{color:var(--field)}
+
+.form-card{background:var(--paper);border-radius:var(--r-lg);padding:30px;box-shadow:var(--shadow);max-width:480px;width:100%;margin:0 auto;border:1px solid var(--line-soft)}
+.form-card h3{font-family:'Bebas Neue';font-size:24px;letter-spacing:.06em;color:var(--ink);margin-bottom:6px}
+.form-card .form-sub{font-size:13px;color:var(--ink-muted);margin-bottom:22px}
+.field-input{margin-bottom:16px;text-align:left}
+.field-input label{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:7px}
+.field-input input{width:100%;padding:13px 16px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--cream-warm);font-family:'Barlow';font-size:15px;color:var(--ink);transition:all .2s}
+.field-input input:focus{outline:none;border-color:var(--par-green);background:var(--paper);box-shadow:0 0 0 3px rgba(2,166,131,.12)}
+
+.game-stage .slide-inner{justify-content:flex-start;max-width:1100px}
+.mission-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:14px;flex-wrap:wrap}
+.mh-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.mh-badge{padding:8px 16px;background:var(--par-green);color:#fff;border-radius:100px;font-family:'Bebas Neue';font-size:14px;letter-spacing:.16em}
+.mh-badge.gold{background:linear-gradient(135deg,#B58A1F,var(--gold));color:#fff}
+.mh-badge.teal{background:linear-gradient(135deg,var(--stop),var(--stop-soft));color:#fff}
+.mh-badge.field{background:linear-gradient(135deg,var(--field),var(--field-soft));color:#fff}
+.mh-title{font-family:'Bebas Neue';font-size:22px;color:var(--ink);letter-spacing:.04em;line-height:1}
+.mh-pills{display:flex;gap:10px;flex-wrap:wrap}
+.mh-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--paper);border:1px solid var(--line);border-radius:100px;font-size:11px;color:var(--ink-soft);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.mh-pill svg{width:14px;height:14px;color:var(--par-green)}
+.mh-pill .val{color:var(--ink);font-family:'Bebas Neue';font-size:16px;letter-spacing:.06em}
+.mh-pill.timer .val.danger{color:var(--rose)}
+.mh-pill.timer .val.warn{color:var(--warm)}
+
+.mission-progress{display:flex;gap:6px;margin-bottom:18px}
+.mp-bar{flex:1;height:4px;background:var(--line-soft);border-radius:2px;overflow:hidden}
+.mp-bar .fill{height:100%;background:var(--gold);width:0%;transition:width .4s}
+.mp-bar.teal .fill{background:var(--stop-soft)}
+.mp-bar.green .fill{background:var(--field)}
+.mp-bar.done .fill{width:100%}
+
+.mission-intro{background:var(--paper);border-radius:var(--r-lg);padding:38px 32px;box-shadow:var(--shadow);border:1px solid var(--line-soft);text-align:center}
+.mission-intro .m-num{font-family:'Cormorant Garamond';font-style:italic;font-size:64px;color:var(--par-green-pale);line-height:1;margin-bottom:-10px}
+.mission-intro.gold .m-num{color:#FBE9B5}
+.mission-intro.teal .m-num{color:#CFE4EA}
+.mission-intro.field .m-num{color:#CFEAD8}
+.mission-intro h2{font-family:'Bebas Neue';font-size:42px;color:var(--ink);letter-spacing:.04em;margin-bottom:10px}
+.mission-intro p{font-size:15px;color:var(--ink-soft);max-width:600px;margin:0 auto 18px;line-height:1.6}
+.mission-intro .m-rules{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:var(--par-green-pale);color:var(--par-green-deep);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.pill.gold{background:#FBE9B5;color:#7A5A11}
+.pill.teal{background:#CFE4EA;color:var(--stop)}
+.pill.field{background:#CFEAD8;color:var(--field)}
+.pill.gray{background:var(--line-soft);color:var(--ink-soft)}
+
+/* JUEGO 1 · RULETA */
+.roulette-stage{background:radial-gradient(ellipse at top,rgba(242,199,92,.10),transparent 60%),linear-gradient(180deg,var(--roulette),var(--roulette-soft));border-radius:var(--r-lg);padding:24px;color:#fff;display:grid;grid-template-columns:340px 1fr;gap:22px;box-shadow:var(--shadow);min-height:520px}
+@media (max-width:900px){.roulette-stage{grid-template-columns:1fr}}
+.roulette-side{display:flex;flex-direction:column;align-items:center;gap:14px}
+.roulette-wrap{position:relative;display:flex;justify-content:center}
+#wheelCanvas{border-radius:50%;border:6px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.4);background:#fff}
+.pointer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:32px solid var(--rose);z-index:10;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.roulette-main{display:flex;flex-direction:column;gap:14px}
+.roulette-stat-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.roulette-cat{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(242,199,92,.18);color:var(--gold);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.roulette-cat .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.emoji-display{font-size:3.6rem;letter-spacing:14px;text-align:center;padding:24px 18px;background:rgba(255,255,255,.06);border-radius:var(--r);border:1px dashed rgba(255,255,255,.20);min-height:120px;display:flex;align-items:center;justify-content:center;color:#fff}
+.roulette-q-text{font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:rgba(255,255,255,.85);text-align:center;line-height:1.4}
+.roulette-input-row{display:flex;gap:10px;flex-wrap:wrap}
+.roulette-input-row input{flex:1;min-width:0;padding:13px 16px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.06);color:#fff;font-family:'Barlow';font-size:15px;text-align:center;font-weight:600;letter-spacing:.04em}
+.roulette-input-row input:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.10)}
+.roulette-input-row input:disabled{opacity:.5}
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;background:var(--gold);color:var(--roulette);border-radius:100px;font-family:'Bebas Neue';font-size:15px;letter-spacing:.14em;transition:all .3s;cursor:pointer;border:none}
+.btn-gold:hover:not(:disabled){background:#F8D67A;transform:translateY(-2px);box-shadow:0 8px 18px rgba(242,199,92,.4)}
+.btn-gold:disabled{opacity:.45;cursor:not-allowed}
+.roulette-fb{padding:12px 16px;border-radius:8px;font-size:13px;display:none;line-height:1.5}
+.roulette-fb.show{display:block;animation:slideIn .3s}
+.roulette-fb.ok{background:rgba(2,166,131,.22);color:#CDEEDD;border-left:3px solid var(--par-green-light)}
+.roulette-fb.no{background:rgba(232,133,122,.22);color:#F8D8D3;border-left:3px solid var(--rose)}
+.roulette-fb strong{display:block;font-family:'Bebas Neue';font-size:14px;margin-bottom:4px;letter-spacing:.06em}
+.round-tracker{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.rt-dot{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:11px;color:rgba(255,255,255,.55)}
+.rt-dot.current{background:var(--gold);color:var(--roulette);border-color:var(--gold);font-weight:700}
+.rt-dot.ok{background:rgba(2,166,131,.45);color:#fff;border-color:var(--par-green-light)}
+.rt-dot.bad{background:rgba(232,133,122,.45);color:#fff;border-color:var(--rose)}
+
+/* JUEGO 2 · STOP */
+.stop-stage{background:radial-gradient(ellipse at top,rgba(207,228,234,.30),transparent 60%),linear-gradient(180deg,var(--stop),var(--stop-soft));border-radius:var(--r-lg);padding:24px;color:#fff;display:grid;grid-template-columns:240px 1fr;gap:22px;box-shadow:var(--shadow);min-height:520px}
+@media (max-width:900px){.stop-stage{grid-template-columns:1fr}}
+.stop-side{display:flex;flex-direction:column;gap:14px;align-items:center}
+.letter-big{width:180px;height:180px;border-radius:50%;background:#fff;color:var(--stop);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:96px;box-shadow:0 12px 30px rgba(0,0,0,.25);position:relative}
+.letter-big::before{content:"";position:absolute;inset:6px;border:2px dashed rgba(31,78,95,.25);border-radius:50%;pointer-events:none}
+.stop-clue{font-family:'Cormorant Garamond';font-style:italic;font-size:14px;color:rgba(255,255,255,.78);text-align:center;line-height:1.45}
+.stop-round-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(207,228,234,.20);color:#CFE4EA;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.stop-round-pill .dot{width:6px;height:6px;border-radius:50%;background:#CFE4EA}
+.stop-main{display:flex;flex-direction:column;gap:14px}
+.stop-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stop-fields{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width:640px){.stop-fields{grid-template-columns:1fr}}
+.stop-field{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:10px 14px}
+.stop-field label{display:block;font-family:'Bebas Neue';font-size:11px;letter-spacing:.22em;color:#CFE4EA;margin-bottom:5px}
+.stop-field input{width:100%;padding:8px 10px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.10);border-radius:var(--r-sm);color:#fff;font-family:'Barlow';font-size:14px;font-weight:600;letter-spacing:.04em}
+.stop-field input:focus{outline:none;border-color:var(--par-green-light);background:rgba(0,0,0,.25)}
+.stop-field input:disabled{opacity:.5}
+.stop-field.ok{border-color:var(--par-green-light);background:rgba(2,166,131,.14)}
+.stop-field.ok input{border-color:var(--par-green-light)}
+.stop-field.bad{border-color:var(--rose);background:rgba(232,133,122,.14)}
+.stop-field.bad input{border-color:var(--rose)}
+.stop-fb{padding:12px 16px;border-radius:8px;font-size:13px;display:none;line-height:1.5}
+.stop-fb.show{display:block;animation:slideIn .3s}
+.stop-fb.ok{background:rgba(2,166,131,.22);color:#CDEEDD;border-left:3px solid var(--par-green-light)}
+.stop-fb.no{background:rgba(232,133,122,.22);color:#F8D8D3;border-left:3px solid var(--rose)}
+.stop-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.btn-stop{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;background:#fff;color:var(--stop);border-radius:100px;font-family:'Bebas Neue';font-size:15px;letter-spacing:.14em;transition:all .3s;cursor:pointer;border:none}
+.btn-stop:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.btn-stop:disabled{opacity:.45;cursor:not-allowed}
+
+/* JUEGO 3 · MUNDIALISTA */
+.field-stage{background:linear-gradient(180deg,var(--field),var(--field-soft));border-radius:var(--r-lg);padding:24px;color:#fff;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);min-height:520px}
+.field-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.field-round-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.16);color:#fff;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.field-stat-row{display:flex;gap:10px;flex-wrap:wrap}
+.field-stat{background:rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:10px 16px;text-align:center;min-width:88px}
+.field-stat .fs-num{font-family:'Bebas Neue';font-size:22px;line-height:1;color:#fff}
+.field-stat .fs-lbl{font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.65);margin-top:4px;text-transform:uppercase}
+.field-stat.warn .fs-num{color:var(--warm)}
+.field-stat.danger .fs-num{color:var(--rose)}
+.pitch{position:relative;flex:1;min-height:380px;border:3px solid rgba(255,255,255,.45);border-radius:var(--r);background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 40px,transparent 40px 80px),linear-gradient(180deg,#1F8855,#176E45);overflow:hidden;cursor:crosshair;user-select:none}
+.pitch::before{content:"";position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.45)}
+.pitch::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border:2px solid rgba(255,255,255,.45);border-radius:50%}
+.goal-top,.goal-bot{position:absolute;left:50%;transform:translateX(-50%);width:220px;height:48px;border:3px solid rgba(255,255,255,.85);background:rgba(255,255,255,.10);box-sizing:border-box}
+.goal-top{top:-3px;border-bottom:none}
+.goal-bot{bottom:-3px;border-top:none}
+.ball{position:absolute;width:48px;height:48px;border-radius:50%;cursor:pointer;transition:transform .12s;display:flex;align-items:center;justify-content:center;font-size:38px;text-shadow:0 2px 4px rgba(0,0,0,.4)}
+.ball:hover{transform:scale(1.12)}
+.ball.scored{animation:scorePop .35s forwards;pointer-events:none}
+@keyframes scorePop{0%{transform:scale(1)}60%{transform:scale(1.6);opacity:.4}100%{transform:scale(0);opacity:0}}
+.spark{position:absolute;pointer-events:none;font-family:'Bebas Neue';font-size:22px;color:var(--gold);text-shadow:0 2px 6px rgba(0,0,0,.4);animation:sparkUp .8s forwards}
+@keyframes sparkUp{0%{opacity:1;transform:translateY(0) scale(.7)}100%{opacity:0;transform:translateY(-50px) scale(1.2)}}
+.pitch-start-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;z-index:5}
+.pitch-start-overlay h3{font-family:'Bebas Neue';font-size:38px;letter-spacing:.04em;color:#fff;margin-bottom:6px}
+.pitch-start-overlay p{font-size:14px;color:rgba(255,255,255,.85);max-width:420px;line-height:1.5}
+
+/* RESULT + CERT */
+.result-card{background:var(--paper);border-radius:var(--r-lg);padding:44px;box-shadow:var(--shadow-lg);max-width:680px;margin:0 auto;text-align:center}
+.result-card .r-badge{width:110px;height:110px;border-radius:50%;background:var(--par-green-pale);color:var(--par-green-deep);margin:0 auto 22px;display:flex;align-items:center;justify-content:center}
+.result-card .r-badge svg{width:54px;height:54px}
+.result-card.fail .r-badge{background:#F5D9D5;color:var(--rose)}
+.result-card h2{font-family:'Bebas Neue';font-size:44px;color:var(--ink);margin-bottom:6px;letter-spacing:.02em}
+.result-card .r-name{font-family:'Cormorant Garamond';font-style:italic;font-size:22px;color:var(--par-green);margin-bottom:22px}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0;padding:20px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.result-stat .rs-num{font-family:'Bebas Neue';font-size:38px;color:var(--par-green);line-height:1}
+.result-stat .rs-lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-top:6px}
+.result-card .r-detail{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0;padding:14px;background:var(--cream-warm);border-radius:12px}
+.r-detail .rd-block{text-align:center}
+.rd-block .rd-num{font-family:'Bebas Neue';font-size:22px;line-height:1}
+.rd-block .rd-num.gold{color:#B58A1F}
+.rd-block .rd-num.teal{color:var(--stop)}
+.rd-block .rd-num.green{color:var(--field)}
+.rd-block .rd-lbl{font-size:9px;color:var(--ink-muted);letter-spacing:.14em;margin-top:4px}
+.rd-block .rd-time{font-size:10px;color:var(--ink-muted);margin-top:2px}
+.result-msg{font-size:15px;color:var(--ink-soft);line-height:1.6;margin:18px 0 24px}
+.btn-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.cert-slide{padding:40px 32px;background:var(--cream)}
+.cert-slide .slide-inner{align-items:center;justify-content:center}
+.cert-wrap{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}
+.cert-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.certificate{width:100%;max-width:620px;background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--par-green);padding:36px 40px;position:relative;font-family:'Barlow';box-shadow:var(--shadow-lg);border-radius:6px}
+.certificate::before{content:"";position:absolute;inset:8px;border:1px dashed var(--line);border-radius:3px;pointer-events:none}
+.cert-inner{position:relative;z-index:2}
+.cert-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.cert-logo-wrap{display:flex;align-items:center;gap:10px}
+.cert-logo-img{height:32px;width:auto}
+.cert-id{font-family:'Barlow';font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);text-align:right}
+.cert-id strong{display:block;color:var(--par-green-deep);font-weight:700;font-size:11px;margin-top:2px}
+.cert-overline{font-family:'Bebas Neue';font-size:11px;letter-spacing:.36em;color:var(--par-green-deep);margin-bottom:10px;text-align:center}
+.cert-title{font-family:'Bebas Neue';font-size:34px;line-height:1;color:var(--ink);letter-spacing:.04em;text-align:center;margin-bottom:4px}
+.cert-subtitle{font-family:'Cormorant Garamond';font-style:italic;font-size:16px;color:var(--par-green);text-align:center;margin-bottom:20px}
+.cert-presented{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);text-align:center;margin-bottom:8px}
+.cert-name{font-family:'Cormorant Garamond';font-weight:600;font-size:30px;color:var(--par-green-deep);line-height:1;padding:6px 16px;border-bottom:1px solid var(--line);text-align:center;margin-bottom:10px}
+.cert-cedula{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);text-align:center;margin-bottom:14px}
+.cert-cedula strong{color:var(--ink);font-weight:600}
+.cert-body{font-size:13px;line-height:1.6;color:var(--ink-soft);text-align:center;margin-bottom:18px;padding:0 4px}
+.cert-body strong{color:var(--ink);font-weight:600}
+.cert-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:14px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);margin-bottom:16px}
+.cert-stat{text-align:center}
+.cert-stat .cs-num{font-family:'Bebas Neue';font-size:22px;color:var(--par-green);line-height:1}
+.cert-stat .cs-lbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);margin-top:4px}
+.cert-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.cert-issued{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted)}
+.cert-issued strong{display:block;color:var(--ink);font-weight:600;font-size:11px;margin-top:2px}
+.cert-seal{width:78px;height:78px;border-radius:50%;background:var(--par-green-pale);border:2px solid var(--par-green);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.cert-seal::before{content:"";position:absolute;inset:4px;border:1px dashed var(--par-green);border-radius:50%;opacity:.55}
+.cert-seal-top{font-family:'Bebas Neue';font-size:7px;letter-spacing:.18em;color:var(--par-green-deep);text-align:center;line-height:1.2;padding:0 6px}
+.cert-seal-mid{font-family:'Cormorant Garamond';font-style:italic;font-size:22px;color:var(--par-green-deep);line-height:1;margin:1px 0}
+.cert-seal-bot{font-family:'Bebas Neue';font-size:7px;letter-spacing:.16em;color:var(--par-green-deep);text-align:center;line-height:1.2}
+
+.score-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:var(--par-green);color:#fff;padding:24px 42px;border-radius:24px;font-family:'Bebas Neue';font-size:42px;letter-spacing:.06em;box-shadow:var(--shadow-lg);z-index:200;pointer-events:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .35s}
+.score-popup.show{transform:translate(-50%,-50%) scale(1)}
+.score-popup.gold{background:linear-gradient(135deg,#B58A1F,var(--gold))}
+.score-popup.teal{background:linear-gradient(135deg,var(--stop),var(--stop-soft))}
+.score-popup.field{background:linear-gradient(135deg,var(--field),var(--field-soft))}
+.score-popup.bad{background:var(--rose)}
+
+@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.slide::-webkit-scrollbar{width:6px}
+.slide::-webkit-scrollbar-track{background:transparent}
+.slide::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+
+@media (max-width:1024px){.slide{padding:32px 28px 90px}}
+@media (max-width:640px){
+  .topbar{padding:0 16px}
+  .brand-sub{display:none}
+  .slide{padding:24px 18px 100px}
+  .nav-hint{display:none}
+  .certificate{padding:24px 22px}
+  .cert-title{font-size:26px}
+  .cert-name{font-size:24px}
+  .cert-bottom{flex-direction:column;text-align:center;gap:18px}
+  .result-card .r-detail{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .topbar,.progress,.nav-controls,.cert-actions{display:none!important}
+  .deck,.slide{position:static;inset:auto;overflow:visible}
+  .slide{display:none}
+  .slide.active{display:flex;visibility:visible;opacity:1;transform:none;padding:0}
+  .certificate{box-shadow:none;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img class="brand-logo" id="brandLogo" alt="Par Servicios">
+    <span class="brand-sub">Reto de Habilidades</span>
+  </div>
+  <div class="topbar-right">
+    <span class="slide-counter"><span id="curN">01</span> <span class="total">/ <span id="totN">00</span></span></span>
+  </div>
+</header>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+<main class="deck" id="deck">
+
+  <section class="slide game-intro active" id="slideIntro">
+    <div class="slide-inner">
+      <span class="slide-tag" style="margin:0 auto 16px">Tres Juegos · Un certificado</span>
+      <h1>EL RETO <span class="em">en tres jugadas</span></h1>
+      <p class="lead">
+        Tres mini-juegos que ponen a prueba tu <strong>intuición</strong>, tu <strong>memoria</strong>
+        y tus <strong>reflejos</strong>. Al final recibes tu certificado oficial de
+        <strong>Par Servicios</strong>. Necesitas mínimo <strong>70 %</strong> para certificarte.
+      </p>
+
+      <div class="mission-preview">
+        <div class="mp-card gold">
+          <div class="mp-num">JUEGO 1</div>
+          <div class="mp-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <h4>Ruleta de Pistas</h4>
+          <p>Gira la ruleta, analiza los emojis y descubre el país, la película o la marca oculta.</p>
+          <div class="mp-pts">300 PTS · 8 rondas</div>
+        </div>
+        <div class="mp-card teal">
+          <div class="mp-num">JUEGO 2</div>
+          <div class="mp-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </div>
+          <h4>Stop · Tutti Frutti</h4>
+          <p>Recibes una letra y debes completar país, color, animal, fruta, nombre y marca antes de que se acabe el tiempo.</p>
+          <div class="mp-pts">200 PTS · 3 rondas</div>
+        </div>
+        <div class="mp-card field">
+          <div class="mp-num">JUEGO 3</div>
+          <div class="mp-ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M5 5l14 14M5 19L19 5"/></svg>
+          </div>
+          <h4>Reto Mundialista</h4>
+          <p>Mete la mayor cantidad de goles posibles en 2 minutos. Cada balón que aparezca debes pulsarlo.</p>
+          <div class="mp-pts">300 PTS · 2 min</div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Datos del participante</h3>
+        <div class="form-sub">Aparecerán en tu certificado si apruebas.</div>
+        <div class="field-input">
+          <label>Nombre completo</label>
+          <input type="text" id="inpName" placeholder="Como aparece en tu cédula" maxlength="60" autocomplete="off">
+        </div>
+        <div class="field-input">
+          <label>Número de cédula</label>
+          <input type="text" id="inpCedula" placeholder="Solo números" maxlength="15" inputmode="numeric" autocomplete="off">
+        </div>
+        <div class="field-input">
+          <label>Cargo o área</label>
+          <input type="text" id="inpCargo" placeholder="Ej: Operario de servicios" maxlength="50" autocomplete="off">
+        </div>
+        <button class="btn-primary" id="btnStartGame" disabled style="width:100%;margin-top:6px">
+          Iniciar el reto
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide game-stage" id="slideMission">
+    <div class="slide-inner">
+      <div class="mission-header">
+        <div class="mh-left">
+          <span class="mh-badge" id="mhBadge">JUEGO 1 · 1 de 3</span>
+          <span class="mh-title" id="mhTitle">RULETA DE PISTAS</span>
+        </div>
+        <div class="mh-pills">
+          <span class="mh-pill timer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Tiempo</span>
+            <span class="val" id="mhTime">00:00</span>
+          </span>
+          <span class="mh-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5.5 20l2-7L2 9h7z"/></svg>
+            <span>Puntaje</span>
+            <span class="val"><span id="mhScore">0</span>/<span id="mhMax">800</span></span>
+          </span>
+        </div>
+      </div>
+      <div class="mission-progress">
+        <div class="mp-bar" id="mpBar1"><div class="fill"></div></div>
+        <div class="mp-bar teal" id="mpBar2"><div class="fill"></div></div>
+        <div class="mp-bar green" id="mpBar3"><div class="fill"></div></div>
+      </div>
+      <div id="missionContainer"></div>
+    </div>
+  </section>
+
+  <section class="slide" id="slideResult">
+    <div class="slide-inner" style="justify-content:center;align-items:center">
+      <div class="result-card" id="resultCard">
+        <div class="r-badge" id="rBadge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h2 id="rTitle">¡Bien hecho!</h2>
+        <div class="r-name" id="rName">—</div>
+        <div class="result-stats">
+          <div class="result-stat"><div class="rs-num" id="rTotal">0</div><div class="rs-lbl">Puntaje total</div></div>
+          <div class="result-stat"><div class="rs-num" id="rPct">0%</div><div class="rs-lbl">Porcentaje</div></div>
+          <div class="result-stat"><div class="rs-num" id="rTime">00:00</div><div class="rs-lbl">Tiempo total</div></div>
+        </div>
+        <div class="r-detail">
+          <div class="rd-block">
+            <div class="rd-num gold" id="rQuiz">0</div>
+            <div class="rd-lbl">RULETA</div>
+            <div class="rd-time" id="rQuizTime">00:00</div>
+          </div>
+          <div class="rd-block">
+            <div class="rd-num teal" id="rMaze">0</div>
+            <div class="rd-lbl">STOP</div>
+            <div class="rd-time" id="rMazeTime">00:00</div>
+          </div>
+          <div class="rd-block">
+            <div class="rd-num green" id="rHang">0</div>
+            <div class="rd-lbl">MUNDIALISTA</div>
+            <div class="rd-time" id="rHangTime">00:00</div>
+          </div>
+        </div>
+        <p class="result-msg" id="rMsg">…</p>
+        <div class="btn-row">
+          <button class="btn-secondary" id="btnRetry">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Repetir
+          </button>
+          <button class="btn-primary" id="btnGoCert">
+            Ver certificado
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide cert-slide" id="slideCert">
+    <div class="slide-inner">
+      <div class="cert-wrap">
+        <div class="certificate" id="certEl">
+          <div class="cert-inner">
+            <div class="cert-top">
+              <div class="cert-logo-wrap">
+                <img class="cert-logo-img" id="certLogo" alt="Par Servicios">
+              </div>
+              <div class="cert-id">Folio<strong id="certFolio">—</strong></div>
+            </div>
+            <div class="cert-overline">CERTIFICADO DE PARTICIPACIÓN</div>
+            <h1 class="cert-title">RETO DE HABILIDADES</h1>
+            <div class="cert-subtitle">Par Servicios · 2026</div>
+            <div class="cert-presented">Se otorga el presente certificado a</div>
+            <div class="cert-name" id="certName">—</div>
+            <div class="cert-cedula">C.C. <strong id="certCedula">—</strong> · <span id="certCargo">—</span></div>
+            <div class="cert-body">
+              Por haber completado satisfactoriamente el <strong>Reto de Habilidades de Par Servicios</strong>,
+              demostrando destreza, agilidad mental y compromiso con la dinámica institucional.
+            </div>
+            <div class="cert-stats">
+              <div class="cert-stat"><div class="cs-num" id="certPct">—</div><div class="cs-lbl">Puntaje</div></div>
+              <div class="cert-stat"><div class="cs-num" id="certTime">—</div><div class="cs-lbl">Tiempo</div></div>
+              <div class="cert-stat"><div class="cs-num" id="certDate">—</div><div class="cs-lbl">Fecha</div></div>
+            </div>
+            <div class="cert-bottom">
+              <div class="cert-issued">
+                Expedido por
+                <strong>Par Servicios</strong>
+              </div>
+              <div class="cert-seal">
+                <div class="cert-seal-top">CERTIFICADO<br>OFICIAL</div>
+                <div class="cert-seal-mid">PS</div>
+                <div class="cert-seal-bot">PAR SERVICIOS<br>2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-actions">
+          <button class="btn-secondary" onclick="window.print()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Imprimir
+          </button>
+          <button class="btn-primary" id="btnDownloadPdf">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar PDF
+          </button>
+          <button class="btn-secondary" id="btnFinish">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Inicio
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="nav-controls">
+  <button class="nav-btn" id="navPrev" disabled aria-label="Anterior">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <span class="nav-hint">Tu progreso se guarda al terminar</span>
+  <button class="nav-btn" id="navNext" disabled aria-label="Siguiente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<div class="score-popup" id="scorePop"></div>
+
+<script>
+/* LOGO PAR SERVICIOS — pega aquí el data:image/png;base64 del logo (mismo del index original) */
+const PAR_LOGO_SRC = '';
+
+(function setupLogo(){
+  const brand = document.getElementById('brandLogo');
+  const cert  = document.getElementById('certLogo');
+  if(PAR_LOGO_SRC){
+    brand.src = PAR_LOGO_SRC;
+    cert.src  = PAR_LOGO_SRC;
+  } else {
+    const svg = 'data:image/svg+xml;utf8,'+encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40"><text x="0" y="30" font-family="Bebas Neue,Arial Black,sans-serif" font-size="32" fill="#02A683" letter-spacing="2">PAR SERVICIOS</text></svg>'
+    );
+    brand.src = svg; cert.src = svg;
+  }
+})();
+
+/* WEB APP URL (Apps Script) — misma del index original */
+const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwGYlaVZx50pO_1VebnppDP6VqLmGk27IBVL2C6VN2VoMRtlb_vWoh_n8qOovChE03uuA/exec';
+
+/* DATOS · RULETA (8 rondas) */
+const ROULETTE_DB = [
+  { emojis:"🧉 🥩 ⚽ 🏔️", cat:"País",     ans:"argentina",        display:"Argentina 🇦🇷", desc:"Mate, asado, fútbol, la Patagonia." },
+  { emojis:"☕ 🫓 🦋 🎶", cat:"País",     ans:"colombia",         display:"Colombia 🇨🇴",  desc:"Café, arepa, biodiversidad, música." },
+  { emojis:"🍣 🗻 🌸 ⛩️", cat:"País",     ans:"japon",            display:"Japón 🇯🇵",     desc:"Sushi, Monte Fuji, flor de cerezo, templos." },
+  { emojis:"🌮 🌵 🌶️ 💀", cat:"País",     ans:"mexico",           display:"México 🇲🇽",    desc:"Tacos, cactus, picante, Día de Muertos." },
+  { emojis:"🐘 🏏 🍛 🛕", cat:"País",     ans:"india",            display:"India 🇮🇳",     desc:"Elefante, cricket, curry, templos." },
+  { emojis:"🚢 🥶 🚪 💔", cat:"Película", ans:"titanic",          display:"Titanic",        desc:"Barco, frío, la puerta, corazón roto." },
+  { emojis:"🦁 👑 🌅 🐒", cat:"Película", ans:"el rey leon",      display:"El Rey León",    desc:"La sabana, Mufasa, Rafiki." },
+  { emojis:"⚡ 🧙 🦉 🚂", cat:"Película", ans:"harry potter",     display:"Harry Potter",   desc:"Cicatriz, mago, lechuza, tren a Hogwarts." },
+  { emojis:"🤖 🚗 🔥 🛣️", cat:"Película", ans:"rapido y furioso", display:"Rápido y Furioso", desc:"Autos, carreras, acción y familia." },
+  { emojis:"👻 🎒 🚫 🟢", cat:"Película", ans:"cazafantasmas",    display:"Cazafantasmas",  desc:"Fantasmas, mochilas de protones, NY." },
+  { emojis:"🍔 🍟 🤡 🟡", cat:"Marca",    ans:"mcdonalds",        display:"McDonald's",     desc:"Hamburguesa, papas, Ronald, arcos dorados." },
+  { emojis:"📱 🍏 💻 🎧", cat:"Marca",    ans:"apple",            display:"Apple",          desc:"iPhone, manzana, Mac, AirPods." },
+  { emojis:"👟 ✅ 🏃 ⚡", cat:"Marca",    ans:"nike",             display:"Nike",           desc:"Tenis, just do it, deporte." },
+  { emojis:"🥤 ❤️ 🎅 ✨", cat:"Marca",    ans:"coca cola",        display:"Coca-Cola",      desc:"Bebida, rojo, Papá Noel, refresco." }
+];
+const ROULETTE_ROUNDS = 8;
+const ROULETTE_PTS_PER = 30;
+const ROULETTE_MAX_PTS = ROULETTE_ROUNDS * ROULETTE_PTS_PER;
+const ROULETTE_TIME_BONUS = 60;
+const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;
+
+/* DATOS · STOP / TUTTI FRUTTI */
+const STOP_CATS = [
+  {key:'pais',   label:'País'},
+  {key:'color',  label:'Color'},
+  {key:'animal', label:'Animal'},
+  {key:'fruta',  label:'Fruta / Verdura'},
+  {key:'nombre', label:'Nombre propio'},
+  {key:'marca',  label:'Marca / Empresa'}
+];
+const STOP_LETTERS = ['A','B','C','D','E','F','G','H','I','J','L','M','N','O','P','R','S','T','V'];
+const STOP_DICT = {
+  pais:   ['argentina','bolivia','brasil','colombia','chile','dinamarca','ecuador','espana','francia','grecia','holanda','italia','japon','jamaica','laos','mexico','noruega','panama','paraguay','peru','portugal','rusia','suecia','suiza','tailandia','turquia','uruguay','venezuela','alemania','inglaterra','egipto','etiopia','filipinas','finlandia','austria','australia','canada','china','cuba'],
+  color:  ['amarillo','azul','blanco','beige','cafe','celeste','cian','dorado','escarlata','esmeralda','fucsia','gris','indigo','lila','magenta','marron','morado','naranja','negro','plata','purpura','rojo','rosa','salmon','sepia','turquesa','verde','violeta','vino'],
+  animal: ['abeja','aguila','arana','ardilla','ballena','buho','burro','caballo','camello','canguro','cebra','chita','cocodrilo','delfin','elefante','foca','gato','gallina','hipopotamo','iguana','jirafa','jaguar','koala','leon','lobo','mono','murcielago','nutria','oso','panda','perro','rinoceronte','serpiente','tigre','tortuga','vaca','zorro','aves','sapo','salmon','rata'],
+  fruta:  ['aguacate','arandano','banano','breva','cereza','ciruela','coco','curuba','durazno','fresa','frambuesa','granadilla','guayaba','higo','kiwi','lima','limon','mandarina','mango','manzana','maracuya','melocoton','melon','mora','naranja','papaya','pera','pina','platano','sandia','tamarindo','toronja','uchuva','uva','tomate','espinaca','rabano','remolacha'],
+  nombre: ['andres','alejandro','beatriz','camila','daniel','diana','esteban','elena','felipe','fernando','gabriel','gloria','hector','isabel','julian','jorge','laura','lina','manuel','maria','natalia','nicolas','oscar','olga','pablo','paula','ricardo','rosa','santiago','sofia','tomas','teresa','valentina','victor','ana','luis','carlos','sergio'],
+  marca:  ['adidas','apple','bmw','bavaria','bancolombia','coca cola','colombina','disney','ecopetrol','exito','ferrari','google','honda','hp','ibm','intel','jumbo','kia','lego','lenovo','mercedes','microsoft','nestle','nike','olimpica','pepsi','postobon','renault','samsung','sony','tesla','toyota','visa','volvo','dell','huawei','rappi','epm','telmex','televisa']
+};
+const STOP_ROUNDS = 3;
+const STOP_TIME = 60;
+const STOP_PTS_PER_FIELD = 10;
+const STOP_MAX_PTS = STOP_ROUNDS * STOP_CATS.length * STOP_PTS_PER_FIELD;
+const STOP_BONUS = 20;
+const STOP_MAX = STOP_MAX_PTS + STOP_BONUS;
+
+/* DATOS · MUNDIALISTA */
+const FIELD_TIME_LIMIT = 120;
+const FIELD_TARGET_GOALS = 30;
+const FIELD_PTS_PER_GOAL = 8;
+const FIELD_TIME_BONUS = 60;
+const FIELD_MAX = FIELD_TARGET_GOALS * FIELD_PTS_PER_GOAL + FIELD_TIME_BONUS;
+
+/* TOTAL */
+const MAX_TOTAL = ROULETTE_MAX + STOP_MAX + FIELD_MAX;
+const PASS_PCT   = 70;
+const PASS_SCORE = Math.ceil(MAX_TOTAL * PASS_PCT / 100);
+
+/* ESTADO */
+const G = {
+  player:{name:'',cedula:'',cargo:''},
+  roulette:{score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null},
+  stop:    {score:0,started:0,ended:0,roundIdx:0,results:[],currentLetter:''},
+  fieldG:  {score:0,started:0,ended:0,goals:0,started_:false},
+  totalScore:0, percent:0, passed:false,
+  startedAt:0, endedAt:0
+};
+
+/* NAV */
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+document.getElementById('totN').textContent = String(totalSlides).padStart(2,'0');
+let curIdx = 0;
+const navPrev = document.getElementById('navPrev');
+const navNext = document.getElementById('navNext');
+const progressBar = document.getElementById('progressBar');
+
+function goToSlide(i){
+  if(i<0||i>=totalSlides) return;
+  slides.forEach((s,k)=>{
+    s.classList.remove('active','prev');
+    if(k===i) s.classList.add('active');
+    if(k<i)  s.classList.add('prev');
+  });
+  curIdx = i;
+  document.getElementById('curN').textContent = String(i+1).padStart(2,'0');
+  progressBar.style.width = ((i+1)/totalSlides*100)+'%';
+  const onMission = slides[i].id === 'slideMission';
+  navPrev.style.display = onMission ? 'none' : '';
+  navNext.style.display = onMission ? 'none' : '';
+  navPrev.disabled = i===0;
+  navNext.disabled = true;
+}
+navPrev.addEventListener('click', ()=> goToSlide(curIdx-1));
+
+/* FORM */
+const inpName = document.getElementById('inpName');
+const inpCed  = document.getElementById('inpCedula');
+const inpCargo= document.getElementById('inpCargo');
+const btnStart= document.getElementById('btnStartGame');
+function validateForm(){
+  const ok = inpName.value.trim().length>=3 &&
+             /^\d{5,}$/.test(inpCed.value.trim()) &&
+             inpCargo.value.trim().length>=2;
+  btnStart.disabled = !ok;
+}
+[inpName, inpCed, inpCargo].forEach(el=>el.addEventListener('input', validateForm));
+
+btnStart.addEventListener('click', ()=>{
+  G.player.name   = inpName.value.trim();
+  G.player.cedula = inpCed.value.trim();
+  G.player.cargo  = inpCargo.value.trim();
+  G.startedAt = Date.now();
+  document.getElementById('mhMax').textContent = MAX_TOTAL;
+
+  G.roulette = {score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null};
+  G.stop     = {score:0,started:0,ended:0,roundIdx:0,results:[],currentLetter:''};
+  G.fieldG   = {score:0,started:0,ended:0,goals:0,started_:false};
+  G.totalScore = 0; updateHeader();
+  ['mpBar1','mpBar2','mpBar3'].forEach(id=>{
+    const b = document.getElementById(id);
+    b.classList.remove('done');
+    b.querySelector('.fill').style.width='0%';
+  });
+
+  startRoulette();
+  goToSlide(1);
+});
+
+/* HELPERS */
+function fmtMS(sec){
+  sec = Math.max(0, Math.floor(sec));
+  const m = String(Math.floor(sec/60)).padStart(2,'0');
+  const s = String(sec%60).padStart(2,'0');
+  return m+':'+s;
+}
+function updateHeader(){ document.getElementById('mhScore').textContent = G.totalScore; }
+function popScore(text, cls){
+  const el = document.getElementById('scorePop');
+  el.textContent = text;
+  el.className = 'score-popup show '+(cls||'');
+  setTimeout(()=> el.classList.remove('show'), 900);
+}
+function normalize(str){
+  return (str||'').toString().toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[^a-z0-9 ]/g,'').trim();
+}
+
+/* JUEGO 1 · RULETA */
+let rouletteHeaderTimer = null;
+function startRoulette(){
+  G.roulette.started = Date.now();
+  document.getElementById('mhBadge').className = 'mh-badge gold';
+  document.getElementById('mhBadge').textContent = 'JUEGO 1 · 1 de 3';
+  document.getElementById('mhTitle').textContent = 'RULETA DE PISTAS';
+
+  const html = `
+    <div class="mission-intro gold" style="margin-bottom:18px">
+      <div class="m-num">Juego I</div>
+      <h2>RULETA DE PISTAS</h2>
+      <p>La ruleta te entrega <strong>${ROULETTE_ROUNDS} retos</strong> con emojis. Cada acierto suma <strong>${ROULETTE_PTS_PER} pts</strong>. Si terminas rápido recibes un bono extra hasta <strong>${ROULETTE_TIME_BONUS} pts</strong>.</p>
+      <div class="m-rules">
+        <span class="pill gold">${ROULETTE_MAX} pts máx</span>
+        <span class="pill">${ROULETTE_ROUNDS} rondas</span>
+        <span class="pill gray">Sin reintentos</span>
+      </div>
+      <button class="btn-primary" id="rouletteGoBtn">Empezar Ruleta
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="roulette-stage" id="rouletteStage" style="display:none">
+      <div class="roulette-side">
+        <div class="roulette-wrap">
+          <div class="pointer"></div>
+          <canvas id="wheelCanvas" width="300" height="300"></canvas>
+        </div>
+        <button class="btn-gold" id="spinBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Girar Ruleta
+        </button>
+        <div class="round-tracker" id="rTracker"></div>
+      </div>
+      <div class="roulette-main">
+        <div class="roulette-stat-row">
+          <span class="roulette-cat" id="rCat"><span class="dot"></span><span id="rCatText">— ESPERANDO GIRO —</span></span>
+          <span class="roulette-cat" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)">
+            <span class="dot" style="background:#fff"></span>
+            <span id="rRoundText">RONDA 1 / ${ROULETTE_ROUNDS}</span>
+          </span>
+        </div>
+        <div class="emoji-display" id="emojiDisplay">❓ ❓ ❓ ❓</div>
+        <p class="roulette-q-text" id="rInstr">Pulsa <strong style="color:var(--gold)">Girar Ruleta</strong> para obtener tu pista.</p>
+        <div class="roulette-input-row">
+          <input type="text" id="guessInput" placeholder="Escribe tu respuesta…" disabled autocomplete="off">
+          <button class="btn-gold" id="guessBtn" disabled>Adivinar</button>
+        </div>
+        <div class="roulette-fb" id="rouletteFb"></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('missionContainer').innerHTML = html;
+
+  document.getElementById('rouletteGoBtn').addEventListener('click', ()=>{
+    document.querySelector('.mission-intro').style.display='none';
+    document.getElementById('rouletteStage').style.display='grid';
+    G.roulette.started = Date.now();
+    setupWheel();
+    renderRouletteTracker();
+    if(rouletteHeaderTimer) clearInterval(rouletteHeaderTimer);
+    rouletteHeaderTimer = setInterval(()=>{
+      document.getElementById('mhTime').textContent =
+        fmtMS((Date.now()-G.roulette.started)/1000);
+    }, 500);
+  });
+}
+
+function renderRouletteTracker(){
+  const t = document.getElementById('rTracker');
+  let html='';
+  for(let i=0;i<ROULETTE_ROUNDS;i++){
+    const res = G.roulette.results[i];
+    let cls='';
+    if(i === G.roulette.roundIdx) cls='current';
+    else if(res === true) cls='ok';
+    else if(res === false) cls='bad';
+    html += `<div class="rt-dot ${cls}">${i+1}</div>`;
+  }
+  t.innerHTML = html;
+  document.getElementById('rRoundText').textContent =
+    'RONDA '+(G.roulette.roundIdx+1)+' / '+ROULETTE_ROUNDS;
+}
+
+let wheelCtx = null;
+const wheelSegments = ["País","Película","Marca","País","Película","Marca","País","Película"];
+const wheelColors   = ["#F2C75C","#0FBF8B","#E89B4A","#02A683","#F2C75C","#0FBF8B","#E89B4A","#02A683"];
+let startAngle = 0;
+const arc = Math.PI / (wheelSegments.length / 2);
+let spinTimeout = null;
+let spinAngleStart = 0;
+let spinTime = 0;
+let spinTimeTotal = 0;
+let spinning = false;
+
+function setupWheel(){
+  const c = document.getElementById('wheelCanvas');
+  wheelCtx = c.getContext('2d');
+  drawWheel();
+  document.getElementById('spinBtn').addEventListener('click', spin);
+  document.getElementById('guessBtn').addEventListener('click', checkRouletteAnswer);
+  document.getElementById('guessInput').addEventListener('keydown', e=>{
+    if(e.key==='Enter') checkRouletteAnswer();
+  });
+}
+
+function drawWheel(){
+  const ctx = wheelCtx;
+  ctx.clearRect(0,0,300,300);
+  const outsideRadius=140, textRadius=92, insideRadius=18;
+  for(let i=0;i<wheelSegments.length;i++){
+    const angle = startAngle + i*arc;
+    ctx.fillStyle = wheelColors[i];
+    ctx.beginPath();
+    ctx.arc(150,150,outsideRadius,angle,angle+arc,false);
+    ctx.arc(150,150,insideRadius,angle+arc,angle,true);
+    ctx.fill();
+    ctx.save();
+    ctx.fillStyle='#fff';
+    ctx.translate(150+Math.cos(angle+arc/2)*textRadius, 150+Math.sin(angle+arc/2)*textRadius);
+    ctx.rotate(angle+arc/2 + Math.PI/2);
+    const text = wheelSegments[i];
+    ctx.font='bold 14px sans-serif';
+    ctx.fillText(text, -ctx.measureText(text).width/2, 0);
+    ctx.restore();
+  }
+  ctx.beginPath();
+  ctx.arc(150,150,16,0,Math.PI*2);
+  ctx.fillStyle = '#fff';
+  ctx.fill();
+  ctx.strokeStyle = '#0B1E3F';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+function spin(){
+  if(spinning) return;
+  if(G.roulette.roundIdx >= ROULETTE_ROUNDS) return;
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('guessInput').disabled = true;
+  document.getElementById('guessBtn').disabled = true;
+  document.getElementById('emojiDisplay').textContent = '🎲 GIRANDO…';
+  document.getElementById('rCatText').textContent = '— SUSPENSO —';
+  document.getElementById('rInstr').textContent = 'Esperando la pista…';
+  document.getElementById('rouletteFb').className = 'roulette-fb';
+
+  spinAngleStart = Math.random()*10 + 12;
+  spinTime = 0;
+  spinTimeTotal = Math.random()*1500 + 2200;
+  rotateWheel();
+}
+
+function rotateWheel(){
+  spinTime += 30;
+  if(spinTime >= spinTimeTotal){ stopRotateWheel(); return; }
+  const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+  startAngle += (spinAngle * Math.PI/180);
+  drawWheel();
+  spinTimeout = setTimeout(rotateWheel, 30);
+}
+
+function easeOut(t,b,c,d){
+  const ts=(t/=d)*t, tc=ts*t;
+  return b+c*(tc + -3*ts + 3*t);
+}
+
+function stopRotateWheel(){
+  clearTimeout(spinTimeout); spinTimeout=null;
+  spinning = false;
+
+  const norm = ((Math.PI*1.5 - startAngle) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
+  const idx = Math.floor(norm / arc) % wheelSegments.length;
+  const pickedCat = wheelSegments[idx];
+
+  const pool = ROULETTE_DB.filter(d => d.cat === pickedCat);
+  const list = pool.length ? pool : ROULETTE_DB;
+  const ch = list[Math.floor(Math.random()*list.length)];
+  G.roulette.currentChallenge = ch;
+
+  document.getElementById('emojiDisplay').textContent = ch.emojis;
+  document.getElementById('rCatText').textContent = 'CATEGORÍA · '+ch.cat.toUpperCase();
+  document.getElementById('rInstr').innerHTML = 'Lee los emojis y escribe el <strong>'+ch.cat.toLowerCase()+'</strong> oculto.';
+
+  const inp = document.getElementById('guessInput');
+  inp.disabled = false; inp.value = ''; inp.focus();
+  document.getElementById('guessBtn').disabled = false;
+}
+
+function checkRouletteAnswer(){
+  const ch = G.roulette.currentChallenge;
+  if(!ch) return;
+  const inp = document.getElementById('guessInput');
+  const val = normalize(inp.value);
+  if(!val) return;
+  const ans = normalize(ch.ans);
+  const ok = val === ans || val.includes(ans) || (ans.includes(val) && val.length >= Math.min(4, ans.length));
+
+  const fb = document.getElementById('rouletteFb');
+  if(ok){
+    G.roulette.score += ROULETTE_PTS_PER;
+    G.totalScore += ROULETTE_PTS_PER;
+    G.roulette.results.push(true);
+    fb.className = 'roulette-fb ok show';
+    fb.innerHTML = '<strong>+'+ROULETTE_PTS_PER+' pts · ¡Correcto!</strong>Era <strong>'+ch.display+'</strong>. '+ch.desc;
+    popScore('+'+ROULETTE_PTS_PER, 'gold');
+  } else {
+    G.roulette.results.push(false);
+    fb.className = 'roulette-fb no show';
+    fb.innerHTML = '<strong>Incorrecto</strong>La respuesta era <strong>'+ch.display+'</strong>. '+ch.desc;
+    popScore('+0', 'bad');
+  }
+  updateHeader();
+  inp.disabled = true;
+  document.getElementById('guessBtn').disabled = true;
+  G.roulette.roundIdx++;
+  document.querySelector('#mpBar1 .fill').style.width = (G.roulette.roundIdx/ROULETTE_ROUNDS*100)+'%';
+
+  if(G.roulette.roundIdx >= ROULETTE_ROUNDS){
+    setTimeout(endRoulette, 1500);
+  } else {
+    renderRouletteTracker();
+    document.getElementById('spinBtn').disabled = false;
+  }
+}
+
+function endRoulette(){
+  if(rouletteHeaderTimer){ clearInterval(rouletteHeaderTimer); rouletteHeaderTimer=null; }
+  G.roulette.ended = Date.now();
+
+  const sec = (G.roulette.ended - G.roulette.started)/1000;
+  const bonus = Math.round(Math.max(0, Math.min(1, (240 - sec)/180)) * ROULETTE_TIME_BONUS);
+  G.roulette.score += bonus;
+  G.totalScore += bonus;
+  updateHeader();
+  if(bonus>0) popScore('+'+bonus+' BONO', 'gold');
+
+  document.getElementById('mpBar1').classList.add('done');
+  setTimeout(startStop, 1100);
+}
+
+/* JUEGO 2 · STOP */
+let stopTimerId = null;
+let stopTimeLeft = STOP_TIME;
+
+function startStop(){
+  G.stop.started = Date.now();
+  document.getElementById('mhBadge').className = 'mh-badge teal';
+  document.getElementById('mhBadge').textContent = 'JUEGO 2 · 2 de 3';
+  document.getElementById('mhTitle').textContent = 'STOP · TUTTI FRUTTI';
+
+  const html = `
+    <div class="mission-intro teal" style="margin-bottom:18px">
+      <div class="m-num">Juego II</div>
+      <h2>STOP · TUTTI FRUTTI</h2>
+      <p>Te damos una <strong>letra</strong> al azar. Debes completar <strong>${STOP_CATS.length} categorías</strong> con palabras que comiencen con esa letra: ${STOP_CATS.map(c=>c.label).join(' · ')}. Tienes <strong>${STOP_TIME} segundos por ronda</strong>.</p>
+      <div class="m-rules">
+        <span class="pill teal">${STOP_MAX} pts máx</span>
+        <span class="pill">${STOP_ROUNDS} rondas</span>
+        <span class="pill gray">${STOP_TIME} s c/u</span>
+      </div>
+      <button class="btn-primary" id="stopGoBtn">Empezar Stop
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="stop-stage" id="stopStage" style="display:none">
+      <div class="stop-side">
+        <span class="stop-round-pill"><span class="dot"></span><span id="stopRoundText">RONDA 1 / ${STOP_ROUNDS}</span></span>
+        <div class="letter-big" id="stopLetter">A</div>
+        <p class="stop-clue">La palabra debe <strong>iniciar</strong> con esta letra. Tildes y mayúsculas no importan.</p>
+      </div>
+      <div class="stop-main">
+        <div class="stop-top">
+          <span class="mh-pill timer" style="background:rgba(0,0,0,.20);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.85)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Tiempo</span>
+            <span class="val" id="stopTimerVal" style="color:#fff">${STOP_TIME}</span>
+          </span>
+          <div class="stop-actions">
+            <button class="btn-stop" id="stopBtn">¡STOP! Validar</button>
+          </div>
+        </div>
+        <div class="stop-fields" id="stopFields"></div>
+        <div class="stop-fb" id="stopFb"></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('missionContainer').innerHTML = html;
+
+  document.getElementById('stopGoBtn').addEventListener('click', ()=>{
+    document.querySelector('.mission-intro').style.display='none';
+    document.getElementById('stopStage').style.display='grid';
+    G.stop.started = Date.now();
+    startStopRound(0);
+  });
+}
+
+function startStopRound(idx){
+  G.stop.roundIdx = idx;
+  const letter = STOP_LETTERS[Math.floor(Math.random()*STOP_LETTERS.length)];
+  G.stop.currentLetter = letter;
+
+  document.getElementById('stopLetter').textContent = letter;
+  document.getElementById('stopRoundText').textContent = 'RONDA '+(idx+1)+' / '+STOP_ROUNDS;
+
+  const fieldsHtml = STOP_CATS.map(c => `
+    <div class="stop-field" data-key="${c.key}">
+      <label>${c.label}</label>
+      <input type="text" data-input="${c.key}" maxlength="22" autocomplete="off" placeholder="Empieza con ${letter}…">
+    </div>
+  `).join('');
+  document.getElementById('stopFields').innerHTML = fieldsHtml;
+  document.getElementById('stopFb').className = 'stop-fb';
+
+  document.querySelectorAll('.stop-field input').forEach(i=>{ i.disabled=false; });
+  const stopBtn = document.getElementById('stopBtn');
+  stopBtn.disabled = false;
+  stopBtn.onclick = ()=> validateStopRound(false);
+
+  stopTimeLeft = STOP_TIME;
+  document.getElementById('stopTimerVal').textContent = stopTimeLeft;
+  if(stopTimerId) clearInterval(stopTimerId);
+  stopTimerId = setInterval(stopTick, 1000);
+
+  const first = document.querySelector('.stop-field input');
+  if(first) first.focus();
+}
+
+function stopTick(){
+  stopTimeLeft--;
+  const v = document.getElementById('stopTimerVal');
+  v.textContent = Math.max(0, stopTimeLeft);
+  if(stopTimeLeft <= 5) v.style.color = 'var(--rose)';
+  else if(stopTimeLeft <= 10) v.style.color = 'var(--warm)';
+  else v.style.color = '#fff';
+  document.getElementById('mhTime').textContent = fmtMS((Date.now()-G.stop.started)/1000);
+  if(stopTimeLeft <= 0){
+    clearInterval(stopTimerId); stopTimerId = null;
+    validateStopRound(true);
+  }
+}
+
+function validateStopRound(byTimeout){
+  if(stopTimerId){ clearInterval(stopTimerId); stopTimerId=null; }
+  document.querySelectorAll('.stop-field input').forEach(i=>i.disabled=true);
+  document.getElementById('stopBtn').disabled = true;
+
+  const letter = G.stop.currentLetter.toLowerCase();
+  const letterNorm = normalize(letter);
+  let okCount = 0;
+  let detail = [];
+
+  STOP_CATS.forEach(c => {
+    const inp = document.querySelector('.stop-field input[data-input="'+c.key+'"]');
+    const wrap = document.querySelector('.stop-field[data-key="'+c.key+'"]');
+    const val = normalize(inp.value);
+    const dict = STOP_DICT[c.key] || [];
+    let ok = false;
+    if(val && val.charAt(0) === letterNorm && val.length >= 3 && dict.includes(val)){
+      ok = true;
+    }
+    if(ok){
+      wrap.classList.add('ok'); wrap.classList.remove('bad');
+      okCount++;
+      G.stop.score += STOP_PTS_PER_FIELD;
+      G.totalScore += STOP_PTS_PER_FIELD;
+      detail.push(c.label+' ✓');
+    } else {
+      wrap.classList.add('bad'); wrap.classList.remove('ok');
+      detail.push(c.label+' ✗');
+    }
+  });
+
+  let bonusRound = 0;
+  if(okCount === STOP_CATS.length){
+    bonusRound = Math.round(STOP_BONUS / STOP_ROUNDS);
+    G.stop.score += bonusRound;
+    G.totalScore += bonusRound;
+  }
+  updateHeader();
+  G.stop.results.push({letter:G.stop.currentLetter, ok:okCount, bonus:bonusRound});
+
+  const fb = document.getElementById('stopFb');
+  fb.className = okCount >= 4 ? 'stop-fb ok show' : 'stop-fb no show';
+  fb.innerHTML = '<strong>'+(byTimeout?'¡Se acabó el tiempo!':'STOP')+' · '+okCount+'/'+STOP_CATS.length+' correctas '+
+    (bonusRound ? ('· Bono ronda +'+bonusRound+' pts') : '')+
+    '</strong>'+detail.join(' · ');
+
+  const gained = okCount*STOP_PTS_PER_FIELD + bonusRound;
+  popScore('+'+gained, 'teal');
+
+  document.querySelector('#mpBar2 .fill').style.width = ((G.stop.roundIdx+1)/STOP_ROUNDS*100)+'%';
+
+  setTimeout(()=>{
+    if(G.stop.roundIdx+1 < STOP_ROUNDS){
+      startStopRound(G.stop.roundIdx+1);
+    } else {
+      endStop();
+    }
+  }, 1800);
+}
+
+function endStop(){
+  G.stop.ended = Date.now();
+  document.getElementById('mpBar2').classList.add('done');
+  setTimeout(startFieldGame, 900);
+}
+
+/* JUEGO 3 · MUNDIALISTA */
+let fieldTimerId = null;
+let fieldTimeLeft = FIELD_TIME_LIMIT;
+let fieldSpawnId = null;
+let fieldHeaderTimer = null;
+
+function startFieldGame(){
+  G.fieldG.started = Date.now();
+  document.getElementById('mhBadge').className = 'mh-badge field';
+  document.getElementById('mhBadge').textContent = 'JUEGO 3 · 3 de 3';
+  document.getElementById('mhTitle').textContent = 'RETO MUNDIALISTA';
+
+  const html = `
+    <div class="mission-intro field" style="margin-bottom:18px">
+      <div class="m-num">Juego III</div>
+      <h2>RETO MUNDIALISTA</h2>
+      <p>Mete <strong>${FIELD_TARGET_GOALS} goles</strong> en el menor tiempo posible. Cada balón que aparezca en la cancha debes pulsarlo. Tienes un máximo de <strong>2 minutos</strong>.</p>
+      <div class="m-rules">
+        <span class="pill field">${FIELD_MAX} pts máx</span>
+        <span class="pill">${FIELD_PTS_PER_GOAL} pts por gol</span>
+        <span class="pill gray">2 minutos límite</span>
+      </div>
+      <button class="btn-primary" id="fieldGoBtn">¡A la cancha!
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="field-stage" id="fieldStage" style="display:none">
+      <div class="field-top">
+        <span class="field-round-pill">⚽ RETO MUNDIALISTA</span>
+        <div class="field-stat-row">
+          <div class="field-stat"><div class="fs-num" id="fsGoals">0</div><div class="fs-lbl">Goles</div></div>
+          <div class="field-stat"><div class="fs-num" id="fsTarget">${FIELD_TARGET_GOALS}</div><div class="fs-lbl">Meta</div></div>
+          <div class="field-stat" id="fsTimerBox"><div class="fs-num" id="fsTimer">${FIELD_TIME_LIMIT}</div><div class="fs-lbl">Segundos</div></div>
+          <div class="field-stat"><div class="fs-num" id="fsScore">0</div><div class="fs-lbl">Puntos</div></div>
+        </div>
+      </div>
+      <div class="pitch" id="pitch">
+        <div class="goal-top"></div>
+        <div class="goal-bot"></div>
+        <div class="pitch-start-overlay" id="pitchOverlay">
+          <h3>¡PREPÁRATE!</h3>
+          <p>Pulsa <strong>Iniciar</strong> para empezar. Cada balón aparece por <strong>1.4 s</strong>: pulsa rápido. La meta es <strong>${FIELD_TARGET_GOALS} goles</strong>.</p>
+          <button class="btn-primary" id="pitchStartBtn">Iniciar</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('missionContainer').innerHTML = html;
+
+  document.getElementById('fieldGoBtn').addEventListener('click', ()=>{
+    document.querySelector('.mission-intro').style.display='none';
+    document.getElementById('fieldStage').style.display='flex';
+    document.getElementById('pitchStartBtn').addEventListener('click', beginFieldPlay, {once:true});
+  });
+}
+
+function beginFieldPlay(){
+  G.fieldG.started_ = true;
+  G.fieldG.started = Date.now();
+  G.fieldG.goals = 0;
+  fieldTimeLeft = FIELD_TIME_LIMIT;
+  document.getElementById('pitchOverlay').style.display='none';
+  document.getElementById('fsGoals').textContent = '0';
+  document.getElementById('fsScore').textContent = '0';
+  document.getElementById('fsTimer').textContent = fieldTimeLeft;
+
+  if(fieldTimerId) clearInterval(fieldTimerId);
+  fieldTimerId = setInterval(fieldTick, 1000);
+
+  if(fieldHeaderTimer) clearInterval(fieldHeaderTimer);
+  fieldHeaderTimer = setInterval(()=>{
+    document.getElementById('mhTime').textContent =
+      fmtMS((Date.now()-G.fieldG.started)/1000);
+  }, 500);
+
+  spawnBall();
+}
+
+function fieldTick(){
+  fieldTimeLeft--;
+  const t = document.getElementById('fsTimer');
+  const box = document.getElementById('fsTimerBox');
+  t.textContent = Math.max(0,fieldTimeLeft);
+  box.classList.remove('warn','danger');
+  if(fieldTimeLeft <= 10) box.classList.add('danger');
+  else if(fieldTimeLeft <= 30) box.classList.add('warn');
+  if(fieldTimeLeft <= 0){ endField(); }
+}
+
+function spawnBall(){
+  if(!G.fieldG.started_) return;
+  if(fieldTimeLeft <= 0) return;
+  if(G.fieldG.goals >= FIELD_TARGET_GOALS) return;
+
+  const pitch = document.getElementById('pitch');
+  const rect = pitch.getBoundingClientRect();
+  const size = 48;
+  const margin = 12;
+  const maxX = Math.max(0, rect.width  - size - margin*2);
+  const maxY = Math.max(0, rect.height - size - margin*2);
+  const x = margin + Math.random()*maxX;
+  const y = margin + Math.random()*maxY;
+
+  const ball = document.createElement('div');
+  ball.className = 'ball';
+  ball.style.left = x+'px';
+  ball.style.top  = y+'px';
+  ball.textContent = '⚽';
+
+  let removed = false;
+  const removeBall = ()=>{
+    if(removed) return; removed = true;
+    if(ball.parentNode) ball.parentNode.removeChild(ball);
+    if(G.fieldG.started_ && fieldTimeLeft > 0 && G.fieldG.goals < FIELD_TARGET_GOALS){
+      fieldSpawnId = setTimeout(spawnBall, 250 + Math.random()*350);
+    }
+  };
+
+  ball.addEventListener('click', ()=>{
+    if(removed) return;
+    removed = true;
+    ball.classList.add('scored');
+    G.fieldG.goals++;
+    G.fieldG.score += FIELD_PTS_PER_GOAL;
+    G.totalScore += FIELD_PTS_PER_GOAL;
+    updateHeader();
+    document.getElementById('fsGoals').textContent = G.fieldG.goals;
+    document.getElementById('fsScore').textContent = G.fieldG.score;
+
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    spark.textContent = '+'+FIELD_PTS_PER_GOAL;
+    spark.style.left = (x+10)+'px';
+    spark.style.top  = (y-6)+'px';
+    pitch.appendChild(spark);
+    setTimeout(()=>{ if(spark.parentNode) spark.parentNode.removeChild(spark); }, 800);
+
+    setTimeout(()=>{ if(ball.parentNode) ball.parentNode.removeChild(ball); }, 320);
+
+    document.querySelector('#mpBar3 .fill').style.width =
+      Math.min(100, G.fieldG.goals/FIELD_TARGET_GOALS*100)+'%';
+
+    if(G.fieldG.goals >= FIELD_TARGET_GOALS){
+      endField();
+    } else {
+      fieldSpawnId = setTimeout(spawnBall, 200 + Math.random()*300);
+    }
+  });
+
+  pitch.appendChild(ball);
+  setTimeout(removeBall, 1400);
+}
+
+function endField(){
+  if(fieldTimerId){ clearInterval(fieldTimerId); fieldTimerId = null; }
+  if(fieldSpawnId){ clearTimeout(fieldSpawnId); fieldSpawnId = null; }
+  if(fieldHeaderTimer){ clearInterval(fieldHeaderTimer); fieldHeaderTimer = null; }
+  if(!G.fieldG.started_){ return; }
+  G.fieldG.started_ = false;
+  G.fieldG.ended = Date.now();
+
+  let bonus = 0;
+  if(G.fieldG.goals >= FIELD_TARGET_GOALS){
+    const sec = (G.fieldG.ended - G.fieldG.started)/1000;
+    bonus = Math.round(Math.max(0, (FIELD_TIME_LIMIT - sec)/FIELD_TIME_LIMIT) * FIELD_TIME_BONUS);
+  }
+  G.fieldG.score += bonus;
+  G.totalScore += bonus;
+  updateHeader();
+  if(bonus > 0) popScore('+'+bonus+' BONO', 'field');
+
+  document.querySelectorAll('#pitch .ball').forEach(b => b.remove());
+
+  document.getElementById('mpBar3').classList.add('done');
+  setTimeout(finishGame, 900);
+}
+
+/* RESULTADO */
+function finishGame(){
+  G.endedAt = Date.now();
+  const totalSec = Math.floor((G.endedAt - G.startedAt)/1000);
+  G.percent = Math.round(G.totalScore / MAX_TOTAL * 100);
+  G.passed  = G.totalScore >= PASS_SCORE;
+
+  document.getElementById('rTotal').textContent = G.totalScore+'/'+MAX_TOTAL;
+  document.getElementById('rPct').textContent   = G.percent+'%';
+  document.getElementById('rTime').textContent  = fmtMS(totalSec);
+  document.getElementById('rQuiz').textContent  = G.roulette.score+'/'+ROULETTE_MAX;
+  document.getElementById('rMaze').textContent  = G.stop.score+'/'+STOP_MAX;
+  document.getElementById('rHang').textContent  = G.fieldG.score+'/'+FIELD_MAX;
+  document.getElementById('rQuizTime').textContent = fmtMS((G.roulette.ended - G.roulette.started)/1000);
+  document.getElementById('rMazeTime').textContent = fmtMS((G.stop.ended     - G.stop.started)/1000);
+  document.getElementById('rHangTime').textContent = fmtMS((G.fieldG.ended   - G.fieldG.started)/1000);
+  document.getElementById('rName').textContent = G.player.name;
+
+  const card  = document.getElementById('resultCard');
+  const title = document.getElementById('rTitle');
+  const msg   = document.getElementById('rMsg');
+  const btnCert = document.getElementById('btnGoCert');
+
+  if(G.passed){
+    card.classList.remove('fail');
+    title.textContent = '¡Aprobaste!';
+    msg.innerHTML = 'Felicitaciones <strong>'+G.player.name.split(' ')[0]+
+      '</strong>. Lograste <strong>'+G.totalScore+'/'+MAX_TOTAL+' puntos ('+G.percent+
+      '%)</strong>. Tu certificado de Par Servicios está desbloqueado.';
+    btnCert.style.display='inline-flex';
+  } else {
+    card.classList.add('fail');
+    title.textContent = 'No aprobaste';
+    msg.innerHTML = 'Obtuviste <strong>'+G.totalScore+'/'+MAX_TOTAL+' ('+G.percent+
+      '%)</strong> y se requieren mínimo <strong>'+PASS_PCT+'%</strong> para certificarte.';
+    btnCert.style.display='none';
+  }
+  goToSlide(2);
+}
+
+/* CERTIFICADO + ENVÍO A SHEETS */
+document.getElementById('btnGoCert').addEventListener('click', ()=>{
+  if(!G.passed){
+    alert('No puedes acceder al certificado. Necesitas mínimo '+PASS_PCT+'%.');
+    return;
+  }
+  const totalSec = Math.floor((G.endedAt - G.startedAt)/1000);
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2,'0');
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const yyyy = today.getFullYear();
+  const folio = 'PS-' + yyyy + '-' + Math.floor(10000 + Math.random()*90000);
+
+  document.getElementById('certName').textContent   = G.player.name.toUpperCase();
+  document.getElementById('certCedula').textContent = G.player.cedula;
+  document.getElementById('certCargo').textContent  = G.player.cargo;
+  document.getElementById('certPct').textContent    = G.percent+'%';
+  document.getElementById('certTime').textContent   = fmtMS(totalSec);
+  document.getElementById('certDate').textContent   = dd+'/'+mm+'/'+yyyy;
+  document.getElementById('certFolio').textContent  = folio;
+
+  const payload = {
+    folio:folio,
+    nombre:G.player.name, cedula:G.player.cedula, cargo:G.player.cargo,
+    quizScore: G.roulette.score,  quizTime: fmtMS((G.roulette.ended - G.roulette.started)/1000),
+    mazeScore: G.stop.score,      mazeTime: fmtMS((G.stop.ended     - G.stop.started)/1000),
+    hangScore: G.fieldG.score,    hangTime: fmtMS((G.fieldG.ended   - G.fieldG.started)/1000),
+    totalScore:G.totalScore, maxScore:MAX_TOTAL, percent:G.percent,
+    totalTime: fmtMS(totalSec),
+    estado: 'Aprobado'
+  };
+  sendViaFetch(payload);
+  goToSlide(3);
+});
+
+function sendViaFetch(payload){
+  if(!WEBAPP_URL || WEBAPP_URL.indexOf('http') !== 0){
+    console.warn('WEBAPP_URL no configurada — el resultado no se enviará al backend.');
+    return;
+  }
+  fetch(WEBAPP_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    redirect: 'follow'
+  }).catch(err => console.warn('Envío al backend falló:', err));
+}
+
+document.getElementById('btnRetry').addEventListener('click', ()=> goToSlide(0));
+document.getElementById('btnFinish').addEventListener('click', ()=> goToSlide(0));
+
+/* PDF */
+document.getElementById('btnDownloadPdf').addEventListener('click', async ()=>{
+  if(!G.passed){ alert('Puntaje insuficiente.'); return; }
+  const btn = document.getElementById('btnDownloadPdf');
+  const original = btn.innerHTML;
+  btn.innerHTML='Generando...'; btn.disabled=true;
+  try{
+    const certEl = document.getElementById('certEl');
+    const certLogoEl = document.getElementById('certLogo');
+    if(PAR_LOGO_SRC && certLogoEl.src !== PAR_LOGO_SRC){ certLogoEl.src = PAR_LOGO_SRC; }
+    const imgs = certEl.querySelectorAll('img');
+    await Promise.all(Array.from(imgs).map(img => {
+      if(img.complete && img.naturalWidth > 0) return Promise.resolve();
+      return new Promise(res => {
+        img.onload = res;
+        img.onerror = res;
+        setTimeout(res, 1500);
+      });
+    }));
+    await new Promise(r => setTimeout(r, 120));
+    const canvas = await html2canvas(certEl, {scale:2, backgroundColor:'#FFFFFF', logging:false, useCORS:true, allowTaint:true, imageTimeout:3000});
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+    const pdfW = pdf.internal.pageSize.getWidth();
+    const pdfH = pdf.internal.pageSize.getHeight();
+    const ratio = canvas.width / canvas.height;
+    let w = pdfW - 30;
+    let h = w / ratio;
+    if(h > pdfH - 30){ h = pdfH - 30; w = h * ratio; }
+    pdf.addImage(imgData, 'PNG', (pdfW-w)/2, (pdfH-h)/2, w, h);
+    const slug = G.player.name.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+    pdf.save('Certificado_ParServicios_'+slug+'.pdf');
+  }catch(e){ console.error(e); alert('Error generando PDF. Usa Imprimir.'); }
+  finally{ btn.innerHTML=original; btn.disabled=false; }
+});
+
+/* INIT */
+validateForm();
+goToSlide(0);
+</script>
+</body>
+</html>
