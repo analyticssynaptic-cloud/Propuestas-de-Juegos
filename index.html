@@ -183,62 +183,105 @@ img{max-width:100%;display:block}
 .rt-dot.ok{background:rgba(2,166,131,.45);color:#fff;border-color:var(--par-green-light)}
 .rt-dot.bad{background:rgba(232,133,122,.45);color:#fff;border-color:var(--rose)}
 
-/* JUEGO 2 · STOP */
-.stop-stage{background:radial-gradient(ellipse at top,rgba(207,228,234,.30),transparent 60%),linear-gradient(180deg,var(--stop),var(--stop-soft));border-radius:var(--r-lg);padding:24px;color:#fff;display:grid;grid-template-columns:240px 1fr;gap:22px;box-shadow:var(--shadow);min-height:520px}
-@media (max-width:900px){.stop-stage{grid-template-columns:1fr}}
-.stop-side{display:flex;flex-direction:column;gap:14px;align-items:center}
-.letter-big{width:180px;height:180px;border-radius:50%;background:#fff;color:var(--stop);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:96px;box-shadow:0 12px 30px rgba(0,0,0,.25);position:relative}
-.letter-big::before{content:"";position:absolute;inset:6px;border:2px dashed rgba(31,78,95,.25);border-radius:50%;pointer-events:none}
-.stop-clue{font-family:'Cormorant Garamond';font-style:italic;font-size:14px;color:rgba(255,255,255,.78);text-align:center;line-height:1.45}
-.stop-round-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(207,228,234,.20);color:#CFE4EA;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-.stop-round-pill .dot{width:6px;height:6px;border-radius:50%;background:#CFE4EA}
-.stop-main{display:flex;flex-direction:column;gap:14px}
-.stop-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.stop-fields{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-@media (max-width:640px){.stop-fields{grid-template-columns:1fr}}
-.stop-field{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:10px 14px}
-.stop-field label{display:block;font-family:'Bebas Neue';font-size:11px;letter-spacing:.22em;color:#CFE4EA;margin-bottom:5px}
-.stop-field input{width:100%;padding:8px 10px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.10);border-radius:var(--r-sm);color:#fff;font-family:'Barlow';font-size:14px;font-weight:600;letter-spacing:.04em}
-.stop-field input:focus{outline:none;border-color:var(--par-green-light);background:rgba(0,0,0,.25)}
-.stop-field input:disabled{opacity:.5}
-.stop-field.ok{border-color:var(--par-green-light);background:rgba(2,166,131,.14)}
-.stop-field.ok input{border-color:var(--par-green-light)}
-.stop-field.bad{border-color:var(--rose);background:rgba(232,133,122,.14)}
-.stop-field.bad input{border-color:var(--rose)}
-.stop-fb{padding:12px 16px;border-radius:8px;font-size:13px;display:none;line-height:1.5}
-.stop-fb.show{display:block;animation:slideIn .3s}
-.stop-fb.ok{background:rgba(2,166,131,.22);color:#CDEEDD;border-left:3px solid var(--par-green-light)}
-.stop-fb.no{background:rgba(232,133,122,.22);color:#F8D8D3;border-left:3px solid var(--rose)}
-.stop-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
-.btn-stop{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;background:#fff;color:var(--stop);border-radius:100px;font-family:'Bebas Neue';font-size:15px;letter-spacing:.14em;transition:all .3s;cursor:pointer;border:none}
-.btn-stop:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.25)}
-.btn-stop:disabled{opacity:.45;cursor:not-allowed}
+/* JUEGO 2 · BANDERAS */
+.flag-stage{
+  background:
+    radial-gradient(ellipse at top,rgba(207,228,234,.25),transparent 60%),
+    linear-gradient(180deg,var(--stop),var(--stop-soft));
+  border-radius:var(--r-lg);padding:24px;color:#fff;
+  display:flex;flex-direction:column;align-items:center;gap:18px;
+  box-shadow:var(--shadow);min-height:520px;
+}
+.flag-top{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.flag-q-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(207,228,234,.20);color:#CFE4EA;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.flag-q-pill .dot{width:6px;height:6px;border-radius:50%;background:#CFE4EA}
+.flag-stat-row{display:flex;gap:10px;flex-wrap:wrap}
+.flag-stat{background:rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:10px 16px;text-align:center;min-width:84px}
+.flag-stat .fs-num{font-family:'Bebas Neue';font-size:22px;line-height:1;color:#fff}
+.flag-stat .fs-lbl{font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.65);margin-top:4px;text-transform:uppercase}
+.flag-stat.gold .fs-num{color:var(--gold)}
+.flag-q-text{font-size:14px;color:rgba(255,255,255,.85);text-align:center}
+.flag-q-text strong{color:#fff;font-family:'Bebas Neue';letter-spacing:.04em}
+.flag-frame{
+  width:340px;max-width:100%;aspect-ratio:3/2;border-radius:.75rem;overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,.55),0 0 0 2px rgba(255,255,255,.10);
+  background:rgba(0,0,0,.25);position:relative;flex-shrink:0;
+}
+.flag-frame img{width:100%;height:100%;object-fit:cover;transition:opacity .3s;display:block}
+.flag-frame.ca{animation:flagCa .45s cubic-bezier(.16,1,.3,1)}
+.flag-frame.wa{animation:flagWa .4s}
+@keyframes flagCa{0%{transform:scale(1)}50%{transform:scale(1.06);box-shadow:0 0 50px rgba(2,166,131,.5)}100%{transform:scale(1)}}
+@keyframes flagWa{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+.flag-options{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;width:100%;max-width:560px}
+@media (max-width:560px){.flag-options{grid-template-columns:1fr}}
+.flag-opt{
+  padding:.95rem 1.1rem;background:rgba(255,255,255,.06);
+  border:2px solid rgba(255,255,255,.14);
+  border-radius:.75rem;color:#fff;font-family:'Barlow';font-size:.95rem;font-weight:600;
+  cursor:pointer;text-align:left;transition:all .18s;display:flex;align-items:center;gap:.6rem;
+}
+.flag-opt:hover:not(:disabled){border-color:var(--par-green-light);background:rgba(2,166,131,.10);transform:translateY(-2px);box-shadow:0 6px 18px rgba(2,166,131,.20)}
+.flag-opt:disabled{cursor:not-allowed;opacity:.65}
+.flag-opt.correct{border-color:var(--par-green-light);background:rgba(2,166,131,.25);color:#CDEEDD;animation:flagPick .3s cubic-bezier(.16,1,.3,1)}
+.flag-opt.wrong{border-color:var(--rose);background:rgba(232,133,122,.20);color:#F8D8D3}
+.flag-opt.reveal{border-color:var(--par-green-light);background:rgba(2,166,131,.10)}
+@keyframes flagPick{from{transform:scale(.96);opacity:.7}to{transform:scale(1);opacity:1}}
+.flag-fb{min-height:36px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;opacity:0;transform:translateY(4px);transition:all .3s;text-align:center}
+.flag-fb.show{opacity:1;transform:translateY(0)}
+.flag-fb.ok{color:var(--par-green-light)}
+.flag-fb.no{color:var(--rose)}
+.flag-streak{display:none;align-items:center;gap:.5rem;padding:.3rem 1rem;background:rgba(242,199,92,.12);border:2px solid rgba(242,199,92,.40);border-radius:100px;font-size:.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.06em;animation:streakUp .3s cubic-bezier(.16,1,.3,1)}
+.flag-streak.show{display:flex}
+@keyframes streakUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.flag-next{display:none;padding:.7rem 2.2rem;background:linear-gradient(135deg,var(--par-green),var(--par-green-light));border:none;border-radius:100px;color:#fff;font-family:'Bebas Neue';font-size:16px;letter-spacing:.14em;cursor:pointer;box-shadow:0 4px 20px rgba(2,166,131,.40);transition:transform .2s,box-shadow .2s;animation:streakUp .3s cubic-bezier(.16,1,.3,1)}
+.flag-next.show{display:inline-flex;align-items:center;gap:8px}
+.flag-next:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(2,166,131,.50)}
 
-/* JUEGO 3 · MUNDIALISTA */
-.field-stage{background:linear-gradient(180deg,var(--field),var(--field-soft));border-radius:var(--r-lg);padding:24px;color:#fff;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);min-height:520px}
-.field-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.field-round-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.16);color:#fff;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-.field-stat-row{display:flex;gap:10px;flex-wrap:wrap}
-.field-stat{background:rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.10);border-radius:var(--r);padding:10px 16px;text-align:center;min-width:88px}
-.field-stat .fs-num{font-family:'Bebas Neue';font-size:22px;line-height:1;color:#fff}
-.field-stat .fs-lbl{font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.65);margin-top:4px;text-transform:uppercase}
-.field-stat.warn .fs-num{color:var(--warm)}
-.field-stat.danger .fs-num{color:var(--rose)}
-.pitch{position:relative;flex:1;min-height:380px;border:3px solid rgba(255,255,255,.45);border-radius:var(--r);background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 40px,transparent 40px 80px),linear-gradient(180deg,#1F8855,#176E45);overflow:hidden;cursor:crosshair;user-select:none}
-.pitch::before{content:"";position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.45)}
-.pitch::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border:2px solid rgba(255,255,255,.45);border-radius:50%}
-.goal-top,.goal-bot{position:absolute;left:50%;transform:translateX(-50%);width:220px;height:48px;border:3px solid rgba(255,255,255,.85);background:rgba(255,255,255,.10);box-sizing:border-box}
-.goal-top{top:-3px;border-bottom:none}
-.goal-bot{bottom:-3px;border-top:none}
-.ball{position:absolute;width:48px;height:48px;border-radius:50%;cursor:pointer;transition:transform .12s;display:flex;align-items:center;justify-content:center;font-size:38px;text-shadow:0 2px 4px rgba(0,0,0,.4)}
-.ball:hover{transform:scale(1.12)}
-.ball.scored{animation:scorePop .35s forwards;pointer-events:none}
-@keyframes scorePop{0%{transform:scale(1)}60%{transform:scale(1.6);opacity:.4}100%{transform:scale(0);opacity:0}}
-.spark{position:absolute;pointer-events:none;font-family:'Bebas Neue';font-size:22px;color:var(--gold);text-shadow:0 2px 6px rgba(0,0,0,.4);animation:sparkUp .8s forwards}
-@keyframes sparkUp{0%{opacity:1;transform:translateY(0) scale(.7)}100%{opacity:0;transform:translateY(-50px) scale(1.2)}}
-.pitch-start-overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;z-index:5}
-.pitch-start-overlay h3{font-family:'Bebas Neue';font-size:38px;letter-spacing:.04em;color:#fff;margin-bottom:6px}
-.pitch-start-overlay p{font-size:14px;color:rgba(255,255,255,.85);max-width:420px;line-height:1.5}
+/* JUEGO 3 · LABERINTO */
+.maze-stage{
+  background:
+    radial-gradient(ellipse at top,rgba(207,228,234,.25),transparent 60%),
+    linear-gradient(180deg,var(--field),var(--field-soft));
+  border-radius:var(--r-lg);padding:24px;color:#fff;
+  display:grid;grid-template-columns:1fr 240px;gap:22px;
+  box-shadow:var(--shadow);min-height:540px;
+}
+@media (max-width:900px){.maze-stage{grid-template-columns:1fr}}
+.maze-main{display:flex;flex-direction:column;gap:14px;align-items:center}
+.maze-info-row{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.maze-canvas-wrap{
+  background:rgba(0,0,0,.30);border-radius:var(--r);padding:12px;
+  border:1px solid rgba(255,255,255,.10);width:100%;
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+#mazeCanvas{width:100%;max-width:500px;aspect-ratio:1;background:#FAF7F2;border-radius:var(--r-sm);display:block;touch-action:none}
+.maze-side{display:flex;flex-direction:column;gap:14px}
+.maze-card{background:rgba(0,0,0,.22);border-radius:var(--r);padding:14px;border:1px solid rgba(255,255,255,.10)}
+.maze-card h5{font-family:'Bebas Neue';font-size:11px;letter-spacing:.22em;color:#CFEAD8;margin-bottom:10px}
+.maze-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.maze-stat{background:rgba(255,255,255,.06);padding:10px;border-radius:8px;text-align:center}
+.maze-stat .ms-num{font-family:'Bebas Neue';font-size:22px;line-height:1;color:#fff}
+.maze-stat .ms-lbl{font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.65);margin-top:4px;text-transform:uppercase}
+.maze-instructions{font-size:12px;color:rgba(255,255,255,.85);line-height:1.6}
+.maze-instructions kbd{display:inline-block;padding:2px 6px;margin:0 2px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:4px;font-family:'Barlow';font-weight:700;font-size:11px;color:#fff}
+.dpad{display:grid;grid-template-columns:repeat(3,44px);grid-template-rows:repeat(3,44px);gap:4px;margin:0 auto}
+.dpad button{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);color:#fff;border-radius:8px;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.dpad button:hover{background:var(--par-green);border-color:var(--par-green)}
+.dpad button:active{transform:scale(.92)}
+.dpad .dpad-up{grid-column:2;grid-row:1}
+.dpad .dpad-left{grid-column:1;grid-row:2}
+.dpad .dpad-right{grid-column:3;grid-row:2}
+.dpad .dpad-down{grid-column:2;grid-row:3}
+.maze-overlay{position:absolute;inset:12px;border-radius:var(--r-sm);background:rgba(250,247,242,.96);backdrop-filter:blur(8px);display:none;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;padding:14px;text-align:center;animation:slideIn .35s ease;z-index:5}
+.maze-overlay.show{display:flex}
+.maze-overlay h3{font-family:'Bebas Neue';font-size:36px;color:var(--field);letter-spacing:.04em}
+.maze-overlay p{font-size:13px;color:var(--ink-soft);max-width:340px;line-height:1.5}
+.maze-overlay .mo-stats{display:flex;gap:14px;justify-content:center;margin-top:8px}
+.maze-overlay .mo-stat{text-align:center}
+.maze-overlay .mo-stat .v{font-family:'Bebas Neue';font-size:22px;color:var(--par-green)}
+.maze-overlay .mo-stat .l{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted);margin-top:2px}
+.maze-fb{padding:10px 14px;border-radius:8px;font-size:12px;line-height:1.4;text-align:center;width:100%;background:rgba(0,0,0,.22);color:rgba(255,255,255,.85)}
+.maze-fb strong{color:#fff}
 
 /* RESULT + CERT */
 .result-card{background:var(--paper);border-radius:var(--r-lg);padding:44px;box-shadow:var(--shadow-lg);max-width:680px;margin:0 auto;text-align:center}
@@ -370,18 +413,18 @@ img{max-width:100%;display:block}
           <div class="mp-ico">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
           </div>
-          <h4>Stop · Tutti Frutti</h4>
-          <p>Recibes una letra y debes completar país, color, animal, fruta, nombre y marca antes de que se acabe el tiempo.</p>
-          <div class="mp-pts">200 PTS · 3 rondas</div>
+          <h4>Adivina la Bandera</h4>
+          <p>Reconoce 20 banderas del mundo. Cada acierto suma puntos, y las rachas valen el doble. ¡Demuestra tu cultura general!</p>
+          <div class="mp-pts">300 PTS · 20 banderas</div>
         </div>
         <div class="mp-card field">
           <div class="mp-num">JUEGO 3</div>
           <div class="mp-ico">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20M5 5l14 14M5 19L19 5"/></svg>
           </div>
-          <h4>Reto Mundialista</h4>
-          <p>Mete la mayor cantidad de goles posibles en 2 minutos. Cada balón que aparezca debes pulsarlo.</p>
-          <div class="mp-pts">300 PTS · 2 min</div>
+          <h4>Laberinto Contrarreloj</h4>
+          <p>Encuentra la salida del laberinto en el menor tiempo posible. Usa flechas, WASD o el D-pad. ¡Cuidado con los caminos sin salida!</p>
+          <div class="mp-pts">200 PTS · 3 min máx</div>
         </div>
       </div>
 
@@ -458,12 +501,12 @@ img{max-width:100%;display:block}
           </div>
           <div class="rd-block">
             <div class="rd-num teal" id="rMaze">0</div>
-            <div class="rd-lbl">STOP</div>
+            <div class="rd-lbl">BANDERAS</div>
             <div class="rd-time" id="rMazeTime">00:00</div>
           </div>
           <div class="rd-block">
             <div class="rd-num green" id="rHang">0</div>
-            <div class="rd-lbl">MUNDIALISTA</div>
+            <div class="rd-lbl">LABERINTO</div>
             <div class="rd-time" id="rHangTime">00:00</div>
           </div>
         </div>
@@ -573,22 +616,68 @@ const PAR_LOGO_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgQAAADrCAYA
 /* WEB APP URL (Apps Script) — misma del index original */
 const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwGYlaVZx50pO_1VebnppDP6VqLmGk27IBVL2C6VN2VoMRtlb_vWoh_n8qOovChE03uuA/exec';
 
-/* DATOS · RULETA (8 rondas) */
+/* DATOS · RULETA — 60+ pares (sin repetir entre rondas) */
 const ROULETTE_DB = [
-  { emojis:"🧉 🥩 ⚽ 🏔️", cat:"País",     ans:"argentina",        display:"Argentina 🇦🇷", desc:"Mate, asado, fútbol, la Patagonia." },
-  { emojis:"☕ 🫓 🦋 🎶", cat:"País",     ans:"colombia",         display:"Colombia 🇨🇴",  desc:"Café, arepa, biodiversidad, música." },
-  { emojis:"🍣 🗻 🌸 ⛩️", cat:"País",     ans:"japon",            display:"Japón 🇯🇵",     desc:"Sushi, Monte Fuji, flor de cerezo, templos." },
-  { emojis:"🌮 🌵 🌶️ 💀", cat:"País",     ans:"mexico",           display:"México 🇲🇽",    desc:"Tacos, cactus, picante, Día de Muertos." },
-  { emojis:"🐘 🏏 🍛 🛕", cat:"País",     ans:"india",            display:"India 🇮🇳",     desc:"Elefante, cricket, curry, templos." },
-  { emojis:"🚢 🥶 🚪 💔", cat:"Película", ans:"titanic",          display:"Titanic",        desc:"Barco, frío, la puerta, corazón roto." },
-  { emojis:"🦁 👑 🌅 🐒", cat:"Película", ans:"el rey leon",      display:"El Rey León",    desc:"La sabana, Mufasa, Rafiki." },
-  { emojis:"⚡ 🧙 🦉 🚂", cat:"Película", ans:"harry potter",     display:"Harry Potter",   desc:"Cicatriz, mago, lechuza, tren a Hogwarts." },
+  /* === PAÍSES === */
+  { emojis:"🧉 🥩 ⚽ 🏔️", cat:"País", ans:"argentina",     display:"Argentina 🇦🇷", desc:"Mate, asado, fútbol y la Patagonia." },
+  { emojis:"☕ 🫓 🦋 🎶", cat:"País", ans:"colombia",       display:"Colombia 🇨🇴",  desc:"Café, arepa, biodiversidad y música." },
+  { emojis:"🍣 🗻 🌸 ⛩️", cat:"País", ans:"japon",         display:"Japón 🇯🇵",     desc:"Sushi, Monte Fuji, cerezos, templos." },
+  { emojis:"🌮 🌵 🌶️ 💀", cat:"País", ans:"mexico",         display:"México 🇲🇽",    desc:"Tacos, cactus, picante, Día de Muertos." },
+  { emojis:"🐘 🏏 🍛 🛕", cat:"País", ans:"india",         display:"India 🇮🇳",     desc:"Elefante, cricket, curry y templos." },
+  { emojis:"🍕 🍝 🛵 🏛️", cat:"País", ans:"italia",        display:"Italia 🇮🇹",    desc:"Pizza, pasta, Vespa y el Coliseo." },
+  { emojis:"🥖 🗼 🥐 🧀", cat:"País", ans:"francia",       display:"Francia 🇫🇷",   desc:"Baguette, Torre Eiffel y queso." },
+  { emojis:"🍺 🥨 🌭 🏰", cat:"País", ans:"alemania",      display:"Alemania 🇩🇪",  desc:"Cerveza, pretzel, salchicha y castillos." },
+  { emojis:"💃 🥘 🐂 🍷", cat:"País", ans:"espana",        display:"España 🇪🇸",    desc:"Flamenco, paella, toros y vino." },
+  { emojis:"🐨 🦘 🏉 🏝️", cat:"País", ans:"australia",     display:"Australia 🇦🇺", desc:"Koala, canguro, rugby e islas." },
+  { emojis:"🐼 🥢 🏯 🐉", cat:"País", ans:"china",         display:"China 🇨🇳",     desc:"Panda, palillos, pagodas y dragones." },
+  { emojis:"🌷 🚲 🧀 🌬️", cat:"País", ans:"holanda",       display:"Países Bajos 🇳🇱", desc:"Tulipanes, bicis, queso y molinos." },
+  { emojis:"⛷️ 🧀 🕰️ 🍫", cat:"País", ans:"suiza",         display:"Suiza 🇨🇭",     desc:"Alpes, fondue, relojes y chocolate." },
+  { emojis:"☕ 🌴 🏖️ 🥥", cat:"País", ans:"brasil",        display:"Brasil 🇧🇷",    desc:"Café, samba, playas y cocos." },
+  { emojis:"🦙 🛕 🌋 🥔", cat:"País", ans:"peru",          display:"Perú 🇵🇪",      desc:"Llama, Machu Picchu, volcán y papa." },
+  { emojis:"🌴 🍌 🌋 🦜", cat:"País", ans:"cuba",          display:"Cuba 🇨🇺",      desc:"Palmas, plátanos, son y guacamayas." },
+  { emojis:"🦌 🎿 ❄️ 🍁", cat:"País", ans:"canada",        display:"Canadá 🇨🇦",    desc:"Alce, esquí, nieve y la hoja de arce." },
+  { emojis:"🍔 🗽 🏈 🦅", cat:"País", ans:"estados unidos",display:"Estados Unidos 🇺🇸", desc:"Hamburguesa, NFL, Libertad y águila." },
+  { emojis:"🐪 🕌 🛢️ 🌅", cat:"País", ans:"arabia",        display:"Arabia Saudita 🇸🇦", desc:"Camello, mezquita, petróleo y desierto." },
+  { emojis:"🏔️ ☕ 🌹 ⛪", cat:"País", ans:"rusia",         display:"Rusia 🇷🇺",     desc:"Estepa, té, ballet y catedrales." },
+  { emojis:"🐊 🌅 🏛️ 🐫", cat:"País", ans:"egipto",        display:"Egipto 🇪🇬",    desc:"Nilo, pirámides, esfinge, camellos." },
+  { emojis:"🥟 ☕ 🕌 ⚽", cat:"País", ans:"turquia",       display:"Turquía 🇹🇷",   desc:"Kebab, mezquitas y café turco." },
+  { emojis:"🌴 🍉 🐢 🏖️", cat:"País", ans:"maldivas",      display:"Maldivas 🇲🇻",  desc:"Palmas, sandía, tortugas y playas." },
+  { emojis:"🥩 ☕ ⛪ 🏰", cat:"País", ans:"uruguay",       display:"Uruguay 🇺🇾",   desc:"Asado, mate y ciudad colonial." },
+  { emojis:"🍷 🏔️ 🥟 ⛷️", cat:"País", ans:"chile",         display:"Chile 🇨🇱",     desc:"Vino, Andes, empanadas y nieve." },
+  { emojis:"🛢️ 🦜 ⚽ 🌴", cat:"País", ans:"venezuela",     display:"Venezuela 🇻🇪", desc:"Petróleo, guacamayas, fútbol y caribe." },
+  { emojis:"⚽ 👟 🌊 🎨", cat:"País", ans:"portugal",      display:"Portugal 🇵🇹",  desc:"Cristiano, mar, futbolistas y arte." },
+
+  /* === PELÍCULAS === */
+  { emojis:"🚢 🥶 🚪 💔", cat:"Película", ans:"titanic",       display:"Titanic",       desc:"Barco, frío, la puerta, corazón roto." },
+  { emojis:"🦁 👑 🌅 🐒", cat:"Película", ans:"el rey leon",   display:"El Rey León",   desc:"La sabana, Mufasa, Rafiki." },
+  { emojis:"⚡ 🧙 🦉 🚂", cat:"Película", ans:"harry potter",  display:"Harry Potter",  desc:"Cicatriz, mago, lechuza, Hogwarts." },
   { emojis:"🤖 🚗 🔥 🛣️", cat:"Película", ans:"rapido y furioso", display:"Rápido y Furioso", desc:"Autos, carreras, acción y familia." },
-  { emojis:"👻 🎒 🚫 🟢", cat:"Película", ans:"cazafantasmas",    display:"Cazafantasmas",  desc:"Fantasmas, mochilas de protones, NY." },
-  { emojis:"🍔 🍟 🤡 🟡", cat:"Marca",    ans:"mcdonalds",        display:"McDonald's",     desc:"Hamburguesa, papas, Ronald, arcos dorados." },
-  { emojis:"📱 🍏 💻 🎧", cat:"Marca",    ans:"apple",            display:"Apple",          desc:"iPhone, manzana, Mac, AirPods." },
-  { emojis:"👟 ✅ 🏃 ⚡", cat:"Marca",    ans:"nike",             display:"Nike",           desc:"Tenis, just do it, deporte." },
-  { emojis:"🥤 ❤️ 🎅 ✨", cat:"Marca",    ans:"coca cola",        display:"Coca-Cola",      desc:"Bebida, rojo, Papá Noel, refresco." }
+  { emojis:"👻 🎒 🚫 🟢", cat:"Película", ans:"cazafantasmas", display:"Cazafantasmas", desc:"Fantasmas, mochilas, Nueva York." },
+  { emojis:"🦖 🦕 🏝️ 🥶", cat:"Película", ans:"jurassic park", display:"Jurassic Park", desc:"Dinosaurios en una isla aislada." },
+  { emojis:"👽 🪐 ⚔️ 🛸", cat:"Película", ans:"star wars",     display:"Star Wars",     desc:"Planetas, sables láser y naves." },
+  { emojis:"🧙 🐉 👑 ⚔️", cat:"Película", ans:"el senor de los anillos", display:"El Señor de los Anillos", desc:"Magos, dragones, reyes y guerra." },
+  { emojis:"🕷️ 🕸️ 🏙️ 🦸", cat:"Película", ans:"spider man",   display:"Spider-Man",    desc:"Telaraña, ciudad y el hombre araña." },
+  { emojis:"🦈 🌊 🏄 🩸", cat:"Película", ans:"tiburon",       display:"Tiburón",       desc:"Aleta en el mar, surfista, ataque." },
+  { emojis:"❄️ 👑 👸 🦌", cat:"Película", ans:"frozen",        display:"Frozen",        desc:"Reinas de hielo y un reno mágico." },
+  { emojis:"🐠 🌊 🔍 🤡", cat:"Película", ans:"buscando a nemo", display:"Buscando a Nemo", desc:"Pez payaso perdido en el océano." },
+  { emojis:"🐢 🥷 🍕 🟢", cat:"Película", ans:"tortugas ninja", display:"Tortugas Ninja",desc:"Cuatro tortugas, pizza y ninjas." },
+  { emojis:"🦁 🌬️ 📖 👧", cat:"Película", ans:"narnia",        display:"Las Crónicas de Narnia", desc:"León hablante, ropero mágico." },
+  { emojis:"🎩 🐰 ⏰ 🍰", cat:"Película", ans:"alicia",        display:"Alicia en el País de las Maravillas", desc:"Sombrero, conejo y hora del té." },
+  { emojis:"🦇 🌃 🃏 🏙️", cat:"Película", ans:"batman",        display:"Batman",        desc:"Murciélago, ciudad nocturna y Joker." },
+  { emojis:"🌊 🐙 🚢 ⚓", cat:"Película", ans:"piratas del caribe", display:"Piratas del Caribe", desc:"Kraken, barcos, brújula, ron." },
+  { emojis:"🔫 💼 🎩 💰", cat:"Película", ans:"james bond",    display:"James Bond",    desc:"Espía con licencia para matar." },
+  { emojis:"🃏 🌃 🎭 🎨", cat:"Película", ans:"joker",         display:"Joker",         desc:"El bromista psicópata de Gótica." },
+  { emojis:"🐀 🇫🇷 🍝 🍴", cat:"Película", ans:"ratatouille",   display:"Ratatouille",   desc:"Una rata cocinera en París." },
+  { emojis:"🐉 ⛩️ 🥷 👲", cat:"Película", ans:"mulan",         display:"Mulán",         desc:"Guerrera china con dragón." },
+  { emojis:"🌪️ 🏡 🐶 👠", cat:"Película", ans:"el mago de oz", display:"El Mago de Oz", desc:"Tornado, casa, perro y zapatos rojos." },
+  { emojis:"🤡 🎈 🛁 👶", cat:"Película", ans:"it",            display:"It (Eso)",      desc:"Payaso terrorífico que ataca niños." },
+  { emojis:"🥊 🥇 🏃 🐔", cat:"Película", ans:"rocky",         display:"Rocky",         desc:"Boxeador entrenando contra todo." },
+  { emojis:"💍 🌋 🧙 👁️", cat:"Película", ans:"el hobbit",     display:"El Hobbit",     desc:"Anillo, volcán y mago itinerante." },
+  { emojis:"🐺 🌕 🌲 🧒", cat:"Película", ans:"crepusculo",    display:"Crepúsculo",    desc:"Vampiros, lobos y bosque." },
+  { emojis:"🎤 🪩 🕺 ⭐", cat:"Película", ans:"la la land",    display:"La La Land",    desc:"Musical, jazz y romance en LA." },
+  { emojis:"🎡 🎟️ 🐎 🤠", cat:"Película", ans:"toy story",    display:"Toy Story",     desc:"Juguetes que cobran vida." },
+  { emojis:"🐉 🧒 🌅 🪶", cat:"Película", ans:"como entrenar a tu dragon", display:"Cómo entrenar a tu dragón", desc:"Vikingo y su dragón mascota." },
+  { emojis:"🐭 🎩 🎢 🏰", cat:"Película", ans:"disney",        display:"Walt Disney",   desc:"Mickey, sombrero, parques y castillo." }
 ];
 const ROULETTE_ROUNDS = 8;
 const ROULETTE_PTS_PER = 30;
@@ -596,49 +685,47 @@ const ROULETTE_MAX_PTS = ROULETTE_ROUNDS * ROULETTE_PTS_PER;
 const ROULETTE_TIME_BONUS = 60;
 const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;
 
-/* DATOS · STOP / TUTTI FRUTTI */
-const STOP_CATS = [
-  {key:'pais',   label:'País'},
-  {key:'color',  label:'Color'},
-  {key:'animal', label:'Animal'},
-  {key:'fruta',  label:'Fruta / Verdura'},
-  {key:'nombre', label:'Nombre propio'},
-  {key:'marca',  label:'Marca / Empresa'}
-];
-const STOP_LETTERS = ['A','B','C','D','E','F','G','H','I','J','L','M','N','O','P','R','S','T','V'];
-const STOP_DICT = {
-  pais:   ['argentina','bolivia','brasil','colombia','chile','dinamarca','ecuador','espana','francia','grecia','holanda','italia','japon','jamaica','laos','mexico','noruega','panama','paraguay','peru','portugal','rusia','suecia','suiza','tailandia','turquia','uruguay','venezuela','alemania','inglaterra','egipto','etiopia','filipinas','finlandia','austria','australia','canada','china','cuba'],
-  color:  ['amarillo','azul','blanco','beige','cafe','celeste','cian','dorado','escarlata','esmeralda','fucsia','gris','indigo','lila','magenta','marron','morado','naranja','negro','plata','purpura','rojo','rosa','salmon','sepia','turquesa','verde','violeta','vino'],
-  animal: ['abeja','aguila','arana','ardilla','ballena','buho','burro','caballo','camello','canguro','cebra','chita','cocodrilo','delfin','elefante','foca','gato','gallina','hipopotamo','iguana','jirafa','jaguar','koala','leon','lobo','mono','murcielago','nutria','oso','panda','perro','rinoceronte','serpiente','tigre','tortuga','vaca','zorro','aves','sapo','salmon','rata'],
-  fruta:  ['aguacate','arandano','banano','breva','cereza','ciruela','coco','curuba','durazno','fresa','frambuesa','granadilla','guayaba','higo','kiwi','lima','limon','mandarina','mango','manzana','maracuya','melocoton','melon','mora','naranja','papaya','pera','pina','platano','sandia','tamarindo','toronja','uchuva','uva','tomate','espinaca','rabano','remolacha'],
-  nombre: ['andres','alejandro','beatriz','camila','daniel','diana','esteban','elena','felipe','fernando','gabriel','gloria','hector','isabel','julian','jorge','laura','lina','manuel','maria','natalia','nicolas','oscar','olga','pablo','paula','ricardo','rosa','santiago','sofia','tomas','teresa','valentina','victor','ana','luis','carlos','sergio'],
-  marca:  ['adidas','apple','bmw','bavaria','bancolombia','coca cola','colombina','disney','ecopetrol','exito','ferrari','google','honda','hp','ibm','intel','jumbo','kia','lego','lenovo','mercedes','microsoft','nestle','nike','olimpica','pepsi','postobon','renault','samsung','sony','tesla','toyota','visa','volvo','dell','huawei','rappi','epm','telmex','televisa']
-};
-const STOP_ROUNDS = 3;
-const STOP_TIME = 60;
-const STOP_PTS_PER_FIELD = 10;
-const STOP_MAX_PTS = STOP_ROUNDS * STOP_CATS.length * STOP_PTS_PER_FIELD;
-const STOP_BONUS = 20;
-const STOP_MAX = STOP_MAX_PTS + STOP_BONUS;
 
-/* DATOS · MUNDIALISTA */
-const FIELD_TIME_LIMIT = 120;
-const FIELD_TARGET_GOALS = 30;
-const FIELD_PTS_PER_GOAL = 8;
-const FIELD_TIME_BONUS = 60;
-const FIELD_MAX = FIELD_TARGET_GOALS * FIELD_PTS_PER_GOAL + FIELD_TIME_BONUS;
+/* DATOS · BANDERAS */
+const FLAG_COUNTRIES = [
+  {n:'Brasil',c:'br'},{n:'México',c:'mx'},{n:'Colombia',c:'co'},{n:'Argentina',c:'ar'},
+  {n:'Perú',c:'pe'},{n:'Chile',c:'cl'},{n:'Venezuela',c:'ve'},{n:'España',c:'es'},
+  {n:'Francia',c:'fr'},{n:'Alemania',c:'de'},{n:'Italia',c:'it'},{n:'Reino Unido',c:'gb'},
+  {n:'Portugal',c:'pt'},{n:'Países Bajos',c:'nl'},{n:'Suecia',c:'se'},{n:'Noruega',c:'no'},
+  {n:'Suiza',c:'ch'},{n:'Rusia',c:'ru'},{n:'Turquía',c:'tr'},{n:'Japón',c:'jp'},
+  {n:'China',c:'cn'},{n:'India',c:'in'},{n:'Corea del Sur',c:'kr'},{n:'Arabia Saudita',c:'sa'},
+  {n:'Indonesia',c:'id'},{n:'Egipto',c:'eg'},{n:'Sudáfrica',c:'za'},{n:'Nigeria',c:'ng'},
+  {n:'Marruecos',c:'ma'},{n:'Australia',c:'au'},{n:'Canadá',c:'ca'},{n:'Estados Unidos',c:'us'},
+  {n:'Cuba',c:'cu'},{n:'Uruguay',c:'uy'},{n:'Ecuador',c:'ec'},{n:'Polonia',c:'pl'},
+  {n:'Grecia',c:'gr'},{n:'Ucrania',c:'ua'},{n:'Tailandia',c:'th'},{n:'Filipinas',c:'ph'},
+  {n:'Pakistán',c:'pk'},{n:'Irán',c:'ir'},{n:'Israel',c:'il'},{n:'Kenia',c:'ke'},
+  {n:'Etiopía',c:'et'},{n:'Nueva Zelanda',c:'nz'},{n:'Bolivia',c:'bo'},{n:'Paraguay',c:'py'},
+  {n:'Bélgica',c:'be'},{n:'Austria',c:'at'}
+];
+const FLAG_URL      = c => 'https://flagcdn.com/w320/'+c+'.png';
+const FLAG_TOTAL    = 20;             // preguntas
+const FLAG_OPTS     = 4;              // opciones por pregunta
+const FLAG_PTS_BASE = 12;             // por acierto base
+const FLAG_PTS_MAX  = 300;            // máximo del juego
+
+/* DATOS · LABERINTO */
+const MAZE_TIME_LIMIT = 180;          // 3 minutos
+const MAZE_SIZE       = 21;           // 21x21 (impar)
+const MAZE_BASE_PTS   = 140;          // por resolverlo
+const MAZE_TIME_BONUS = 60;           // bonus por terminar rápido
+const MAZE_MAX        = MAZE_BASE_PTS + MAZE_TIME_BONUS;  // 200
 
 /* TOTAL */
-const MAX_TOTAL = ROULETTE_MAX + STOP_MAX + FIELD_MAX;
+const MAX_TOTAL = ROULETTE_MAX + FLAG_PTS_MAX + MAZE_MAX;
 const PASS_PCT   = 70;
 const PASS_SCORE = Math.ceil(MAX_TOTAL * PASS_PCT / 100);
 
 /* ESTADO */
 const G = {
   player:{name:'',cedula:'',cargo:''},
-  roulette:{score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null},
-  stop:    {score:0,started:0,ended:0,roundIdx:0,results:[],currentLetter:''},
-  fieldG:  {score:0,started:0,ended:0,goals:0,started_:false},
+  roulette:{score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null},
+  flag:    {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false},
+  maze:    {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT},
   totalScore:0, percent:0, passed:false,
   startedAt:0, endedAt:0
 };
@@ -691,8 +778,8 @@ btnStart.addEventListener('click', ()=>{
   document.getElementById('mhMax').textContent = MAX_TOTAL;
 
   G.roulette = {score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null};
-  G.stop     = {score:0,started:0,ended:0,roundIdx:0,results:[],currentLetter:''};
-  G.fieldG   = {score:0,started:0,ended:0,goals:0,started_:false};
+  G.flag     = {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false};
+  G.maze     = {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT};
   G.totalScore = 0; updateHeader();
   ['mpBar1','mpBar2','mpBar3'].forEach(id=>{
     const b = document.getElementById(id);
@@ -809,8 +896,8 @@ function renderRouletteTracker(){
 }
 
 let wheelCtx = null;
-const wheelSegments = ["País","Película","Marca","País","Película","Marca","País","Película"];
-const wheelColors   = ["#F2C75C","#0FBF8B","#E89B4A","#02A683","#F2C75C","#0FBF8B","#E89B4A","#02A683"];
+const wheelSegments = ["País","Película","País","Película","País","Película","País","Película"];
+const wheelColors   = ["#F2C75C","#0FBF8B","#02A683","#E89B4A","#F2C75C","#0FBF8B","#02A683","#E89B4A"];
 let startAngle = 0;
 const arc = Math.PI / (wheelSegments.length / 2);
 let spinTimeout = null;
@@ -962,351 +1049,549 @@ function endRoulette(){
   if(bonus>0) popScore('+'+bonus+' BONO', 'gold');
 
   document.getElementById('mpBar1').classList.add('done');
-  setTimeout(startStop, 1100);
+  setTimeout(startFlag, 1100);
 }
 
-/* JUEGO 2 · STOP */
-let stopTimerId = null;
-let stopTimeLeft = STOP_TIME;
+/* ================================================================
+   JUEGO 2 · BANDERAS
+================================================================ */
+let flagHeaderTimer = null;
 
-function startStop(){
-  G.stop.started = Date.now();
+function shuffleArr(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]] } return b; }
+function pickN(a,n){ return shuffleArr(a).slice(0,n); }
+
+function buildFlagQs(){
+  return shuffleArr(FLAG_COUNTRIES).slice(0, FLAG_TOTAL).map(c => ({
+    c, opts: shuffleArr([c, ...pickN(FLAG_COUNTRIES.filter(x=>x.n!==c.n), FLAG_OPTS-1)])
+  }));
+}
+
+function startFlag(){
+  G.flag.started = Date.now();
+  G.flag.qs = buildFlagQs();
   document.getElementById('mhBadge').className = 'mh-badge teal';
   document.getElementById('mhBadge').textContent = 'JUEGO 2 · 2 de 3';
-  document.getElementById('mhTitle').textContent = 'STOP · TUTTI FRUTTI';
+  document.getElementById('mhTitle').textContent = 'ADIVINA LA BANDERA';
 
   const html = `
     <div class="mission-intro teal" style="margin-bottom:18px">
       <div class="m-num">Juego II</div>
-      <h2>STOP · TUTTI FRUTTI</h2>
-      <p>Te damos una <strong>letra</strong> al azar. Debes completar <strong>${STOP_CATS.length} categorías</strong> con palabras que comiencen con esa letra: ${STOP_CATS.map(c=>c.label).join(' · ')}. Tienes <strong>${STOP_TIME} segundos por ronda</strong>.</p>
+      <h2>ADIVINA LA BANDERA</h2>
+      <p>Identifica <strong>${FLAG_TOTAL} banderas</strong> del mundo. Cada acierto vale <strong>${FLAG_PTS_BASE} pts</strong> y las rachas de 3+ aciertos suman bono. ¡Sin tiempo límite, no te equivoques!</p>
       <div class="m-rules">
-        <span class="pill teal">${STOP_MAX} pts máx</span>
-        <span class="pill">${STOP_ROUNDS} rondas</span>
-        <span class="pill gray">${STOP_TIME} s c/u</span>
+        <span class="pill teal">${FLAG_PTS_MAX} pts máx</span>
+        <span class="pill">${FLAG_TOTAL} preguntas</span>
+        <span class="pill gray">${FLAG_OPTS} opciones</span>
       </div>
-      <button class="btn-primary" id="stopGoBtn">Empezar Stop
+      <button class="btn-primary" id="flagGoBtn">Empezar
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
     </div>
-    <div class="stop-stage" id="stopStage" style="display:none">
-      <div class="stop-side">
-        <span class="stop-round-pill"><span class="dot"></span><span id="stopRoundText">RONDA 1 / ${STOP_ROUNDS}</span></span>
-        <div class="letter-big" id="stopLetter">A</div>
-        <p class="stop-clue">La palabra debe <strong>iniciar</strong> con esta letra. Tildes y mayúsculas no importan.</p>
-      </div>
-      <div class="stop-main">
-        <div class="stop-top">
-          <span class="mh-pill timer" style="background:rgba(0,0,0,.20);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.85)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>Tiempo</span>
-            <span class="val" id="stopTimerVal" style="color:#fff">${STOP_TIME}</span>
-          </span>
-          <div class="stop-actions">
-            <button class="btn-stop" id="stopBtn">¡STOP! Validar</button>
-          </div>
+    <div class="flag-stage" id="flagStage" style="display:none">
+      <div class="flag-top">
+        <span class="flag-q-pill"><span class="dot"></span><span id="flagQNum">PREGUNTA 1 / ${FLAG_TOTAL}</span></span>
+        <div class="flag-stat-row">
+          <div class="flag-stat gold"><div class="fs-num" id="flagScore">0</div><div class="fs-lbl">Puntos</div></div>
+          <div class="flag-stat"><div class="fs-num" id="flagCor">0</div><div class="fs-lbl">Correctas</div></div>
+          <div class="flag-stat"><div class="fs-num" id="flagWrg">0</div><div class="fs-lbl">Erradas</div></div>
+          <div class="flag-stat"><div class="fs-num" id="flagStreak">🔥0</div><div class="fs-lbl">Racha</div></div>
         </div>
-        <div class="stop-fields" id="stopFields"></div>
-        <div class="stop-fb" id="stopFb"></div>
       </div>
+      <p class="flag-q-text">¿A qué país pertenece esta <strong>bandera</strong>?</p>
+      <div class="flag-frame" id="flagFrame">
+        <img id="flagImg" src="" alt="Bandera">
+      </div>
+      <div class="flag-options" id="flagOpts"></div>
+      <div class="flag-fb" id="flagFb"></div>
+      <div class="flag-streak" id="flagStrk">🔥 <span id="flagStrkTxt">Racha x3!</span></div>
+      <button class="flag-next" id="flagNext">Siguiente
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
     </div>
   `;
   document.getElementById('missionContainer').innerHTML = html;
 
-  document.getElementById('stopGoBtn').addEventListener('click', ()=>{
+  document.getElementById('flagGoBtn').addEventListener('click', ()=>{
     document.querySelector('.mission-intro').style.display='none';
-    document.getElementById('stopStage').style.display='grid';
-    G.stop.started = Date.now();
-    startStopRound(0);
-  });
-}
-
-function startStopRound(idx){
-  G.stop.roundIdx = idx;
-  const letter = STOP_LETTERS[Math.floor(Math.random()*STOP_LETTERS.length)];
-  G.stop.currentLetter = letter;
-
-  document.getElementById('stopLetter').textContent = letter;
-  document.getElementById('stopRoundText').textContent = 'RONDA '+(idx+1)+' / '+STOP_ROUNDS;
-
-  const fieldsHtml = STOP_CATS.map(c => `
-    <div class="stop-field" data-key="${c.key}">
-      <label>${c.label}</label>
-      <input type="text" data-input="${c.key}" maxlength="22" autocomplete="off" placeholder="Empieza con ${letter}…">
-    </div>
-  `).join('');
-  document.getElementById('stopFields').innerHTML = fieldsHtml;
-  document.getElementById('stopFb').className = 'stop-fb';
-
-  document.querySelectorAll('.stop-field input').forEach(i=>{ i.disabled=false; });
-  const stopBtn = document.getElementById('stopBtn');
-  stopBtn.disabled = false;
-  stopBtn.onclick = ()=> validateStopRound(false);
-
-  stopTimeLeft = STOP_TIME;
-  document.getElementById('stopTimerVal').textContent = stopTimeLeft;
-  if(stopTimerId) clearInterval(stopTimerId);
-  stopTimerId = setInterval(stopTick, 1000);
-
-  const first = document.querySelector('.stop-field input');
-  if(first) first.focus();
-}
-
-function stopTick(){
-  stopTimeLeft--;
-  const v = document.getElementById('stopTimerVal');
-  v.textContent = Math.max(0, stopTimeLeft);
-  if(stopTimeLeft <= 5) v.style.color = 'var(--rose)';
-  else if(stopTimeLeft <= 10) v.style.color = 'var(--warm)';
-  else v.style.color = '#fff';
-  document.getElementById('mhTime').textContent = fmtMS((Date.now()-G.stop.started)/1000);
-  if(stopTimeLeft <= 0){
-    clearInterval(stopTimerId); stopTimerId = null;
-    validateStopRound(true);
-  }
-}
-
-function validateStopRound(byTimeout){
-  if(stopTimerId){ clearInterval(stopTimerId); stopTimerId=null; }
-  document.querySelectorAll('.stop-field input').forEach(i=>i.disabled=true);
-  document.getElementById('stopBtn').disabled = true;
-
-  const letter = G.stop.currentLetter.toLowerCase();
-  const letterNorm = normalize(letter);
-  let okCount = 0;
-  let detail = [];
-
-  STOP_CATS.forEach(c => {
-    const inp = document.querySelector('.stop-field input[data-input="'+c.key+'"]');
-    const wrap = document.querySelector('.stop-field[data-key="'+c.key+'"]');
-    const val = normalize(inp.value);
-    const dict = STOP_DICT[c.key] || [];
-    let ok = false;
-    if(val && val.charAt(0) === letterNorm && val.length >= 3 && dict.includes(val)){
-      ok = true;
-    }
-    if(ok){
-      wrap.classList.add('ok'); wrap.classList.remove('bad');
-      okCount++;
-      G.stop.score += STOP_PTS_PER_FIELD;
-      G.totalScore += STOP_PTS_PER_FIELD;
-      detail.push(c.label+' ✓');
-    } else {
-      wrap.classList.add('bad'); wrap.classList.remove('ok');
-      detail.push(c.label+' ✗');
-    }
+    document.getElementById('flagStage').style.display='flex';
+    G.flag.started = Date.now();
+    if(flagHeaderTimer) clearInterval(flagHeaderTimer);
+    flagHeaderTimer = setInterval(()=>{
+      document.getElementById('mhTime').textContent =
+        fmtMS((Date.now()-G.flag.started)/1000);
+    }, 500);
+    renderFlagQuestion();
   });
 
-  let bonusRound = 0;
-  if(okCount === STOP_CATS.length){
-    bonusRound = Math.round(STOP_BONUS / STOP_ROUNDS);
-    G.stop.score += bonusRound;
-    G.totalScore += bonusRound;
+  document.getElementById('flagNext') && document.getElementById('flagNext').addEventListener('click', nextFlag);
+}
+
+function renderFlagQuestion(){
+  G.flag.done = false;
+  const q = G.flag.qs[G.flag.qIdx];
+  if(!q){ endFlag(); return; }
+
+  const img = document.getElementById('flagImg');
+  img.style.opacity = '0';
+  img.src = FLAG_URL(q.c.c);
+  img.onload  = ()=>{ img.style.opacity='1'; };
+  img.onerror = ()=>{ img.src = 'https://flagpedia.net/data/flags/w580/'+q.c.c+'.png'; };
+
+  document.getElementById('flagFrame').className = 'flag-frame';
+  document.getElementById('flagQNum').textContent = 'PREGUNTA '+(G.flag.qIdx+1)+' / '+FLAG_TOTAL;
+
+  const opts = document.getElementById('flagOpts');
+  opts.innerHTML = '';
+  q.opts.forEach(o => {
+    const btn = document.createElement('button');
+    btn.className = 'flag-opt';
+    btn.innerHTML = '<span>'+o.n+'</span>';
+    btn.addEventListener('click', ()=> answerFlag(o.n, q.c.n, btn));
+    opts.appendChild(btn);
+  });
+
+  document.getElementById('flagFb').className = 'flag-fb';
+  document.getElementById('flagFb').textContent = '';
+  document.getElementById('flagNext').classList.remove('show');
+  document.getElementById('flagStrk').classList.remove('show');
+
+  // Bind next btn (re-bind por si recreamos)
+  const nb = document.getElementById('flagNext');
+  nb.onclick = nextFlag;
+}
+
+function answerFlag(chosen, correct, btn){
+  if(G.flag.done) return;
+  G.flag.done = true;
+  document.querySelectorAll('.flag-opt').forEach(b => b.disabled = true);
+  const fb = document.getElementById('flagFb');
+  const frame = document.getElementById('flagFrame');
+
+  if(chosen === correct){
+    G.flag.cor++;
+    G.flag.streak++;
+    G.flag.maxStreak = Math.max(G.flag.maxStreak, G.flag.streak);
+    const bonus = G.flag.streak >= 3 ? FLAG_PTS_BASE * 2 : FLAG_PTS_BASE;
+    G.flag.score += bonus;
+    G.totalScore += bonus;
+    btn.classList.add('correct');
+    frame.classList.add('ca');
+    fb.textContent = G.flag.streak > 1
+      ? '✅ ¡Correcto! +'+bonus+' pts · Racha x'+G.flag.streak
+      : '✅ ¡Correcto! +'+bonus+' pts';
+    fb.className = 'flag-fb ok show';
+    popScore('+'+bonus, 'teal');
+    if(G.flag.streak >= 3){
+      document.getElementById('flagStrkTxt').textContent = 'Racha x'+G.flag.streak+'!';
+      document.getElementById('flagStrk').classList.add('show');
+    }
+  } else {
+    G.flag.wrg++;
+    G.flag.streak = 0;
+    btn.classList.add('wrong');
+    frame.classList.add('wa');
+    fb.textContent = '❌ Era: '+correct;
+    fb.className = 'flag-fb no show';
+    document.querySelectorAll('.flag-opt').forEach(b => {
+      if(b.querySelector('span').textContent === correct) b.classList.add('reveal');
+    });
+    popScore('+0', 'bad');
   }
   updateHeader();
-  G.stop.results.push({letter:G.stop.currentLetter, ok:okCount, bonus:bonusRound});
-
-  const fb = document.getElementById('stopFb');
-  fb.className = okCount >= 4 ? 'stop-fb ok show' : 'stop-fb no show';
-  fb.innerHTML = '<strong>'+(byTimeout?'¡Se acabó el tiempo!':'STOP')+' · '+okCount+'/'+STOP_CATS.length+' correctas '+
-    (bonusRound ? ('· Bono ronda +'+bonusRound+' pts') : '')+
-    '</strong>'+detail.join(' · ');
-
-  const gained = okCount*STOP_PTS_PER_FIELD + bonusRound;
-  popScore('+'+gained, 'teal');
-
-  document.querySelector('#mpBar2 .fill').style.width = ((G.stop.roundIdx+1)/STOP_ROUNDS*100)+'%';
-
-  setTimeout(()=>{
-    if(G.stop.roundIdx+1 < STOP_ROUNDS){
-      startStopRound(G.stop.roundIdx+1);
-    } else {
-      endStop();
-    }
-  }, 1800);
+  document.getElementById('flagScore').textContent  = G.flag.score;
+  document.getElementById('flagCor').textContent    = G.flag.cor;
+  document.getElementById('flagWrg').textContent    = G.flag.wrg;
+  document.getElementById('flagStreak').textContent = '🔥'+G.flag.streak;
+  document.querySelector('#mpBar2 .fill').style.width = ((G.flag.qIdx+1)/FLAG_TOTAL*100)+'%';
+  document.getElementById('flagNext').classList.add('show');
 }
 
-function endStop(){
-  G.stop.ended = Date.now();
+function nextFlag(){
+  G.flag.qIdx++;
+  if(G.flag.qIdx >= FLAG_TOTAL){ endFlag(); return; }
+  renderFlagQuestion();
+}
+
+function endFlag(){
+  if(flagHeaderTimer){ clearInterval(flagHeaderTimer); flagHeaderTimer=null; }
+  G.flag.ended = Date.now();
+  // tope al máximo (puede pasarse con rachas)
+  if(G.flag.score > FLAG_PTS_MAX){
+    const dif = G.flag.score - FLAG_PTS_MAX;
+    G.flag.score = FLAG_PTS_MAX;
+    G.totalScore -= dif;
+    updateHeader();
+  }
   document.getElementById('mpBar2').classList.add('done');
-  setTimeout(startFieldGame, 900);
+  setTimeout(startMaze, 1100);
 }
 
-/* JUEGO 3 · MUNDIALISTA */
-let fieldTimerId = null;
-let fieldTimeLeft = FIELD_TIME_LIMIT;
-let fieldSpawnId = null;
-let fieldHeaderTimer = null;
+/* ================================================================
+   JUEGO 3 · LABERINTO CONTRARRELOJ
+================================================================ */
+let mazeTimerId      = null;
+let mazeHeaderTimer  = null;
+let mazeAnim         = null;
 
-function startFieldGame(){
-  G.fieldG.started = Date.now();
+const MAZE_PAL = {
+  floor:'#FAF7F2', floorAlt:'#F3EEE6',
+  wall:'#BDB3A4',  wallDark:'#8D8273',
+  border:'#E2DDD4',
+  trail:'rgba(2,166,131,0.14)',
+  player:'#02A683', playerHi:'#4FBFA1',
+  start:'#D4F0E5', startB:'#018068',
+  exit:'#FBE9B5',  exitB:'#B58A1F'
+};
+
+const MAZE = {
+  grid: [], player:{x:1,y:1}, exit:{x:0,y:0},
+  trail:[], pos:{x:0,y:0}, target:{x:0,y:0}, cell:0
+};
+
+function startMaze(){
+  G.maze.started = Date.now();
   document.getElementById('mhBadge').className = 'mh-badge field';
   document.getElementById('mhBadge').textContent = 'JUEGO 3 · 3 de 3';
-  document.getElementById('mhTitle').textContent = 'RETO MUNDIALISTA';
+  document.getElementById('mhTitle').textContent = 'LABERINTO CONTRARRELOJ';
 
   const html = `
     <div class="mission-intro field" style="margin-bottom:18px">
       <div class="m-num">Juego III</div>
-      <h2>RETO MUNDIALISTA</h2>
-      <p>Mete <strong>${FIELD_TARGET_GOALS} goles</strong> en el menor tiempo posible. Cada balón que aparezca en la cancha debes pulsarlo. Tienes un máximo de <strong>2 minutos</strong>.</p>
+      <h2>LABERINTO CONTRARRELOJ</h2>
+      <p>Encuentra la salida en el menor tiempo posible. Tienes máximo <strong>3 minutos</strong>. Usa <strong>flechas</strong>, <strong>WASD</strong>, el <strong>D-pad</strong> o desliza el dedo.</p>
       <div class="m-rules">
-        <span class="pill field">${FIELD_MAX} pts máx</span>
-        <span class="pill">${FIELD_PTS_PER_GOAL} pts por gol</span>
-        <span class="pill gray">2 minutos límite</span>
+        <span class="pill field">${MAZE_MAX} pts máx</span>
+        <span class="pill">${MAZE_SIZE}×${MAZE_SIZE} celdas</span>
+        <span class="pill gray">3 min límite</span>
       </div>
-      <button class="btn-primary" id="fieldGoBtn">¡A la cancha!
+      <button class="btn-primary" id="mazeGoBtn">¡A correr!
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
     </div>
-    <div class="field-stage" id="fieldStage" style="display:none">
-      <div class="field-top">
-        <span class="field-round-pill">⚽ RETO MUNDIALISTA</span>
-        <div class="field-stat-row">
-          <div class="field-stat"><div class="fs-num" id="fsGoals">0</div><div class="fs-lbl">Goles</div></div>
-          <div class="field-stat"><div class="fs-num" id="fsTarget">${FIELD_TARGET_GOALS}</div><div class="fs-lbl">Meta</div></div>
-          <div class="field-stat" id="fsTimerBox"><div class="fs-num" id="fsTimer">${FIELD_TIME_LIMIT}</div><div class="fs-lbl">Segundos</div></div>
-          <div class="field-stat"><div class="fs-num" id="fsScore">0</div><div class="fs-lbl">Puntos</div></div>
+    <div class="maze-stage" id="mazeStage" style="display:none">
+      <div class="maze-main">
+        <div class="maze-info-row">
+          <span class="flag-q-pill"><span class="dot"></span>LABERINTO</span>
+          <div class="flag-stat-row">
+            <div class="flag-stat gold"><div class="fs-num" id="mazeSteps">0</div><div class="fs-lbl">Pasos</div></div>
+            <div class="flag-stat" id="mazeTimerBox"><div class="fs-num" id="mazeTimer">${MAZE_TIME_LIMIT}</div><div class="fs-lbl">Segundos</div></div>
+          </div>
+        </div>
+        <div class="maze-canvas-wrap">
+          <canvas id="mazeCanvas"></canvas>
+          <div class="maze-overlay" id="mazeOverlay">
+            <h3 id="mazeOverlayTitle">¡Escapaste!</h3>
+            <p id="mazeOverlaySub">—</p>
+            <div class="mo-stats" id="mazeMoStats"></div>
+          </div>
+        </div>
+        <div class="maze-fb">
+          <strong>Atajos</strong> · <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> o <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>. En móvil desliza el dedo o usa el D-pad.
         </div>
       </div>
-      <div class="pitch" id="pitch">
-        <div class="goal-top"></div>
-        <div class="goal-bot"></div>
-        <div class="pitch-start-overlay" id="pitchOverlay">
-          <h3>¡PREPÁRATE!</h3>
-          <p>Pulsa <strong>Iniciar</strong> para empezar. Cada balón aparece por <strong>1.4 s</strong>: pulsa rápido. La meta es <strong>${FIELD_TARGET_GOALS} goles</strong>.</p>
-          <button class="btn-primary" id="pitchStartBtn">Iniciar</button>
+      <div class="maze-side">
+        <div class="maze-card">
+          <h5>D-pad</h5>
+          <div class="dpad">
+            <button class="dpad-up" id="dpUp">↑</button>
+            <button class="dpad-left" id="dpLeft">←</button>
+            <button class="dpad-right" id="dpRight">→</button>
+            <button class="dpad-down" id="dpDown">↓</button>
+          </div>
+        </div>
+        <div class="maze-card">
+          <h5>Cómo se puntúa</h5>
+          <div class="maze-instructions">
+            <strong style="color:var(--gold)">${MAZE_BASE_PTS} pts</strong> al llegar a la meta. Bono adicional de hasta <strong style="color:var(--gold)">${MAZE_TIME_BONUS} pts</strong> según rapidez. Si se acaba el tiempo, recibes proporcional al avance.
+          </div>
         </div>
       </div>
     </div>
   `;
   document.getElementById('missionContainer').innerHTML = html;
 
-  document.getElementById('fieldGoBtn').addEventListener('click', ()=>{
+  document.getElementById('mazeGoBtn').addEventListener('click', ()=>{
     document.querySelector('.mission-intro').style.display='none';
-    document.getElementById('fieldStage').style.display='flex';
-    document.getElementById('pitchStartBtn').addEventListener('click', beginFieldPlay, {once:true});
+    document.getElementById('mazeStage').style.display='grid';
+    beginMaze();
   });
 }
 
-function beginFieldPlay(){
-  G.fieldG.started_ = true;
-  G.fieldG.started = Date.now();
-  G.fieldG.goals = 0;
-  fieldTimeLeft = FIELD_TIME_LIMIT;
-  document.getElementById('pitchOverlay').style.display='none';
-  document.getElementById('fsGoals').textContent = '0';
-  document.getElementById('fsScore').textContent = '0';
-  document.getElementById('fsTimer').textContent = fieldTimeLeft;
+/* ---- Generación + render ---- */
+function mazeShuffle(a){ for(let i=a.length-1;i>0;i--){ const j=(Math.random()*(i+1))|0; [a[i],a[j]]=[a[j],a[i]] } return a; }
 
-  if(fieldTimerId) clearInterval(fieldTimerId);
-  fieldTimerId = setInterval(fieldTick, 1000);
+function mazeGenerate(size){
+  const grid = Array.from({length:size}, ()=>Array(size).fill(1));
+  function carve(x,y){
+    grid[y][x]=0;
+    const dirs = mazeShuffle([[2,0],[-2,0],[0,2],[0,-2]]);
+    for(const [dx,dy] of dirs){
+      const nx=x+dx, ny=y+dy;
+      if(nx>0 && ny>0 && nx<size-1 && ny<size-1 && grid[ny][nx]===1){
+        grid[y+dy/2][x+dx/2]=0;
+        carve(nx,ny);
+      }
+    }
+  }
+  carve(1,1);
+  // bucles extras (más difícil)
+  const extras = Math.floor(size*size*0.035);
+  for(let i=0;i<extras;i++){
+    const x = 1 + (((Math.random()*((size-1)/2))|0)*2);
+    const y = 1 + (((Math.random()*((size-1)/2))|0)*2);
+    const d = mazeShuffle([[1,0],[-1,0],[0,1],[0,-1]])[0];
+    const nx=x+d[0], ny=y+d[1];
+    if(nx>0 && ny>0 && nx<size-1 && ny<size-1) grid[ny][nx]=0;
+  }
+  return grid;
+}
 
-  if(fieldHeaderTimer) clearInterval(fieldHeaderTimer);
-  fieldHeaderTimer = setInterval(()=>{
+function mazeResize(){
+  const canvas = document.getElementById('mazeCanvas');
+  if(!canvas) return;
+  const wrap = canvas.parentElement;
+  const w = Math.max(180, Math.min(wrap.clientWidth - 24, 500));
+  const cell = Math.max(8, Math.floor(w / MAZE_SIZE));
+  MAZE.cell = cell;
+  canvas.width  = cell * MAZE_SIZE;
+  canvas.height = cell * MAZE_SIZE;
+  canvas.style.width  = canvas.width + 'px';
+  canvas.style.height = canvas.height + 'px';
+  MAZE.pos    = mazeCenter(MAZE.player.x, MAZE.player.y);
+  MAZE.target = {...MAZE.pos};
+  mazeRender();
+}
+
+function mazeCenter(x,y){ return {x:x*MAZE.cell + MAZE.cell/2, y:y*MAZE.cell + MAZE.cell/2}; }
+
+function mazeRender(){
+  const canvas = document.getElementById('mazeCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const c = MAZE.cell, W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+
+  for(let y=0;y<MAZE_SIZE;y++){
+    for(let x=0;x<MAZE_SIZE;x++){
+      const wall = MAZE.grid[y][x]===1;
+      ctx.fillStyle = wall ? MAZE_PAL.wall : ((x+y)%2===0 ? MAZE_PAL.floor : MAZE_PAL.floorAlt);
+      ctx.fillRect(x*c, y*c, c, c);
+    }
+  }
+
+  MAZE.trail.forEach((p,i)=>{
+    ctx.fillStyle = 'rgba(2,166,131,'+(0.04 + (i/MAZE.trail.length)*0.16)+')';
+    ctx.fillRect(p.x*c+1, p.y*c+1, c-2, c-2);
+  });
+
+  // start
+  ctx.fillStyle = MAZE_PAL.start;
+  ctx.fillRect(c+1, c+1, c-2, c-2);
+  ctx.fillStyle = MAZE_PAL.startB;
+  ctx.globalAlpha = .55;
+  ctx.font = '700 '+Math.max(9, c*.45)+'px Barlow';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('S', c+c/2, c+c/2);
+  ctx.globalAlpha = 1;
+
+  // exit
+  const ex = MAZE.exit.x, ey = MAZE.exit.y;
+  const pulse = .55 + .45*Math.sin(Date.now()/180);
+  ctx.fillStyle = MAZE_PAL.exit;
+  ctx.fillRect(ex*c+1, ey*c+1, c-2, c-2);
+  ctx.strokeStyle = 'rgba(181,138,31,'+(0.35+0.35*pulse)+')';
+  ctx.lineWidth = Math.max(1.5, c*0.08);
+  ctx.strokeRect(ex*c+2, ey*c+2, c-4, c-4);
+
+  // grid borders
+  ctx.strokeStyle = MAZE_PAL.border;
+  ctx.lineWidth = 1;
+  for(let x=0;x<=MAZE_SIZE;x++){ ctx.beginPath(); ctx.moveTo(x*c+.5,0); ctx.lineTo(x*c+.5,H); ctx.stroke(); }
+  for(let y=0;y<=MAZE_SIZE;y++){ ctx.beginPath(); ctx.moveTo(0,y*c+.5); ctx.lineTo(W,y*c+.5); ctx.stroke(); }
+
+  // walls
+  ctx.strokeStyle = MAZE_PAL.wallDark;
+  ctx.lineWidth = 2.2;
+  for(let y=0;y<MAZE_SIZE;y++){
+    for(let x=0;x<MAZE_SIZE;x++){
+      if(MAZE.grid[y][x]!==1) continue;
+      if(y===0           || MAZE.grid[y-1][x]===0){ ctx.beginPath(); ctx.moveTo(x*c,y*c);     ctx.lineTo((x+1)*c,y*c);     ctx.stroke(); }
+      if(y===MAZE_SIZE-1 || MAZE.grid[y+1][x]===0){ ctx.beginPath(); ctx.moveTo(x*c,(y+1)*c); ctx.lineTo((x+1)*c,(y+1)*c); ctx.stroke(); }
+      if(x===0           || MAZE.grid[y][x-1]===0){ ctx.beginPath(); ctx.moveTo(x*c,y*c);     ctx.lineTo(x*c,(y+1)*c);     ctx.stroke(); }
+      if(x===MAZE_SIZE-1 || MAZE.grid[y][x+1]===0){ ctx.beginPath(); ctx.moveTo((x+1)*c,y*c); ctx.lineTo((x+1)*c,(y+1)*c); ctx.stroke(); }
+    }
+  }
+  ctx.strokeStyle = MAZE_PAL.wallDark;
+  ctx.lineWidth = 2.8;
+  ctx.strokeRect(1,1,W-2,H-2);
+
+  // player
+  const px = MAZE.pos.x, py = MAZE.pos.y, r = Math.min(11, c*0.32);
+  const glow = ctx.createRadialGradient(px,py,0,px,py,r*2.6);
+  glow.addColorStop(0,'rgba(2,166,131,.22)'); glow.addColorStop(1,'rgba(2,166,131,0)');
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(px,py,r*2.6,0,Math.PI*2); ctx.fill();
+  const g2 = ctx.createRadialGradient(px-r*.2,py-r*.25,1,px,py,r);
+  g2.addColorStop(0, MAZE_PAL.playerHi); g2.addColorStop(1, MAZE_PAL.player);
+  ctx.fillStyle = g2; ctx.beginPath(); ctx.arc(px,py,r,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,.55)';
+  ctx.beginPath(); ctx.arc(px-r*.25, py-r*.3, r*.28, 0, Math.PI*2); ctx.fill();
+}
+
+function mazeLoop(){
+  const dx = MAZE.target.x - MAZE.pos.x;
+  const dy = MAZE.target.y - MAZE.pos.y;
+  MAZE.pos.x += dx*0.32;
+  MAZE.pos.y += dy*0.32;
+  mazeRender();
+  if(Math.abs(dx)+Math.abs(dy)>0.4) mazeAnim = requestAnimationFrame(mazeLoop);
+  else { MAZE.pos = {...MAZE.target}; mazeRender(); mazeAnim=null; }
+}
+
+function mazeCanMove(nx,ny){
+  return nx>=0 && ny>=0 && nx<MAZE_SIZE && ny<MAZE_SIZE && MAZE.grid[ny][nx]===0;
+}
+
+function mazeMove(dx,dy){
+  if(G.maze.won) return;
+  const nx = MAZE.player.x + dx, ny = MAZE.player.y + dy;
+  if(!mazeCanMove(nx,ny)) return;
+  MAZE.player.x = nx; MAZE.player.y = ny;
+  G.maze.steps++;
+  MAZE.trail.push({x:nx,y:ny});
+  if(MAZE.trail.length > 260) MAZE.trail.shift();
+  MAZE.target = mazeCenter(nx,ny);
+  document.getElementById('mazeSteps').textContent = G.maze.steps;
+  if(!mazeAnim) mazeAnim = requestAnimationFrame(mazeLoop);
+  if(nx === MAZE.exit.x && ny === MAZE.exit.y) mazeWin();
+}
+
+function beginMaze(){
+  MAZE.grid = mazeGenerate(MAZE_SIZE);
+  MAZE.player = {x:1,y:1};
+  MAZE.exit   = {x:MAZE_SIZE-2,y:MAZE_SIZE-2};
+  MAZE.grid[MAZE.exit.y][MAZE.exit.x] = 0;
+  MAZE.trail  = [{x:1,y:1}];
+  G.maze.steps = 0;
+  G.maze.won = false;
+  G.maze.timeLeft = MAZE_TIME_LIMIT;
+  document.getElementById('mazeSteps').textContent = '0';
+  document.getElementById('mazeTimer').textContent = MAZE_TIME_LIMIT;
+
+  mazeResize();
+  bindMazeControls();
+
+  if(mazeTimerId) clearInterval(mazeTimerId);
+  mazeTimerId = setInterval(mazeTick, 1000);
+
+  if(mazeHeaderTimer) clearInterval(mazeHeaderTimer);
+  mazeHeaderTimer = setInterval(()=>{
     document.getElementById('mhTime').textContent =
-      fmtMS((Date.now()-G.fieldG.started)/1000);
+      fmtMS((Date.now()-G.maze.started)/1000);
   }, 500);
 
-  spawnBall();
+  window.addEventListener('resize', mazeResize);
 }
 
-function fieldTick(){
-  fieldTimeLeft--;
-  const t = document.getElementById('fsTimer');
-  const box = document.getElementById('fsTimerBox');
-  t.textContent = Math.max(0,fieldTimeLeft);
+function mazeTick(){
+  G.maze.timeLeft--;
+  const t = document.getElementById('mazeTimer');
+  const box = document.getElementById('mazeTimerBox');
+  if(!t || !box) return;
+  t.textContent = Math.max(0, G.maze.timeLeft);
   box.classList.remove('warn','danger');
-  if(fieldTimeLeft <= 10) box.classList.add('danger');
-  else if(fieldTimeLeft <= 30) box.classList.add('warn');
-  if(fieldTimeLeft <= 0){ endField(); }
+  if(G.maze.timeLeft <= 15) box.classList.add('danger');
+  else if(G.maze.timeLeft <= 45) box.classList.add('warn');
+  if(G.maze.timeLeft <= 0){ mazeTimeout(); }
 }
 
-function spawnBall(){
-  if(!G.fieldG.started_) return;
-  if(fieldTimeLeft <= 0) return;
-  if(G.fieldG.goals >= FIELD_TARGET_GOALS) return;
-
-  const pitch = document.getElementById('pitch');
-  const rect = pitch.getBoundingClientRect();
-  const size = 48;
-  const margin = 12;
-  const maxX = Math.max(0, rect.width  - size - margin*2);
-  const maxY = Math.max(0, rect.height - size - margin*2);
-  const x = margin + Math.random()*maxX;
-  const y = margin + Math.random()*maxY;
-
-  const ball = document.createElement('div');
-  ball.className = 'ball';
-  ball.style.left = x+'px';
-  ball.style.top  = y+'px';
-  ball.textContent = '⚽';
-
-  let removed = false;
-  const removeBall = ()=>{
-    if(removed) return; removed = true;
-    if(ball.parentNode) ball.parentNode.removeChild(ball);
-    if(G.fieldG.started_ && fieldTimeLeft > 0 && G.fieldG.goals < FIELD_TARGET_GOALS){
-      fieldSpawnId = setTimeout(spawnBall, 250 + Math.random()*350);
-    }
-  };
-
-  ball.addEventListener('click', ()=>{
-    if(removed) return;
-    removed = true;
-    ball.classList.add('scored');
-    G.fieldG.goals++;
-    G.fieldG.score += FIELD_PTS_PER_GOAL;
-    G.totalScore += FIELD_PTS_PER_GOAL;
-    updateHeader();
-    document.getElementById('fsGoals').textContent = G.fieldG.goals;
-    document.getElementById('fsScore').textContent = G.fieldG.score;
-
-    const spark = document.createElement('div');
-    spark.className = 'spark';
-    spark.textContent = '+'+FIELD_PTS_PER_GOAL;
-    spark.style.left = (x+10)+'px';
-    spark.style.top  = (y-6)+'px';
-    pitch.appendChild(spark);
-    setTimeout(()=>{ if(spark.parentNode) spark.parentNode.removeChild(spark); }, 800);
-
-    setTimeout(()=>{ if(ball.parentNode) ball.parentNode.removeChild(ball); }, 320);
-
-    document.querySelector('#mpBar3 .fill').style.width =
-      Math.min(100, G.fieldG.goals/FIELD_TARGET_GOALS*100)+'%';
-
-    if(G.fieldG.goals >= FIELD_TARGET_GOALS){
-      endField();
-    } else {
-      fieldSpawnId = setTimeout(spawnBall, 200 + Math.random()*300);
-    }
-  });
-
-  pitch.appendChild(ball);
-  setTimeout(removeBall, 1400);
-}
-
-function endField(){
-  if(fieldTimerId){ clearInterval(fieldTimerId); fieldTimerId = null; }
-  if(fieldSpawnId){ clearTimeout(fieldSpawnId); fieldSpawnId = null; }
-  if(fieldHeaderTimer){ clearInterval(fieldHeaderTimer); fieldHeaderTimer = null; }
-  if(!G.fieldG.started_){ return; }
-  G.fieldG.started_ = false;
-  G.fieldG.ended = Date.now();
-
-  let bonus = 0;
-  if(G.fieldG.goals >= FIELD_TARGET_GOALS){
-    const sec = (G.fieldG.ended - G.fieldG.started)/1000;
-    bonus = Math.round(Math.max(0, (FIELD_TIME_LIMIT - sec)/FIELD_TIME_LIMIT) * FIELD_TIME_BONUS);
-  }
-  G.fieldG.score += bonus;
-  G.totalScore += bonus;
+function mazeWin(){
+  if(G.maze.won) return;
+  G.maze.won = true;
+  if(mazeTimerId){ clearInterval(mazeTimerId); mazeTimerId=null; }
+  if(mazeAnim){ cancelAnimationFrame(mazeAnim); mazeAnim=null; }
+  G.maze.ended = Date.now();
+  const sec = Math.floor((G.maze.ended - G.maze.started)/1000);
+  const base = MAZE_BASE_PTS;
+  const bonus = Math.round(Math.max(0, (MAZE_TIME_LIMIT - sec)/MAZE_TIME_LIMIT) * MAZE_TIME_BONUS);
+  G.maze.score = base + bonus;
+  G.totalScore += G.maze.score;
   updateHeader();
-  if(bonus > 0) popScore('+'+bonus+' BONO', 'field');
+  document.getElementById('mazeOverlayTitle').textContent = '¡Escapaste!';
+  document.getElementById('mazeOverlaySub').textContent   = 'Resolviste el laberinto en '+fmtMS(sec)+' usando '+G.maze.steps+' pasos.';
+  document.getElementById('mazeMoStats').innerHTML =
+    '<div class="mo-stat"><div class="v">+'+base+'</div><div class="l">Resolver</div></div>'+
+    '<div class="mo-stat"><div class="v">+'+bonus+'</div><div class="l">Bono velocidad</div></div>'+
+    '<div class="mo-stat"><div class="v">'+G.maze.score+'</div><div class="l">Total</div></div>';
+  document.getElementById('mazeOverlay').classList.add('show');
+  popScore('+'+G.maze.score, 'field');
+  finishMazeGame();
+}
 
-  document.querySelectorAll('#pitch .ball').forEach(b => b.remove());
+function mazeTimeout(){
+  if(G.maze.won) return;
+  if(mazeTimerId){ clearInterval(mazeTimerId); mazeTimerId=null; }
+  if(mazeAnim){ cancelAnimationFrame(mazeAnim); mazeAnim=null; }
+  G.maze.ended = Date.now();
+  // proporcional: distancia manhattan al exit / size
+  const dx = Math.abs(MAZE.exit.x - MAZE.player.x);
+  const dy = Math.abs(MAZE.exit.y - MAZE.player.y);
+  const ratio = 1 - Math.min(1, (dx+dy) / (2*(MAZE_SIZE-2)));
+  G.maze.score = Math.round(MAZE_BASE_PTS * ratio * 0.5);   // hasta 50% del base
+  G.totalScore += G.maze.score;
+  updateHeader();
+  document.getElementById('mazeOverlayTitle').textContent = '¡Tiempo!';
+  document.getElementById('mazeOverlaySub').textContent   = 'Se acabó el tiempo. Recibes puntaje parcial por avance.';
+  document.getElementById('mazeMoStats').innerHTML =
+    '<div class="mo-stat"><div class="v">'+G.maze.score+'</div><div class="l">Puntaje parcial</div></div>';
+  document.getElementById('mazeOverlay').classList.add('show');
+  popScore('+'+G.maze.score, 'field');
+  finishMazeGame();
+}
 
+function finishMazeGame(){
+  if(mazeHeaderTimer){ clearInterval(mazeHeaderTimer); mazeHeaderTimer=null; }
+  window.removeEventListener('keydown', mazeKeyHandler);
+  window.removeEventListener('resize', mazeResize);
   document.getElementById('mpBar3').classList.add('done');
-  setTimeout(finishGame, 900);
+  document.querySelector('#mpBar3 .fill').style.width='100%';
+  setTimeout(finishGame, 1400);
+}
+
+/* controles */
+const MAZE_KEYS = { ArrowUp:[0,-1], ArrowDown:[0,1], ArrowLeft:[-1,0], ArrowRight:[1,0],
+                    w:[0,-1], s:[0,1], a:[-1,0], d:[1,0],
+                    W:[0,-1], S:[0,1], A:[-1,0], D:[1,0] };
+
+function mazeKeyHandler(e){
+  const m = MAZE_KEYS[e.key];
+  if(m){ e.preventDefault(); mazeMove(m[0], m[1]); }
+}
+
+function bindMazeControls(){
+  window.addEventListener('keydown', mazeKeyHandler);
+  const bind = (id, dx, dy) => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('click', e => { e.preventDefault(); mazeMove(dx,dy); });
+  };
+  bind('dpUp',    0,-1);
+  bind('dpDown',  0, 1);
+  bind('dpLeft', -1, 0);
+  bind('dpRight', 1, 0);
+
+  const canvas = document.getElementById('mazeCanvas');
+  let tx = null, ty = null;
+  canvas.addEventListener('touchstart', e => {
+    if(e.touches.length){ tx = e.touches[0].clientX; ty = e.touches[0].clientY; }
+  }, {passive:true});
+  canvas.addEventListener('touchend', e => {
+    if(tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
+    tx = null; ty = null;
+    if(Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+    if(Math.abs(dx) > Math.abs(dy)) mazeMove(dx>0?1:-1, 0);
+    else                            mazeMove(0, dy>0?1:-1);
+  }, {passive:true});
 }
 
 /* RESULTADO */
@@ -1320,11 +1605,11 @@ function finishGame(){
   document.getElementById('rPct').textContent   = G.percent+'%';
   document.getElementById('rTime').textContent  = fmtMS(totalSec);
   document.getElementById('rQuiz').textContent  = G.roulette.score+'/'+ROULETTE_MAX;
-  document.getElementById('rMaze').textContent  = G.stop.score+'/'+STOP_MAX;
-  document.getElementById('rHang').textContent  = G.fieldG.score+'/'+FIELD_MAX;
+  document.getElementById('rMaze').textContent  = G.flag.score+'/'+FLAG_PTS_MAX;
+  document.getElementById('rHang').textContent  = G.maze.score+'/'+MAZE_MAX;
   document.getElementById('rQuizTime').textContent = fmtMS((G.roulette.ended - G.roulette.started)/1000);
-  document.getElementById('rMazeTime').textContent = fmtMS((G.stop.ended     - G.stop.started)/1000);
-  document.getElementById('rHangTime').textContent = fmtMS((G.fieldG.ended   - G.fieldG.started)/1000);
+  document.getElementById('rMazeTime').textContent = fmtMS((G.flag.ended     - G.flag.started)/1000);
+  document.getElementById('rHangTime').textContent = fmtMS((G.maze.ended     - G.maze.started)/1000);
   document.getElementById('rName').textContent = G.player.name;
 
   const card  = document.getElementById('resultCard');
@@ -1374,8 +1659,8 @@ document.getElementById('btnGoCert').addEventListener('click', ()=>{
     folio:folio,
     nombre:G.player.name, cedula:G.player.cedula, cargo:G.player.cargo,
     quizScore: G.roulette.score,  quizTime: fmtMS((G.roulette.ended - G.roulette.started)/1000),
-    mazeScore: G.stop.score,      mazeTime: fmtMS((G.stop.ended     - G.stop.started)/1000),
-    hangScore: G.fieldG.score,    hangTime: fmtMS((G.fieldG.ended   - G.fieldG.started)/1000),
+    mazeScore: G.flag.score,      mazeTime: fmtMS((G.flag.ended     - G.flag.started)/1000),
+    hangScore: G.maze.score,      hangTime: fmtMS((G.maze.ended     - G.maze.started)/1000),
     totalScore:G.totalScore, maxScore:MAX_TOTAL, percent:G.percent,
     totalTime: fmtMS(totalSec),
     estado: 'Aprobado'
