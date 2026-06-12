@@ -248,6 +248,8 @@ img{max-width:100%;display:block}
 .ll-btn:disabled .ll-count,.ll-btn.used .ll-count{background:rgba(255,255,255,.10);color:rgba(255,255,255,.40)}
 .reveal-bar{font-family:'Bebas Neue';font-size:22px;letter-spacing:.32em;color:var(--gold);text-align:center;padding:8px 12px;background:rgba(242,199,92,.10);border:1px dashed rgba(242,199,92,.30);border-radius:8px;min-height:38px;display:none;margin-top:4px}
 .reveal-bar.show{display:block;animation:slideIn .3s}
+.flag-region{display:inline-flex;align-items:center;gap:.45rem;padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:100px;font-size:12px;font-weight:600;color:rgba(255,255,255,.92);letter-spacing:.03em;margin:0 auto;max-width:480px;line-height:1.3;text-align:center;font-family:'Barlow',sans-serif;animation:streakUp .3s cubic-bezier(.16,1,.3,1)}
+.flag-region #flagRegionTxt{color:#CFE4EA;font-weight:600}
 .flag-hint-chip{display:none;align-items:center;gap:.5rem;padding:10px 18px;background:rgba(2,166,131,.15);border:1.5px solid rgba(2,166,131,.40);border-radius:14px;font-size:13px;font-weight:600;color:#CDEEDD;letter-spacing:.01em;margin:0 auto;max-width:480px;line-height:1.45;font-family:'Cormorant Garamond',serif;font-style:italic;text-align:center}
 .flag-hint-chip span{font-style:italic}
 .flag-hint-chip.show{display:inline-flex;animation:streakUp .3s cubic-bezier(.16,1,.3,1)}
@@ -702,57 +704,69 @@ const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;
 
 
 /* DATOS · BANDERAS — t: texto descriptivo representativo (sin decir el nombre) */
+/* r: descriptor de región (siempre visible, ayuda a ubicar)
+   t: pista cultural (solo con comodín)
+   am: true = país americano (para ordenar el inicio del quiz) */
 const FLAG_COUNTRIES = [
-  {n:'Brasil',         c:'br', t:'Selva amazónica, samba y carnaval interminable.'},
-  {n:'México',         c:'mx', t:'Tacos, mariachi, sombrero charro y Día de Muertos.'},
-  {n:'Colombia',       c:'co', t:'Café de altura, vallenato y biodiversidad caribeña.'},
-  {n:'Argentina',      c:'ar', t:'Mate, tango, asado y la Patagonia austral.'},
-  {n:'Perú',           c:'pe', t:'Ciudad inca en la montaña, llamas y ceviche.'},
-  {n:'Chile',          c:'cl', t:'País larguísimo entre Andes y Pacífico, famoso por su vino.'},
-  {n:'Venezuela',      c:'ve', t:'Petróleo, salto de agua más alto del mundo y arepas.'},
-  {n:'España',         c:'es', t:'Flamenco, paella, toros y la siesta.'},
-  {n:'Francia',        c:'fr', t:'Torre de hierro, baguette, queso y vino.'},
-  {n:'Alemania',       c:'de', t:'Cerveza, salchichas, autos potentes y castillos góticos.'},
-  {n:'Italia',         c:'it', t:'Pizza, pasta, Vaticano y arte renacentista.'},
-  {n:'Reino Unido',    c:'gb', t:'Big Ben, té de las cinco, lluvia y la corona real.'},
-  {n:'Portugal',       c:'pt', t:'Fado, azulejos, bacalao y costa atlántica.'},
-  {n:'Países Bajos',   c:'nl', t:'Tulipanes, bicicletas, molinos y canales.'},
-  {n:'Suecia',         c:'se', t:'IKEA, Volvo, ABBA y noches de aurora boreal.'},
-  {n:'Noruega',        c:'no', t:'Fiordos profundos, vikingos y salmón.'},
-  {n:'Suiza',          c:'ch', t:'Alpes, chocolate, relojes precisos y neutralidad.'},
-  {n:'Rusia',          c:'ru', t:'Estepas, ballet, vodka y catedrales doradas.'},
-  {n:'Turquía',        c:'tr', t:'Puente entre dos continentes, kebab y mezquitas.'},
-  {n:'Japón',          c:'jp', t:'Sushi, samuráis, robots y flores de cerezo.'},
-  {n:'China',          c:'cn', t:'Gran muralla, pandas, dragones y la dinastía milenaria.'},
-  {n:'India',          c:'in', t:'Curry picante, Taj Mahal, elefantes y Bollywood.'},
-  {n:'Corea del Sur',  c:'kr', t:'K-pop, kimchi, tecnología puntera y dramas románticos.'},
-  {n:'Arabia Saudita', c:'sa', t:'Desierto, camellos, peregrinación y oro negro.'},
-  {n:'Indonesia',      c:'id', t:'Archipiélago de volcanes, batik y orangutanes.'},
-  {n:'Egipto',         c:'eg', t:'Pirámides, faraones, Nilo y esfinge milenaria.'},
-  {n:'Sudáfrica',      c:'za', t:'Safari del Big Five, diamantes y la herencia de Mandela.'},
-  {n:'Nigeria',        c:'ng', t:'Afrobeat, petróleo y la megaciudad de Lagos.'},
-  {n:'Marruecos',      c:'ma', t:'Sahara, especias, zocos y la ciudad azul.'},
-  {n:'Australia',      c:'au', t:'Canguros, koalas, surf y desierto rojo.'},
-  {n:'Canadá',         c:'ca', t:'Hoja de arce, hockey, alces y miel de jarabe.'},
-  {n:'Estados Unidos', c:'us', t:'Hollywood, hamburguesas, rascacielos y NFL.'},
-  {n:'Cuba',           c:'cu', t:'Salsa, ron, tabaco y autos clásicos de los 50.'},
-  {n:'Uruguay',        c:'uy', t:'Mate, asado y el origen del tango compartido.'},
-  {n:'Ecuador',        c:'ec', t:'Mitad del mundo, Galápagos y volcanes andinos.'},
-  {n:'Polonia',        c:'pl', t:'Pierogis, Chopin y casco histórico de su capital.'},
-  {n:'Grecia',         c:'gr', t:'Mitología, Acrópolis, islas blancas y mar Egeo.'},
-  {n:'Ucrania',        c:'ua', t:'Trigales dorados y campanas ortodoxas en Kiev.'},
-  {n:'Tailandia',      c:'th', t:'Templos dorados, Pad Thai, elefantes y playas paradisíacas.'},
-  {n:'Filipinas',      c:'ph', t:'Más de 7000 islas, mangos y mar tropical.'},
-  {n:'Pakistán',       c:'pk', t:'Cordillera del Karakórum, especias y cricket.'},
-  {n:'Irán',           c:'ir', t:'Persia antigua, alfombras tejidas y poesía sufí.'},
-  {n:'Israel',         c:'il', t:'Jerusalén sagrada, Mar Muerto y desierto del Néguev.'},
-  {n:'Kenia',          c:'ke', t:'Safari en la sabana, jirafas y monte ecuatorial nevado.'},
-  {n:'Etiopía',        c:'et', t:'Cuna del café, Nilo Azul y monasterios milenarios.'},
-  {n:'Nueva Zelanda',  c:'nz', t:'Maoríes, paisajes de hobbits y el ave kiwi.'},
-  {n:'Bolivia',        c:'bo', t:'Salar gigantesco, altiplano andino y lago navegable más alto.'},
-  {n:'Paraguay',       c:'py', t:'Lengua guaraní, río Paraná y la represa de Itaipú.'},
-  {n:'Bélgica',        c:'be', t:'Chocolate, gofres, cervezas trapenses y cómics.'},
-  {n:'Austria',        c:'at', t:'Mozart, vals, Alpes y el café vienés.'}
+  /* === AMÉRICA (primeros 10–14 del quiz) === */
+  {n:'Brasil',         c:'br', am:true, r:'Sudamérica · costa atlántica',          t:'Selva amazónica, samba y carnaval interminable.'},
+  {n:'México',         c:'mx', am:true, r:'Norteamérica · al sur de EE.UU.',       t:'Tacos, mariachi, sombrero charro y Día de Muertos.'},
+  {n:'Colombia',       c:'co', am:true, r:'Noroeste de Sudamérica · Caribe',       t:'Café de altura, vallenato y biodiversidad caribeña.'},
+  {n:'Argentina',      c:'ar', am:true, r:'Sudamérica · cono sur',                 t:'Mate, tango, asado y la Patagonia austral.'},
+  {n:'Perú',           c:'pe', am:true, r:'Sudamérica · andino occidental',        t:'Ciudad inca en la montaña, llamas y ceviche.'},
+  {n:'Chile',          c:'cl', am:true, r:'Sudamérica · cono sur pacífico',        t:'País larguísimo entre Andes y Pacífico, famoso por su vino.'},
+  {n:'Venezuela',      c:'ve', am:true, r:'Norte de Sudamérica · Caribe',          t:'Petróleo, salto de agua más alto del mundo y arepas.'},
+  {n:'Canadá',         c:'ca', am:true, r:'Norteamérica · norte',                  t:'Hoja de arce, hockey, alces y miel de jarabe.'},
+  {n:'Estados Unidos', c:'us', am:true, r:'Norteamérica · centro',                 t:'Hollywood, hamburguesas, rascacielos y NFL.'},
+  {n:'Cuba',           c:'cu', am:true, r:'Caribe · isla mayor de las Antillas',   t:'Salsa, ron, tabaco y autos clásicos de los 50.'},
+  {n:'Uruguay',        c:'uy', am:true, r:'Sudamérica · cono sur atlántico',       t:'Mate, asado y el origen del tango compartido.'},
+  {n:'Ecuador',        c:'ec', am:true, r:'Sudamérica · pacífico ecuatorial',      t:'Mitad del mundo, Galápagos y volcanes andinos.'},
+  {n:'Bolivia',        c:'bo', am:true, r:'Sudamérica · andino central',           t:'Salar gigantesco, altiplano andino y lago navegable más alto.'},
+  {n:'Paraguay',       c:'py', am:true, r:'Sudamérica · central interior',         t:'Lengua guaraní, río Paraná y la represa de Itaipú.'},
+
+  /* === EUROPA === */
+  {n:'España',         c:'es', am:false, r:'Europa · península ibérica',           t:'Flamenco, paella, toros y la siesta.'},
+  {n:'Francia',        c:'fr', am:false, r:'Europa occidental',                    t:'Torre de hierro, baguette, queso y vino.'},
+  {n:'Alemania',       c:'de', am:false, r:'Europa central',                       t:'Cerveza, salchichas, autos potentes y castillos góticos.'},
+  {n:'Italia',         c:'it', am:false, r:'Europa · mediterráneo (forma de bota)',t:'Pizza, pasta, Vaticano y arte renacentista.'},
+  {n:'Reino Unido',    c:'gb', am:false, r:'Europa · islas británicas',            t:'Big Ben, té de las cinco, lluvia y la corona real.'},
+  {n:'Portugal',       c:'pt', am:false, r:'Europa · península ibérica (atlántica)',t:'Fado, azulejos, bacalao y costa atlántica.'},
+  {n:'Países Bajos',   c:'nl', am:false, r:'Europa noroccidental · Mar del Norte', t:'Tulipanes, bicicletas, molinos y canales.'},
+  {n:'Suecia',         c:'se', am:false, r:'Europa · escandinavia',                t:'IKEA, Volvo, ABBA y noches de aurora boreal.'},
+  {n:'Noruega',        c:'no', am:false, r:'Europa · escandinavia (fiordos)',      t:'Fiordos profundos, vikingos y salmón.'},
+  {n:'Suiza',          c:'ch', am:false, r:'Europa central · Alpes',               t:'Alpes, chocolate, relojes precisos y neutralidad.'},
+  {n:'Rusia',          c:'ru', am:false, r:'Eurasia · país más extenso del mundo', t:'Estepas, ballet, vodka y catedrales doradas.'},
+  {n:'Polonia',        c:'pl', am:false, r:'Europa centro-oriental',               t:'Pierogis, Chopin y casco histórico de su capital.'},
+  {n:'Grecia',         c:'gr', am:false, r:'Europa · sureste mediterráneo',        t:'Mitología, Acrópolis, islas blancas y mar Egeo.'},
+  {n:'Ucrania',        c:'ua', am:false, r:'Europa oriental',                      t:'Trigales dorados y campanas ortodoxas en Kiev.'},
+  {n:'Bélgica',        c:'be', am:false, r:'Europa noroccidental',                 t:'Chocolate, gofres, cervezas trapenses y cómics.'},
+  {n:'Austria',        c:'at', am:false, r:'Europa central · Alpes',               t:'Mozart, vals, Alpes y el café vienés.'},
+
+  /* === ASIA === */
+  {n:'Turquía',        c:'tr', am:false, r:'Entre Europa y Asia · Anatolia',       t:'Puente entre dos continentes, kebab y mezquitas.'},
+  {n:'Japón',          c:'jp', am:false, r:'Asia oriental · archipiélago',         t:'Sushi, samuráis, robots y flores de cerezo.'},
+  {n:'China',          c:'cn', am:false, r:'Asia oriental · país más poblado',     t:'Gran muralla, pandas, dragones y la dinastía milenaria.'},
+  {n:'India',          c:'in', am:false, r:'Asia · subcontinente',                 t:'Curry picante, Taj Mahal, elefantes y Bollywood.'},
+  {n:'Corea del Sur',  c:'kr', am:false, r:'Asia oriental · península',            t:'K-pop, kimchi, tecnología puntera y dramas románticos.'},
+  {n:'Arabia Saudita', c:'sa', am:false, r:'Medio Oriente · península arábiga',    t:'Desierto, camellos, peregrinación y oro negro.'},
+  {n:'Indonesia',      c:'id', am:false, r:'Sudeste asiático · archipiélago',      t:'Archipiélago de volcanes, batik y orangutanes.'},
+  {n:'Tailandia',      c:'th', am:false, r:'Sudeste asiático · continental',       t:'Templos dorados, Pad Thai, elefantes y playas paradisíacas.'},
+  {n:'Filipinas',      c:'ph', am:false, r:'Sudeste asiático · 7000+ islas',       t:'Más de 7000 islas, mangos y mar tropical.'},
+  {n:'Pakistán',       c:'pk', am:false, r:'Asia del sur · vecino de India',       t:'Cordillera del Karakórum, especias y cricket.'},
+  {n:'Irán',           c:'ir', am:false, r:'Medio Oriente · antigua Persia',       t:'Persia antigua, alfombras tejidas y poesía sufí.'},
+  {n:'Israel',         c:'il', am:false, r:'Medio Oriente · mediterráneo oriental',t:'Jerusalén sagrada, Mar Muerto y desierto del Néguev.'},
+
+  /* === ÁFRICA === */
+  {n:'Egipto',         c:'eg', am:false, r:'Norte de África · Nilo',               t:'Pirámides, faraones, Nilo y esfinge milenaria.'},
+  {n:'Sudáfrica',      c:'za', am:false, r:'Sur de África · punta austral',        t:'Safari del Big Five, diamantes y la herencia de Mandela.'},
+  {n:'Nigeria',        c:'ng', am:false, r:'África occidental',                    t:'Afrobeat, petróleo y la megaciudad de Lagos.'},
+  {n:'Marruecos',      c:'ma', am:false, r:'Norte de África · noroeste',           t:'Sahara, especias, zocos y la ciudad azul.'},
+  {n:'Kenia',          c:'ke', am:false, r:'África oriental · ecuador',            t:'Safari en la sabana, jirafas y monte ecuatorial nevado.'},
+  {n:'Etiopía',        c:'et', am:false, r:'África oriental · cuerno',             t:'Cuna del café, Nilo Azul y monasterios milenarios.'},
+
+  /* === OCEANÍA === */
+  {n:'Australia',      c:'au', am:false, r:'Oceanía · continente isla',            t:'Canguros, koalas, surf y desierto rojo.'},
+  {n:'Nueva Zelanda',  c:'nz', am:false, r:'Oceanía · islas al sureste de Australia',t:'Maoríes, paisajes de hobbits y el ave kiwi.'}
 ];
 const FLAG_URL      = c => 'https://flagcdn.com/w320/'+c+'.png';
 const FLAG_TOTAL    = 20;             // preguntas
@@ -1233,7 +1247,15 @@ function shuffleArr(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=M
 function pickN(a,n){ return shuffleArr(a).slice(0,n); }
 
 function buildFlagQs(){
-  return shuffleArr(FLAG_COUNTRIES).slice(0, FLAG_TOTAL).map(c => ({
+  // Arranca con países americanos para "entrar en confianza"
+  const FIRST_AM = Math.min(10, FLAG_TOTAL);
+  const americas = shuffleArr(FLAG_COUNTRIES.filter(c => c.am));
+  const others   = shuffleArr(FLAG_COUNTRIES.filter(c => !c.am));
+  const ordered  = [
+    ...americas.slice(0, FIRST_AM),
+    ...others.slice(0, FLAG_TOTAL - FIRST_AM)
+  ];
+  return ordered.map(c => ({
     c, opts: shuffleArr([c, ...pickN(FLAG_COUNTRIES.filter(x=>x.n!==c.n), FLAG_OPTS-1)])
   }));
 }
@@ -1273,6 +1295,7 @@ function startFlag(){
       <div class="flag-frame" id="flagFrame">
         <img id="flagImg" src="" alt="Bandera">
       </div>
+      <div class="flag-region" id="flagRegion">📍 <span id="flagRegionTxt">—</span></div>
       <div class="flag-hint-chip" id="flagHintChip">💡 <span id="flagHintTxt"></span></div>
       <div class="lifelines-row" id="flagLifelines">
         <div class="ll-title">Comodines · si dudas</div>
@@ -1321,6 +1344,7 @@ function renderFlagQuestion(){
 
   document.getElementById('flagFrame').className = 'flag-frame';
   document.getElementById('flagQNum').textContent = 'PREGUNTA '+(G.flag.qIdx+1)+' / '+FLAG_TOTAL;
+  document.getElementById('flagRegionTxt').textContent = q.c.r || '—';
 
   const opts = document.getElementById('flagOpts');
   opts.innerHTML = '';
