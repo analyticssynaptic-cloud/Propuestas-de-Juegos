@@ -412,7 +412,7 @@ img{max-width:100%;display:block}
       <p class="lead">
         Tres mini-juegos que ponen a prueba tu <strong>intuición</strong>, tu <strong>memoria</strong>
         y tus <strong>reflejos</strong>. Al final recibes tu certificado oficial de
-        <strong>Par Servicios</strong>. Necesitas mínimo <strong>70 %</strong> para certificarte.
+        <strong>Par Servicios</strong>. Necesitas mínimo <strong>60 %</strong> para certificarte.
       </p>
 
       <div class="mission-preview">
@@ -614,7 +614,7 @@ img{max-width:100%;display:block}
 
 <script>
 /* LOGO PAR SERVICIOS (mismo del index original) */
-const PAR_LOGO_SRC = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MjAgMTUwIj4KICA8ZyBmaWxsPSIjMEZCRjhCIj4KICAgIDxyZWN0IHg9IjMwIiAgeT0iMTgiIHdpZHRoPSIxMTgiIGhlaWdodD0iNDAiIHJ4PSIyMCIgcnk9IjIwIiB0cmFuc2Zvcm09InJvdGF0ZSgtMjggODkgMzgpIi8+CiAgICA8cmVjdCB4PSI2MCIgIHk9Ijg4IiB3aWR0aD0iMTE4IiBoZWlnaHQ9IjQwIiByeD0iMjAiIHJ5PSIyMCIgdHJhbnNmb3JtPSJyb3RhdGUoLTI4IDExOSAxMDgpIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjIxNSIgeT0iOTIiICBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTAwIiBmb250LXdlaWdodD0iOTAwIiBmaWxsPSIjMkQzQTQ4IiBsZXR0ZXItc3BhY2luZz0iLTQiPnBhcjwvdGV4dD4KICA8dGV4dCB4PSIyMTgiIHk9IjEyNSIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiAgZm9udC13ZWlnaHQ9IjUwMCIgZmlsbD0iIzhBOEE4QSIgbGV0dGVyLXNwYWNpbmc9IjYiPnNlcnZpY2lvczwvdGV4dD4KPC9zdmc+Cg==';
+const PAR_LOGO_SRC = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIj4KICA8ZyBmaWxsPSIjMEZCRjhCIj4KICAgIDxyZWN0IHg9IjI1IiB5PSIzMiIgd2lkdGg9IjkyIiBoZWlnaHQ9IjMwIiByeD0iMTUiIHJ5PSIxNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTI2IDcxIDQ3KSIvPgogICAgPHJlY3QgeD0iNTUiIHk9IjEwOCIgd2lkdGg9IjkyIiBoZWlnaHQ9IjMwIiByeD0iMTUiIHJ5PSIxNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTI2IDEwMSAxMjMpIi8+CiAgPC9nPgogIDx0ZXh0IHg9IjE5NSIgeT0iMTQ4IiBmb250LWZhbWlseT0iSGVsdmV0aWNhLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTUwIiBmb250LXdlaWdodD0iOTAwIiBmaWxsPSIjMkQzQTQ4IiBsZXR0ZXItc3BhY2luZz0iLTYiPnBhcjwvdGV4dD4KICA8dGV4dCB4PSIyMDgiIHk9IjE4MiIgZm9udC1mYW1pbHk9IkhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSIjOEE4QThBIiBsZXR0ZXItc3BhY2luZz0iNyI+c2VydmljaW9zPC90ZXh0Pgo8L3N2Zz4K';
 
 (function setupLogo(){
   const brand = document.getElementById('brandLogo');
@@ -658,7 +658,6 @@ const ROULETTE_DB = [
   { emojis:"🏔️ ☕ 🌹 ⛪", cat:"País", ans:"rusia",         display:"Rusia 🇷🇺",     desc:"Estepa, té, ballet y catedrales." },
   { emojis:"🐊 🌅 🏛️ 🐫", cat:"País", ans:"egipto",        display:"Egipto 🇪🇬",    desc:"Nilo, pirámides, esfinge, camellos." },
   { emojis:"🥟 ☕ 🕌 ⚽", cat:"País", ans:"turquia",       display:"Turquía 🇹🇷",   desc:"Kebab, mezquitas y café turco." },
-  { emojis:"🌴 🍉 🐢 🏖️", cat:"País", ans:"maldivas",      display:"Maldivas 🇲🇻",  desc:"Palmas, sandía, tortugas y playas." },
   { emojis:"🥩 ☕ ⛪ 🏰", cat:"País", ans:"uruguay",       display:"Uruguay 🇺🇾",   desc:"Asado, mate y ciudad colonial." },
   { emojis:"🍷 🏔️ 🥟 ⛷️", cat:"País", ans:"chile",         display:"Chile 🇨🇱",     desc:"Vino, Andes, empanadas y nieve." },
   { emojis:"🛢️ 🦜 ⚽ 🌴", cat:"País", ans:"venezuela",     display:"Venezuela 🇻🇪", desc:"Petróleo, guacamayas, fútbol y caribe." },
@@ -771,7 +770,7 @@ const FLAG_COUNTRIES = [
 const FLAG_URL        = c => 'https://flagcdn.com/w320/'+c+'.png';
 const FLAG_TOTAL      = 20;          // preguntas
 const FLAG_OPTS       = 4;           // opciones por pregunta
-const FLAG_PTS_BASE   = 15;          // por acierto base (20×15 = 300 sin necesidad de bonus)
+const FLAG_PTS_BASE   = 20;          // por acierto base (15 aciertos = 300 max, más alcanzable)
 const FLAG_PTS_MAX    = 300;         // máximo del juego
 const FLAG_TIME_LIMIT = 90;          // 1 min 30 s
 
@@ -784,7 +783,7 @@ const MAZE_MAX        = MAZE_BASE_PTS + MAZE_TIME_BONUS;  // 200
 
 /* TOTAL */
 const MAX_TOTAL = ROULETTE_MAX + FLAG_PTS_MAX + MAZE_MAX;
-const PASS_PCT   = 70;
+const PASS_PCT   = 60;
 const PASS_SCORE = Math.ceil(MAX_TOTAL * PASS_PCT / 100);
 
 /* ESTADO */
