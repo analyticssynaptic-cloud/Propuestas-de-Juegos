@@ -248,7 +248,8 @@ img{max-width:100%;display:block}
 .ll-btn:disabled .ll-count,.ll-btn.used .ll-count{background:rgba(255,255,255,.10);color:rgba(255,255,255,.40)}
 .reveal-bar{font-family:'Bebas Neue';font-size:22px;letter-spacing:.32em;color:var(--gold);text-align:center;padding:8px 12px;background:rgba(242,199,92,.10);border:1px dashed rgba(242,199,92,.30);border-radius:8px;min-height:38px;display:none;margin-top:4px}
 .reveal-bar.show{display:block;animation:slideIn .3s}
-.flag-hint-chip{display:none;align-items:center;gap:.5rem;padding:.35rem 1rem;background:rgba(2,166,131,.15);border:1.5px solid rgba(2,166,131,.40);border-radius:100px;font-size:.75rem;font-weight:700;color:var(--par-green-light);text-transform:uppercase;letter-spacing:.06em;margin:0 auto}
+.flag-hint-chip{display:none;align-items:center;gap:.5rem;padding:10px 18px;background:rgba(2,166,131,.15);border:1.5px solid rgba(2,166,131,.40);border-radius:14px;font-size:13px;font-weight:600;color:#CDEEDD;letter-spacing:.01em;margin:0 auto;max-width:480px;line-height:1.45;font-family:'Cormorant Garamond',serif;font-style:italic;text-align:center}
+.flag-hint-chip span{font-style:italic}
 .flag-hint-chip.show{display:inline-flex;animation:streakUp .3s cubic-bezier(.16,1,.3,1)}
 
 /* JUEGO 3 · LABERINTO */
@@ -700,21 +701,58 @@ const ROULETTE_TIME_BONUS = 60;
 const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;
 
 
-/* DATOS · BANDERAS */
+/* DATOS · BANDERAS — t: texto descriptivo representativo (sin decir el nombre) */
 const FLAG_COUNTRIES = [
-  {n:'Brasil',c:'br'},{n:'México',c:'mx'},{n:'Colombia',c:'co'},{n:'Argentina',c:'ar'},
-  {n:'Perú',c:'pe'},{n:'Chile',c:'cl'},{n:'Venezuela',c:'ve'},{n:'España',c:'es'},
-  {n:'Francia',c:'fr'},{n:'Alemania',c:'de'},{n:'Italia',c:'it'},{n:'Reino Unido',c:'gb'},
-  {n:'Portugal',c:'pt'},{n:'Países Bajos',c:'nl'},{n:'Suecia',c:'se'},{n:'Noruega',c:'no'},
-  {n:'Suiza',c:'ch'},{n:'Rusia',c:'ru'},{n:'Turquía',c:'tr'},{n:'Japón',c:'jp'},
-  {n:'China',c:'cn'},{n:'India',c:'in'},{n:'Corea del Sur',c:'kr'},{n:'Arabia Saudita',c:'sa'},
-  {n:'Indonesia',c:'id'},{n:'Egipto',c:'eg'},{n:'Sudáfrica',c:'za'},{n:'Nigeria',c:'ng'},
-  {n:'Marruecos',c:'ma'},{n:'Australia',c:'au'},{n:'Canadá',c:'ca'},{n:'Estados Unidos',c:'us'},
-  {n:'Cuba',c:'cu'},{n:'Uruguay',c:'uy'},{n:'Ecuador',c:'ec'},{n:'Polonia',c:'pl'},
-  {n:'Grecia',c:'gr'},{n:'Ucrania',c:'ua'},{n:'Tailandia',c:'th'},{n:'Filipinas',c:'ph'},
-  {n:'Pakistán',c:'pk'},{n:'Irán',c:'ir'},{n:'Israel',c:'il'},{n:'Kenia',c:'ke'},
-  {n:'Etiopía',c:'et'},{n:'Nueva Zelanda',c:'nz'},{n:'Bolivia',c:'bo'},{n:'Paraguay',c:'py'},
-  {n:'Bélgica',c:'be'},{n:'Austria',c:'at'}
+  {n:'Brasil',         c:'br', t:'Selva amazónica, samba y carnaval interminable.'},
+  {n:'México',         c:'mx', t:'Tacos, mariachi, sombrero charro y Día de Muertos.'},
+  {n:'Colombia',       c:'co', t:'Café de altura, vallenato y biodiversidad caribeña.'},
+  {n:'Argentina',      c:'ar', t:'Mate, tango, asado y la Patagonia austral.'},
+  {n:'Perú',           c:'pe', t:'Ciudad inca en la montaña, llamas y ceviche.'},
+  {n:'Chile',          c:'cl', t:'País larguísimo entre Andes y Pacífico, famoso por su vino.'},
+  {n:'Venezuela',      c:'ve', t:'Petróleo, salto de agua más alto del mundo y arepas.'},
+  {n:'España',         c:'es', t:'Flamenco, paella, toros y la siesta.'},
+  {n:'Francia',        c:'fr', t:'Torre de hierro, baguette, queso y vino.'},
+  {n:'Alemania',       c:'de', t:'Cerveza, salchichas, autos potentes y castillos góticos.'},
+  {n:'Italia',         c:'it', t:'Pizza, pasta, Vaticano y arte renacentista.'},
+  {n:'Reino Unido',    c:'gb', t:'Big Ben, té de las cinco, lluvia y la corona real.'},
+  {n:'Portugal',       c:'pt', t:'Fado, azulejos, bacalao y costa atlántica.'},
+  {n:'Países Bajos',   c:'nl', t:'Tulipanes, bicicletas, molinos y canales.'},
+  {n:'Suecia',         c:'se', t:'IKEA, Volvo, ABBA y noches de aurora boreal.'},
+  {n:'Noruega',        c:'no', t:'Fiordos profundos, vikingos y salmón.'},
+  {n:'Suiza',          c:'ch', t:'Alpes, chocolate, relojes precisos y neutralidad.'},
+  {n:'Rusia',          c:'ru', t:'Estepas, ballet, vodka y catedrales doradas.'},
+  {n:'Turquía',        c:'tr', t:'Puente entre dos continentes, kebab y mezquitas.'},
+  {n:'Japón',          c:'jp', t:'Sushi, samuráis, robots y flores de cerezo.'},
+  {n:'China',          c:'cn', t:'Gran muralla, pandas, dragones y la dinastía milenaria.'},
+  {n:'India',          c:'in', t:'Curry picante, Taj Mahal, elefantes y Bollywood.'},
+  {n:'Corea del Sur',  c:'kr', t:'K-pop, kimchi, tecnología puntera y dramas románticos.'},
+  {n:'Arabia Saudita', c:'sa', t:'Desierto, camellos, peregrinación y oro negro.'},
+  {n:'Indonesia',      c:'id', t:'Archipiélago de volcanes, batik y orangutanes.'},
+  {n:'Egipto',         c:'eg', t:'Pirámides, faraones, Nilo y esfinge milenaria.'},
+  {n:'Sudáfrica',      c:'za', t:'Safari del Big Five, diamantes y la herencia de Mandela.'},
+  {n:'Nigeria',        c:'ng', t:'Afrobeat, petróleo y la megaciudad de Lagos.'},
+  {n:'Marruecos',      c:'ma', t:'Sahara, especias, zocos y la ciudad azul.'},
+  {n:'Australia',      c:'au', t:'Canguros, koalas, surf y desierto rojo.'},
+  {n:'Canadá',         c:'ca', t:'Hoja de arce, hockey, alces y miel de jarabe.'},
+  {n:'Estados Unidos', c:'us', t:'Hollywood, hamburguesas, rascacielos y NFL.'},
+  {n:'Cuba',           c:'cu', t:'Salsa, ron, tabaco y autos clásicos de los 50.'},
+  {n:'Uruguay',        c:'uy', t:'Mate, asado y el origen del tango compartido.'},
+  {n:'Ecuador',        c:'ec', t:'Mitad del mundo, Galápagos y volcanes andinos.'},
+  {n:'Polonia',        c:'pl', t:'Pierogis, Chopin y casco histórico de su capital.'},
+  {n:'Grecia',         c:'gr', t:'Mitología, Acrópolis, islas blancas y mar Egeo.'},
+  {n:'Ucrania',        c:'ua', t:'Trigales dorados y campanas ortodoxas en Kiev.'},
+  {n:'Tailandia',      c:'th', t:'Templos dorados, Pad Thai, elefantes y playas paradisíacas.'},
+  {n:'Filipinas',      c:'ph', t:'Más de 7000 islas, mangos y mar tropical.'},
+  {n:'Pakistán',       c:'pk', t:'Cordillera del Karakórum, especias y cricket.'},
+  {n:'Irán',           c:'ir', t:'Persia antigua, alfombras tejidas y poesía sufí.'},
+  {n:'Israel',         c:'il', t:'Jerusalén sagrada, Mar Muerto y desierto del Néguev.'},
+  {n:'Kenia',          c:'ke', t:'Safari en la sabana, jirafas y monte ecuatorial nevado.'},
+  {n:'Etiopía',        c:'et', t:'Cuna del café, Nilo Azul y monasterios milenarios.'},
+  {n:'Nueva Zelanda',  c:'nz', t:'Maoríes, paisajes de hobbits y el ave kiwi.'},
+  {n:'Bolivia',        c:'bo', t:'Salar gigantesco, altiplano andino y lago navegable más alto.'},
+  {n:'Paraguay',       c:'py', t:'Lengua guaraní, río Paraná y la represa de Itaipú.'},
+  {n:'Bélgica',        c:'be', t:'Chocolate, gofres, cervezas trapenses y cómics.'},
+  {n:'Austria',        c:'at', t:'Mozart, vals, Alpes y el café vienés.'}
 ];
 const FLAG_URL      = c => 'https://flagcdn.com/w320/'+c+'.png';
 const FLAG_TOTAL    = 20;             // preguntas
@@ -738,7 +776,7 @@ const PASS_SCORE = Math.ceil(MAX_TOTAL * PASS_PCT / 100);
 const G = {
   player:{name:'',cedula:'',cargo:''},
   roulette:{score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null,
-            lifelines:{letra:3, longitud:2}, revealed:''},
+            lifelines:{letra:3, pista:3, cambio:3}, revealed:''},
   flag:    {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
             lifelines:{fifty:3, hint:3}},
   maze:    {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT},
@@ -794,7 +832,7 @@ btnStart.addEventListener('click', ()=>{
   document.getElementById('mhMax').textContent = MAX_TOTAL;
 
   G.roulette = {score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null,
-                lifelines:{letra:3, longitud:2}, revealed:''};
+                lifelines:{letra:3, pista:3, cambio:3}, revealed:''};
   G.flag     = {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
                 lifelines:{fifty:3, hint:3}};
   G.maze     = {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT};
@@ -875,12 +913,15 @@ function startRoulette(){
         <p class="roulette-q-text" id="rInstr">Pulsa <strong style="color:var(--gold)">Girar Ruleta</strong> para obtener tu pista.</p>
         <div class="reveal-bar" id="rRevealBar"></div>
         <div class="lifelines-row" id="rLifelines">
-          <div class="ll-title">Comodines · si te traba el reto</div>
+          <div class="ll-title">Comodines · 9 ayudas disponibles (3 + 3 + 3)</div>
           <button class="ll-btn" id="llLetra" type="button" disabled>
             🔤 Letra <span class="ll-count" id="llLetraN">3</span>
           </button>
-          <button class="ll-btn" id="llLongitud" type="button" disabled>
-            📏 Longitud <span class="ll-count" id="llLongitudN">2</span>
+          <button class="ll-btn" id="llPista" type="button" disabled>
+            💡 Pista <span class="ll-count" id="llPistaN">3</span>
+          </button>
+          <button class="ll-btn" id="llCambio" type="button" disabled>
+            🔄 Cambio <span class="ll-count" id="llCambioN">3</span>
           </button>
         </div>
         <div class="roulette-input-row">
@@ -944,9 +985,11 @@ function setupWheel(){
     if(e.key==='Enter') checkRouletteAnswer();
   });
   const bl = document.getElementById('llLetra');
-  const bt = document.getElementById('llLongitud');
+  const bp = document.getElementById('llPista');
+  const bc = document.getElementById('llCambio');
   if(bl) bl.addEventListener('click', useLifelineLetra);
-  if(bt) bt.addEventListener('click', useLifelineLongitud);
+  if(bp) bp.addEventListener('click', useLifelinePista);
+  if(bc) bc.addEventListener('click', useLifelineCambio);
   refreshRouletteLifelines();
 }
 
@@ -1044,22 +1087,23 @@ function refreshRouletteLifelines(){
   const ch = G.roulette.currentChallenge;
   const ll = G.roulette.lifelines;
   const byId = id => document.getElementById(id);
-  const btnL = byId('llLetra'), btnLN = byId('llLetraN');
-  const btnT = byId('llLongitud'), btnTN = byId('llLongitudN');
-  if(!btnL || !btnT) return;
-  // habilitados sólo si hay reto activo y aún quedan usos
+  const btnL = byId('llLetra'),  nL = byId('llLetraN');
+  const btnP = byId('llPista'),  nP = byId('llPistaN');
+  const btnC = byId('llCambio'), nC = byId('llCambioN');
+  if(!btnL || !btnP || !btnC) return;
   const active = !!ch && !document.getElementById('guessInput').disabled;
-  btnL.disabled = !active || ll.letra <= 0;
-  btnT.disabled = !active || ll.longitud <= 0;
-  btnLN.textContent = ll.letra;
-  btnTN.textContent = ll.longitud;
+  btnL.disabled = !active || ll.letra  <= 0;
+  btnP.disabled = !active || ll.pista  <= 0;
+  btnC.disabled = !active || ll.cambio <= 0;
+  nL.textContent = ll.letra;
+  nP.textContent = ll.pista;
+  nC.textContent = ll.cambio;
 }
 
 function useLifelineLetra(){
   const ch = G.roulette.currentChallenge;
   if(!ch || G.roulette.lifelines.letra <= 0) return;
   const ans = (ch.ans || '').replace(/\s+/g,' ');
-  // posiciones aún ocultas
   const cur = G.roulette.revealed || ' '.repeat(ans.length);
   const hidden = [];
   for(let i=0;i<ans.length;i++){
@@ -1073,7 +1117,6 @@ function useLifelineLetra(){
   arr[pick] = ans[pick];
   G.roulette.revealed = arr.join('');
   G.roulette.lifelines.letra--;
-  // pinta como cuadrícula con letra revelada
   let display = '';
   for(let i=0;i<ans.length;i++){
     if(ans[i] === ' ') display += '  ·  ';
@@ -1087,19 +1130,44 @@ function useLifelineLetra(){
   refreshRouletteLifelines();
 }
 
-function useLifelineLongitud(){
+function useLifelinePista(){
   const ch = G.roulette.currentChallenge;
-  if(!ch || G.roulette.lifelines.longitud <= 0) return;
-  const ans = (ch.ans || '');
-  const noSpaces = ans.replace(/\s/g,'').length;
-  const words = ans.split(/\s+/).filter(Boolean).length;
-  G.roulette.lifelines.longitud--;
+  if(!ch || G.roulette.lifelines.pista <= 0) return;
+  G.roulette.lifelines.pista--;
   const fb = document.getElementById('rouletteFb');
   fb.className = 'roulette-fb ok show';
-  fb.innerHTML = '<strong>📏 Pista de longitud</strong>'+
-    (words>1 ? words+' palabras · ' : '')+
-    noSpaces+' letras en total.';
-  popScore('LONGITUD','gold');
+  fb.innerHTML = '<strong>💡 Pista</strong>'+ (ch.desc || 'Sin descripción disponible.');
+  popScore('PISTA','gold');
+  refreshRouletteLifelines();
+}
+
+function useLifelineCambio(){
+  const ch = G.roulette.currentChallenge;
+  if(!ch || G.roulette.lifelines.cambio <= 0) return;
+  G.roulette.lifelines.cambio--;
+  // marcar la actual como usada para no repetirla
+  const used = G.roulette.used || (G.roulette.used = new Set());
+  used.add(ch.ans);
+  // buscar otro reto en la misma categoría que no esté usado
+  let pool = ROULETTE_DB.filter(d => d.cat === ch.cat && !used.has(d.ans));
+  if(!pool.length) pool = ROULETTE_DB.filter(d => !used.has(d.ans));
+  if(!pool.length){ used.clear(); pool = ROULETTE_DB.filter(d => d.cat === ch.cat); if(!pool.length) pool = ROULETTE_DB.slice(); }
+  const nu = pool[Math.floor(Math.random()*pool.length)];
+  used.add(nu.ans);
+  G.roulette.currentChallenge = nu;
+  // reset visual del reto
+  G.roulette.revealed = '';
+  const rb = document.getElementById('rRevealBar');
+  if(rb){ rb.classList.remove('show'); rb.textContent = ''; }
+  document.getElementById('emojiDisplay').textContent = nu.emojis;
+  document.getElementById('rCatText').textContent = 'CATEGORÍA · '+nu.cat.toUpperCase();
+  document.getElementById('rInstr').innerHTML = 'Lee los emojis y escribe el <strong>'+nu.cat.toLowerCase()+'</strong> oculto.';
+  const fb = document.getElementById('rouletteFb');
+  fb.className = 'roulette-fb';
+  fb.innerHTML = '';
+  const inp = document.getElementById('guessInput');
+  inp.value = ''; inp.focus();
+  popScore('CAMBIO','gold');
   refreshRouletteLifelines();
 }
 
@@ -1205,14 +1273,14 @@ function startFlag(){
       <div class="flag-frame" id="flagFrame">
         <img id="flagImg" src="" alt="Bandera">
       </div>
-      <div class="flag-hint-chip" id="flagHintChip">🌍 <span id="flagHintTxt"></span></div>
+      <div class="flag-hint-chip" id="flagHintChip">💡 <span id="flagHintTxt"></span></div>
       <div class="lifelines-row" id="flagLifelines">
         <div class="ll-title">Comodines · si dudas</div>
         <button class="ll-btn" id="llFifty" type="button" disabled>
           ✂️ 50/50 <span class="ll-count" id="llFiftyN">3</span>
         </button>
         <button class="ll-btn" id="llContinent" type="button" disabled>
-          🌍 Continente <span class="ll-count" id="llContinentN">3</span>
+          💡 Pista <span class="ll-count" id="llContinentN">3</span>
         </button>
       </div>
       <div class="flag-options" id="flagOpts"></div>
@@ -1315,10 +1383,10 @@ function useFlagFifty(){
 function useFlagContinent(){
   if(G.flag.done || G.flag.lifelines.hint <= 0) return;
   const q = G.flag.qs[G.flag.qIdx];
-  const cont = q.c.k || 'desconocido';
+  const tip = q.c.t || 'Sin pista disponible.';
   G.flag.lifelines.hint--;
   const chip = document.getElementById('flagHintChip');
-  document.getElementById('flagHintTxt').textContent = 'Continente · '+cont;
+  document.getElementById('flagHintTxt').textContent = tip;
   chip.classList.add('show');
   popScore('PISTA','teal');
   refreshFlagLifelines();
