@@ -696,11 +696,11 @@ const ROULETTE_DB = [
   { emojis:"🐉 🧒 🌅 🪶", cat:"Película", ans:"como entrenar a tu dragon", display:"Cómo entrenar a tu dragón", desc:"Vikingo y su dragón mascota." },
   { emojis:"🐭 🎩 🎢 🏰", cat:"Película", ans:"disney",        display:"Walt Disney",   desc:"Mickey, sombrero, parques y castillo." }
 ];
-const ROULETTE_ROUNDS = 8;
-const ROULETTE_PTS_PER = 30;
-const ROULETTE_MAX_PTS = ROULETTE_ROUNDS * ROULETTE_PTS_PER;
-const ROULETTE_TIME_BONUS = 60;
-const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;
+const ROULETTE_ROUNDS = 5;
+const ROULETTE_PTS_PER = 50;
+const ROULETTE_MAX_PTS = ROULETTE_ROUNDS * ROULETTE_PTS_PER;   // 250
+const ROULETTE_TIME_BONUS = 50;                                // bono más generoso
+const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;   // 300
 
 
 /* DATOS · BANDERAS — t: texto descriptivo representativo (sin decir el nombre) */
@@ -768,11 +768,12 @@ const FLAG_COUNTRIES = [
   {n:'Australia',      c:'au', am:false, r:'Oceanía · continente isla',            t:'Canguros, koalas, surf y desierto rojo.'},
   {n:'Nueva Zelanda',  c:'nz', am:false, r:'Oceanía · islas al sureste de Australia',t:'Maoríes, paisajes de hobbits y el ave kiwi.'}
 ];
-const FLAG_URL      = c => 'https://flagcdn.com/w320/'+c+'.png';
-const FLAG_TOTAL    = 20;             // preguntas
-const FLAG_OPTS     = 4;              // opciones por pregunta
-const FLAG_PTS_BASE = 12;             // por acierto base
-const FLAG_PTS_MAX  = 300;            // máximo del juego
+const FLAG_URL        = c => 'https://flagcdn.com/w320/'+c+'.png';
+const FLAG_TOTAL      = 20;          // preguntas
+const FLAG_OPTS       = 4;           // opciones por pregunta
+const FLAG_PTS_BASE   = 15;          // por acierto base (20×15 = 300 sin necesidad de bonus)
+const FLAG_PTS_MAX    = 300;         // máximo del juego
+const FLAG_TIME_LIMIT = 90;          // 1 min 30 s
 
 /* DATOS · LABERINTO */
 const MAZE_TIME_LIMIT = 180;          // 3 minutos
@@ -792,7 +793,7 @@ const G = {
   roulette:{score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null,
             lifelines:{letra:3, pista:3, cambio:3}, revealed:''},
   flag:    {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
-            lifelines:{fifty:3, hint:3}},
+            lifelines:{fifty:3, hint:3}, timeLeft:90},
   maze:    {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT},
   totalScore:0, percent:0, passed:false,
   startedAt:0, endedAt:0
@@ -848,7 +849,7 @@ btnStart.addEventListener('click', ()=>{
   G.roulette = {score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null,
                 lifelines:{letra:3, pista:3, cambio:3}, revealed:''};
   G.flag     = {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
-                lifelines:{fifty:3, hint:3}};
+                lifelines:{fifty:3, hint:3}, timeLeft:FLAG_TIME_LIMIT};
   G.maze     = {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT};
   G.totalScore = 0; updateHeader();
   ['mpBar1','mpBar2','mpBar3'].forEach(id=>{
@@ -893,11 +894,11 @@ function startRoulette(){
     <div class="mission-intro gold" style="margin-bottom:18px">
       <div class="m-num">Juego I</div>
       <h2>RULETA DE PISTAS</h2>
-      <p>La ruleta te entrega <strong>${ROULETTE_ROUNDS} retos</strong> con emojis. Cada acierto suma <strong>${ROULETTE_PTS_PER} pts</strong>. Si terminas rápido recibes un bono extra hasta <strong>${ROULETTE_TIME_BONUS} pts</strong>.</p>
+      <p>La ruleta te entrega <strong>${ROULETTE_ROUNDS} retos</strong> con emojis. Cada acierto suma <strong>${ROULETTE_PTS_PER} pts</strong>. Si terminas en menos de 2 min recibes un bono de hasta <strong>${ROULETTE_TIME_BONUS} pts</strong>. Tienes <strong>9 comodines</strong> para apoyarte.</p>
       <div class="m-rules">
         <span class="pill gold">${ROULETTE_MAX} pts máx</span>
         <span class="pill">${ROULETTE_ROUNDS} rondas</span>
-        <span class="pill gray">Sin reintentos</span>
+        <span class="pill gray">9 comodines</span>
       </div>
       <button class="btn-primary" id="rouletteGoBtn">Empezar Ruleta
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -1228,7 +1229,8 @@ function endRoulette(){
   G.roulette.ended = Date.now();
 
   const sec = (G.roulette.ended - G.roulette.started)/1000;
-  const bonus = Math.round(Math.max(0, Math.min(1, (240 - sec)/180)) * ROULETTE_TIME_BONUS);
+  // bono generoso: bono completo si termina en <=120s, decae a 0 en 240s
+  const bonus = Math.round(Math.max(0, Math.min(1, (240 - sec)/120)) * ROULETTE_TIME_BONUS);
   G.roulette.score += bonus;
   G.totalScore += bonus;
   updateHeader();
@@ -1242,6 +1244,35 @@ function endRoulette(){
    JUEGO 2 · BANDERAS
 ================================================================ */
 let flagHeaderTimer = null;
+let flagCountdownId = null;
+
+function flagTick(){
+  G.flag.timeLeft--;
+  const t = document.getElementById('flagTimer');
+  const box = document.getElementById('flagTimerBox');
+  if(!t || !box) return;
+  t.textContent = Math.max(0, G.flag.timeLeft);
+  box.classList.remove('warn','danger');
+  if(G.flag.timeLeft <= 10) box.classList.add('danger');
+  else if(G.flag.timeLeft <= 30) box.classList.add('warn');
+  if(G.flag.timeLeft <= 0){ flagTimeout(); }
+}
+
+function flagTimeout(){
+  if(flagCountdownId){ clearInterval(flagCountdownId); flagCountdownId=null; }
+  // bloquear opciones y comodines
+  document.querySelectorAll('.flag-opt').forEach(b => b.disabled = true);
+  ['llFifty','llContinent'].forEach(id => {
+    const e = document.getElementById(id); if(e) e.disabled = true;
+  });
+  const fb = document.getElementById('flagFb');
+  if(fb){
+    fb.className = 'flag-fb no show';
+    fb.textContent = '⏱ ¡Tiempo agotado!';
+  }
+  G.flag.done = true;
+  setTimeout(endFlag, 1200);
+}
 
 function shuffleArr(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]] } return b; }
 function pickN(a,n){ return shuffleArr(a).slice(0,n); }
@@ -1271,11 +1302,11 @@ function startFlag(){
     <div class="mission-intro teal" style="margin-bottom:18px">
       <div class="m-num">Juego II</div>
       <h2>ADIVINA LA BANDERA</h2>
-      <p>Identifica <strong>${FLAG_TOTAL} banderas</strong> del mundo. Cada acierto vale <strong>${FLAG_PTS_BASE} pts</strong> y las rachas de 3+ aciertos suman bono. ¡Sin tiempo límite, no te equivoques!</p>
+      <p>Identifica <strong>${FLAG_TOTAL} banderas</strong> del mundo. Cada acierto vale <strong>${FLAG_PTS_BASE} pts</strong>. Empiezas con países de América y luego pasas al resto del mundo. Tienes <strong>${FLAG_TIME_LIMIT}s (1 min 30)</strong> para responder todas.</p>
       <div class="m-rules">
         <span class="pill teal">${FLAG_PTS_MAX} pts máx</span>
         <span class="pill">${FLAG_TOTAL} preguntas</span>
-        <span class="pill gray">${FLAG_OPTS} opciones</span>
+        <span class="pill gray">${FLAG_OPTS} opciones · ${FLAG_TIME_LIMIT}s</span>
       </div>
       <button class="btn-primary" id="flagGoBtn">Empezar
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -1286,8 +1317,8 @@ function startFlag(){
         <span class="flag-q-pill"><span class="dot"></span><span id="flagQNum">PREGUNTA 1 / ${FLAG_TOTAL}</span></span>
         <div class="flag-stat-row">
           <div class="flag-stat gold"><div class="fs-num" id="flagScore">0</div><div class="fs-lbl">Puntos</div></div>
+          <div class="flag-stat" id="flagTimerBox"><div class="fs-num" id="flagTimer">${FLAG_TIME_LIMIT}</div><div class="fs-lbl">Segundos</div></div>
           <div class="flag-stat"><div class="fs-num" id="flagCor">0</div><div class="fs-lbl">Correctas</div></div>
-          <div class="flag-stat"><div class="fs-num" id="flagWrg">0</div><div class="fs-lbl">Erradas</div></div>
           <div class="flag-stat"><div class="fs-num" id="flagStreak">🔥0</div><div class="fs-lbl">Racha</div></div>
         </div>
       </div>
@@ -1320,11 +1351,14 @@ function startFlag(){
     document.querySelector('.mission-intro').style.display='none';
     document.getElementById('flagStage').style.display='flex';
     G.flag.started = Date.now();
+    G.flag.timeLeft = FLAG_TIME_LIMIT;
     if(flagHeaderTimer) clearInterval(flagHeaderTimer);
     flagHeaderTimer = setInterval(()=>{
       document.getElementById('mhTime').textContent =
         fmtMS((Date.now()-G.flag.started)/1000);
     }, 500);
+    if(flagCountdownId) clearInterval(flagCountdownId);
+    flagCountdownId = setInterval(flagTick, 1000);
     renderFlagQuestion();
   });
 
@@ -1455,8 +1489,7 @@ function answerFlag(chosen, correct, btn){
   }
   updateHeader();
   document.getElementById('flagScore').textContent  = G.flag.score;
-  document.getElementById('flagCor').textContent    = G.flag.cor;
-  document.getElementById('flagWrg').textContent    = G.flag.wrg;
+  document.getElementById('flagCor').textContent    = G.flag.cor+'/'+(G.flag.qIdx+1);
   document.getElementById('flagStreak').textContent = '🔥'+G.flag.streak;
   document.querySelector('#mpBar2 .fill').style.width = ((G.flag.qIdx+1)/FLAG_TOTAL*100)+'%';
   document.getElementById('flagNext').classList.add('show');
@@ -1471,6 +1504,7 @@ function nextFlag(){
 
 function endFlag(){
   if(flagHeaderTimer){ clearInterval(flagHeaderTimer); flagHeaderTimer=null; }
+  if(flagCountdownId){ clearInterval(flagCountdownId); flagCountdownId=null; }
   G.flag.ended = Date.now();
   // tope al máximo (puede pasarse con rachas)
   if(G.flag.score > FLAG_PTS_MAX){
