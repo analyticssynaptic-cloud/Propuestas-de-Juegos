@@ -152,36 +152,52 @@ img{max-width:100%;display:block}
 .pill.field{background:#CFEAD8;color:var(--field)}
 .pill.gray{background:var(--line-soft);color:var(--ink-soft)}
 
-/* JUEGO 1 · RULETA */
-.roulette-stage{background:radial-gradient(ellipse at top,rgba(242,199,92,.10),transparent 60%),linear-gradient(180deg,var(--roulette),var(--roulette-soft));border-radius:var(--r-lg);padding:24px;color:#fff;display:grid;grid-template-columns:340px 1fr;gap:22px;box-shadow:var(--shadow);min-height:520px}
-@media (max-width:900px){.roulette-stage{grid-template-columns:1fr}}
-.roulette-side{display:flex;flex-direction:column;align-items:center;gap:14px}
-.roulette-wrap{position:relative;display:flex;justify-content:center}
-#wheelCanvas{border-radius:50%;border:6px solid var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.4);background:#fff}
-.pointer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:32px solid var(--rose);z-index:10;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
-.roulette-main{display:flex;flex-direction:column;gap:14px}
-.roulette-stat-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.roulette-cat{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(242,199,92,.18);color:var(--gold);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-.roulette-cat .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
-.emoji-display{font-size:3.6rem;letter-spacing:14px;text-align:center;padding:24px 18px;background:rgba(255,255,255,.06);border-radius:var(--r);border:1px dashed rgba(255,255,255,.20);min-height:120px;display:flex;align-items:center;justify-content:center;color:#fff}
-.roulette-q-text{font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:rgba(255,255,255,.85);text-align:center;line-height:1.4}
-.roulette-input-row{display:flex;gap:10px;flex-wrap:wrap}
-.roulette-input-row input{flex:1;min-width:0;padding:13px 16px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.20);background:rgba(255,255,255,.06);color:#fff;font-family:'Barlow';font-size:15px;text-align:center;font-weight:600;letter-spacing:.04em}
-.roulette-input-row input:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.10)}
-.roulette-input-row input:disabled{opacity:.5}
-.btn-gold{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;background:var(--gold);color:var(--roulette);border-radius:100px;font-family:'Bebas Neue';font-size:15px;letter-spacing:.14em;transition:all .3s;cursor:pointer;border:none}
-.btn-gold:hover:not(:disabled){background:#F8D67A;transform:translateY(-2px);box-shadow:0 8px 18px rgba(242,199,92,.4)}
-.btn-gold:disabled{opacity:.45;cursor:not-allowed}
-.roulette-fb{padding:12px 16px;border-radius:8px;font-size:13px;display:none;line-height:1.5}
-.roulette-fb.show{display:block;animation:slideIn .3s}
-.roulette-fb.ok{background:rgba(2,166,131,.22);color:#CDEEDD;border-left:3px solid var(--par-green-light)}
-.roulette-fb.no{background:rgba(232,133,122,.22);color:#F8D8D3;border-left:3px solid var(--rose)}
-.roulette-fb strong{display:block;font-family:'Bebas Neue';font-size:14px;margin-bottom:4px;letter-spacing:.06em}
-.round-tracker{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:6px}
-.rt-dot{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:11px;color:rgba(255,255,255,.55)}
-.rt-dot.current{background:var(--gold);color:var(--roulette);border-color:var(--gold);font-weight:700}
-.rt-dot.ok{background:rgba(2,166,131,.45);color:#fff;border-color:var(--par-green-light)}
-.rt-dot.bad{background:rgba(232,133,122,.45);color:#fff;border-color:var(--rose)}
+/* JUEGO 1 · AHORCADO */
+.hang-stage{background:radial-gradient(ellipse at top right,rgba(2,166,131,.10),transparent 60%),linear-gradient(180deg,#1A2E38,#27424F);border-radius:var(--r-lg);padding:24px;color:#fff;display:grid;grid-template-columns:1fr 260px;gap:22px;box-shadow:var(--shadow);min-height:540px}
+@media (max-width:900px){.hang-stage{grid-template-columns:1fr}}
+.hang-main{display:flex;flex-direction:column;gap:16px;align-items:center}
+.hang-top{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hang-round-pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:100px;background:rgba(242,199,92,.18);color:var(--gold);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.hang-round-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hang-cat-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.hang-clue{font-family:'Cormorant Garamond';font-style:italic;font-size:18px;color:#fff;background:rgba(255,255,255,.05);border-radius:var(--r);padding:14px 22px;text-align:center;border:1px solid rgba(255,255,255,.10);width:100%;line-height:1.45}
+.hang-clue strong{font-style:normal;font-family:'Bebas Neue';font-size:11px;letter-spacing:.24em;color:var(--gold);display:block;margin-bottom:4px}
+.hang-figure{width:170px;height:170px;flex-shrink:0}
+.hang-figure line, .hang-figure circle{stroke:#fff;stroke-width:3;stroke-linecap:round;fill:none;opacity:.35;transition:opacity .3s}
+.hang-figure .show{opacity:1;stroke:var(--rose)}
+.hang-word{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.hang-letter{width:34px;height:42px;display:flex;align-items:flex-end;justify-content:center;font-family:'Bebas Neue';font-size:24px;color:#fff;border-bottom:2px solid var(--gold);padding-bottom:4px;letter-spacing:.04em}
+.hang-letter.empty{color:transparent}
+.hang-letter.space{border-bottom:none;width:14px}
+.hang-letter.revealed{color:var(--gold);animation:popMark .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popMark{0%{transform:scale(.85)}100%{transform:scale(1)}}
+.hang-keyboard{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;width:100%;max-width:560px}
+@media (max-width:640px){.hang-keyboard{grid-template-columns:repeat(7,1fr)}}
+.hang-key{aspect-ratio:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:8px;color:#fff;font-family:'Bebas Neue';font-size:18px;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;user-select:none}
+.hang-key:hover:not(:disabled){background:var(--gold);border-color:var(--gold);color:#1A2E38}
+.hang-key:disabled{cursor:not-allowed}
+.hang-key.ok{background:rgba(2,166,131,.55);border-color:var(--par-green-light);color:#fff;opacity:1}
+.hang-key.bad{background:rgba(232,133,122,.55);border-color:var(--rose);color:#fff;opacity:1}
+.hang-fb{padding:12px 16px;border-radius:8px;font-size:13px;display:none;line-height:1.5;width:100%}
+.hang-fb.show{display:block;animation:slideIn .3s}
+.hang-fb.ok{background:rgba(2,166,131,.22);color:#CDEEDD;border-left:3px solid var(--par-green-light)}
+.hang-fb.no{background:rgba(232,133,122,.22);color:#F8D8D3;border-left:3px solid var(--rose)}
+.hang-fb strong{display:block;font-family:'Bebas Neue';font-size:14px;margin-bottom:4px;letter-spacing:.06em}
+.hang-side{display:flex;flex-direction:column;gap:14px}
+.hang-card{background:rgba(0,0,0,.20);border-radius:var(--r);padding:14px;border:1px solid rgba(255,255,255,.08)}
+.hang-card h5{font-family:'Bebas Neue';font-size:11px;letter-spacing:.22em;color:var(--gold);margin-bottom:10px}
+.hang-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.hang-stat{background:rgba(255,255,255,.06);padding:10px;border-radius:8px;text-align:center}
+.hang-stat .hs-num{font-family:'Bebas Neue';font-size:22px;line-height:1;color:#fff}
+.hang-stat .hs-num.danger{color:var(--rose)}
+.hang-stat .hs-lbl{font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.65);margin-top:4px;text-transform:uppercase}
+.hang-rounds-list{display:flex;flex-direction:column;gap:4px}
+.hang-rounds-list .hr-step{display:flex;justify-content:space-between;padding:6px 10px;border-radius:6px;font-size:11px;color:rgba(255,255,255,.55)}
+.hang-rounds-list .hr-step.done{color:var(--par-green-light);background:rgba(2,166,131,.10)}
+.hang-rounds-list .hr-step.fail{color:var(--rose);background:rgba(232,133,122,.10)}
+.hang-rounds-list .hr-step.current{color:#fff;background:rgba(255,255,255,.10)}
+.hang-rounds-list .hr-n{font-family:'Bebas Neue';letter-spacing:.06em}
+.hang-rounds-list .hr-p{font-family:'Bebas Neue';font-size:13px}
 
 /* JUEGO 2 · BANDERAS */
 .flag-stage{
@@ -419,11 +435,11 @@ img{max-width:100%;display:block}
         <div class="mp-card gold">
           <div class="mp-num">JUEGO 1</div>
           <div class="mp-ico">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 5h10a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4H4"/><circle cx="14" cy="9" r="1.5"/></svg>
           </div>
-          <h4>Ruleta de Pistas</h4>
-          <p>Gira la ruleta, analiza los emojis y descubre el país, la película o la marca oculta.</p>
-          <div class="mp-pts">300 PTS · 8 rondas</div>
+          <h4>Ahorcado</h4>
+          <p>Adivina la palabra oculta letra por letra antes de que se complete el ahorcado. 5 rondas con 9 comodines.</p>
+          <div class="mp-pts">300 PTS · 5 rondas</div>
         </div>
         <div class="mp-card teal">
           <div class="mp-num">JUEGO 2</div>
@@ -513,7 +529,7 @@ img{max-width:100%;display:block}
         <div class="r-detail">
           <div class="rd-block">
             <div class="rd-num gold" id="rQuiz">0</div>
-            <div class="rd-lbl">RULETA</div>
+            <div class="rd-lbl">AHORCADO</div>
             <div class="rd-time" id="rQuizTime">00:00</div>
           </div>
           <div class="rd-block">
@@ -633,74 +649,56 @@ const PAR_LOGO_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAC2CAYA
 /* WEB APP URL (Apps Script) — misma del index original */
 const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwGYlaVZx50pO_1VebnppDP6VqLmGk27IBVL2C6VN2VoMRtlb_vWoh_n8qOovChE03uuA/exec';
 
-/* DATOS · RULETA — 60+ pares (sin repetir entre rondas) */
-const ROULETTE_DB = [
-  /* === PAÍSES === */
-  { emojis:"🧉 🥩 ⚽ 🏔️", cat:"País", ans:"argentina",     display:"Argentina 🇦🇷", desc:"Mate, asado, fútbol y la Patagonia." },
-  { emojis:"☕ 🫓 🦋 🎶", cat:"País", ans:"colombia",       display:"Colombia 🇨🇴",  desc:"Café, arepa, biodiversidad y música." },
-  { emojis:"🍣 🗻 🌸 ⛩️", cat:"País", ans:"japon",         display:"Japón 🇯🇵",     desc:"Sushi, Monte Fuji, cerezos, templos." },
-  { emojis:"🌮 🌵 🌶️ 💀", cat:"País", ans:"mexico",         display:"México 🇲🇽",    desc:"Tacos, cactus, picante, Día de Muertos." },
-  { emojis:"🐘 🏏 🍛 🛕", cat:"País", ans:"india",         display:"India 🇮🇳",     desc:"Elefante, cricket, curry y templos." },
-  { emojis:"🍕 🍝 🛵 🏛️", cat:"País", ans:"italia",        display:"Italia 🇮🇹",    desc:"Pizza, pasta, Vespa y el Coliseo." },
-  { emojis:"🥖 🗼 🥐 🧀", cat:"País", ans:"francia",       display:"Francia 🇫🇷",   desc:"Baguette, Torre Eiffel y queso." },
-  { emojis:"🍺 🥨 🌭 🏰", cat:"País", ans:"alemania",      display:"Alemania 🇩🇪",  desc:"Cerveza, pretzel, salchicha y castillos." },
-  { emojis:"💃 🥘 🐂 🍷", cat:"País", ans:"espana",        display:"España 🇪🇸",    desc:"Flamenco, paella, toros y vino." },
-  { emojis:"🐨 🦘 🏉 🏝️", cat:"País", ans:"australia",     display:"Australia 🇦🇺", desc:"Koala, canguro, rugby e islas." },
-  { emojis:"🐼 🥢 🏯 🐉", cat:"País", ans:"china",         display:"China 🇨🇳",     desc:"Panda, palillos, pagodas y dragones." },
-  { emojis:"🌷 🚲 🧀 🌬️", cat:"País", ans:"holanda",       display:"Países Bajos 🇳🇱", desc:"Tulipanes, bicis, queso y molinos." },
-  { emojis:"⛷️ 🧀 🕰️ 🍫", cat:"País", ans:"suiza",         display:"Suiza 🇨🇭",     desc:"Alpes, fondue, relojes y chocolate." },
-  { emojis:"☕ 🌴 🏖️ 🥥", cat:"País", ans:"brasil",        display:"Brasil 🇧🇷",    desc:"Café, samba, playas y cocos." },
-  { emojis:"🦙 🛕 🌋 🥔", cat:"País", ans:"peru",          display:"Perú 🇵🇪",      desc:"Llama, Machu Picchu, volcán y papa." },
-  { emojis:"🌴 🍌 🌋 🦜", cat:"País", ans:"cuba",          display:"Cuba 🇨🇺",      desc:"Palmas, plátanos, son y guacamayas." },
-  { emojis:"🦌 🎿 ❄️ 🍁", cat:"País", ans:"canada",        display:"Canadá 🇨🇦",    desc:"Alce, esquí, nieve y la hoja de arce." },
-  { emojis:"🍔 🗽 🏈 🦅", cat:"País", ans:"estados unidos",display:"Estados Unidos 🇺🇸", desc:"Hamburguesa, NFL, Libertad y águila." },
-  { emojis:"🐪 🕌 🛢️ 🌅", cat:"País", ans:"arabia",        display:"Arabia Saudita 🇸🇦", desc:"Camello, mezquita, petróleo y desierto." },
-  { emojis:"🏔️ ☕ 🌹 ⛪", cat:"País", ans:"rusia",         display:"Rusia 🇷🇺",     desc:"Estepa, té, ballet y catedrales." },
-  { emojis:"🐊 🌅 🏛️ 🐫", cat:"País", ans:"egipto",        display:"Egipto 🇪🇬",    desc:"Nilo, pirámides, esfinge, camellos." },
-  { emojis:"🥟 ☕ 🕌 ⚽", cat:"País", ans:"turquia",       display:"Turquía 🇹🇷",   desc:"Kebab, mezquitas y café turco." },
-  { emojis:"🥩 ☕ ⛪ 🏰", cat:"País", ans:"uruguay",       display:"Uruguay 🇺🇾",   desc:"Asado, mate y ciudad colonial." },
-  { emojis:"🍷 🏔️ 🥟 ⛷️", cat:"País", ans:"chile",         display:"Chile 🇨🇱",     desc:"Vino, Andes, empanadas y nieve." },
-  { emojis:"🛢️ 🦜 ⚽ 🌴", cat:"País", ans:"venezuela",     display:"Venezuela 🇻🇪", desc:"Petróleo, guacamayas, fútbol y caribe." },
-  { emojis:"⚽ 👟 🌊 🎨", cat:"País", ans:"portugal",      display:"Portugal 🇵🇹",  desc:"Cristiano, mar, futbolistas y arte." },
-
-  /* === PELÍCULAS === */
-  { emojis:"🚢 🥶 🚪 💔", cat:"Película", ans:"titanic",       display:"Titanic",       desc:"Barco, frío, la puerta, corazón roto." },
-  { emojis:"🦁 👑 🌅 🐒", cat:"Película", ans:"el rey leon",   display:"El Rey León",   desc:"La sabana, Mufasa, Rafiki." },
-  { emojis:"⚡ 🧙 🦉 🚂", cat:"Película", ans:"harry potter",  display:"Harry Potter",  desc:"Cicatriz, mago, lechuza, Hogwarts." },
-  { emojis:"🤖 🚗 🔥 🛣️", cat:"Película", ans:"rapido y furioso", display:"Rápido y Furioso", desc:"Autos, carreras, acción y familia." },
-  { emojis:"👻 🎒 🚫 🟢", cat:"Película", ans:"cazafantasmas", display:"Cazafantasmas", desc:"Fantasmas, mochilas, Nueva York." },
-  { emojis:"🦖 🦕 🏝️ 🥶", cat:"Película", ans:"jurassic park", display:"Jurassic Park", desc:"Dinosaurios en una isla aislada." },
-  { emojis:"👽 🪐 ⚔️ 🛸", cat:"Película", ans:"star wars",     display:"Star Wars",     desc:"Planetas, sables láser y naves." },
-  { emojis:"🧙 🐉 👑 ⚔️", cat:"Película", ans:"el senor de los anillos", display:"El Señor de los Anillos", desc:"Magos, dragones, reyes y guerra." },
-  { emojis:"🕷️ 🕸️ 🏙️ 🦸", cat:"Película", ans:"spider man",   display:"Spider-Man",    desc:"Telaraña, ciudad y el hombre araña." },
-  { emojis:"🦈 🌊 🏄 🩸", cat:"Película", ans:"tiburon",       display:"Tiburón",       desc:"Aleta en el mar, surfista, ataque." },
-  { emojis:"❄️ 👑 👸 🦌", cat:"Película", ans:"frozen",        display:"Frozen",        desc:"Reinas de hielo y un reno mágico." },
-  { emojis:"🐠 🌊 🔍 🤡", cat:"Película", ans:"buscando a nemo", display:"Buscando a Nemo", desc:"Pez payaso perdido en el océano." },
-  { emojis:"🐢 🥷 🍕 🟢", cat:"Película", ans:"tortugas ninja", display:"Tortugas Ninja",desc:"Cuatro tortugas, pizza y ninjas." },
-  { emojis:"🦁 🌬️ 📖 👧", cat:"Película", ans:"narnia",        display:"Las Crónicas de Narnia", desc:"León hablante, ropero mágico." },
-  { emojis:"🎩 🐰 ⏰ 🍰", cat:"Película", ans:"alicia",        display:"Alicia en el País de las Maravillas", desc:"Sombrero, conejo y hora del té." },
-  { emojis:"🦇 🌃 🃏 🏙️", cat:"Película", ans:"batman",        display:"Batman",        desc:"Murciélago, ciudad nocturna y Joker." },
-  { emojis:"🌊 🐙 🚢 ⚓", cat:"Película", ans:"piratas del caribe", display:"Piratas del Caribe", desc:"Kraken, barcos, brújula, ron." },
-  { emojis:"🔫 💼 🎩 💰", cat:"Película", ans:"james bond",    display:"James Bond",    desc:"Espía con licencia para matar." },
-  { emojis:"🃏 🌃 🎭 🎨", cat:"Película", ans:"joker",         display:"Joker",         desc:"El bromista psicópata de Gótica." },
-  { emojis:"🐀 🇫🇷 🍝 🍴", cat:"Película", ans:"ratatouille",   display:"Ratatouille",   desc:"Una rata cocinera en París." },
-  { emojis:"🐉 ⛩️ 🥷 👲", cat:"Película", ans:"mulan",         display:"Mulán",         desc:"Guerrera china con dragón." },
-  { emojis:"🌪️ 🏡 🐶 👠", cat:"Película", ans:"el mago de oz", display:"El Mago de Oz", desc:"Tornado, casa, perro y zapatos rojos." },
-  { emojis:"🤡 🎈 🛁 👶", cat:"Película", ans:"it",            display:"It (Eso)",      desc:"Payaso terrorífico que ataca niños." },
-  { emojis:"🥊 🥇 🏃 🐔", cat:"Película", ans:"rocky",         display:"Rocky",         desc:"Boxeador entrenando contra todo." },
-  { emojis:"💍 🌋 🧙 👁️", cat:"Película", ans:"el hobbit",     display:"El Hobbit",     desc:"Anillo, volcán y mago itinerante." },
-  { emojis:"🐺 🌕 🌲 🧒", cat:"Película", ans:"crepusculo",    display:"Crepúsculo",    desc:"Vampiros, lobos y bosque." },
-  { emojis:"🎤 🪩 🕺 ⭐", cat:"Película", ans:"la la land",    display:"La La Land",    desc:"Musical, jazz y romance en LA." },
-  { emojis:"🎡 🎟️ 🐎 🤠", cat:"Película", ans:"toy story",    display:"Toy Story",     desc:"Juguetes que cobran vida." },
-  { emojis:"🐉 🧒 🌅 🪶", cat:"Película", ans:"como entrenar a tu dragon", display:"Cómo entrenar a tu dragón", desc:"Vikingo y su dragón mascota." },
-  { emojis:"🐭 🎩 🎢 🏰", cat:"Película", ans:"disney",        display:"Walt Disney",   desc:"Mickey, sombrero, parques y castillo." }
+/* ================================================================
+   DATOS · AHORCADO
+   word: palabra a adivinar (sin tildes ni espacios para validar simple)
+   display: cómo se muestra al revelar (puede tener tildes/espacios)
+   cat: categoría visible al jugador
+   clue: pista corta visible siempre
+   hint: pista extra (sólo con comodín 💡)
+================================================================ */
+const HANG_WORDS = [
+  { word:'COLOMBIA',  display:'COLOMBIA',  cat:'País',     clue:'País sudamericano famoso por el café y la diversidad cultural.',
+    hint:'Su capital es Bogotá y su moneda es el peso.' },
+  { word:'MARIPOSA',  display:'MARIPOSA',  cat:'Animal',   clue:'Insecto colorido que sale después de la oruga.',
+    hint:'Su transformación se llama metamorfosis.' },
+  { word:'MARADONA',  display:'MARADONA',  cat:'Persona',  clue:'Leyenda del fútbol argentino, famoso por el "gol del siglo".',
+    hint:'Usaba el dorsal número 10 en la selección.' },
+  { word:'CHOCOLATE', display:'CHOCOLATE', cat:'Comida',   clue:'Dulce derivado del cacao, muy popular en Suiza y Bélgica.',
+    hint:'En Colombia se toma caliente con queso.' },
+  { word:'AMAZONAS',  display:'AMAZONAS',  cat:'Lugar',    clue:'Selva tropical más grande del mundo, compartida entre varios países.',
+    hint:'El río que la atraviesa lleva el mismo nombre.' },
+  { word:'TITANIC',   display:'TITANIC',   cat:'Película', clue:'Película romántica sobre un barco que se hundió en 1912.',
+    hint:'Sus protagonistas son Leonardo DiCaprio y Kate Winslet.' },
+  { word:'CARNAVAL',  display:'CARNAVAL',  cat:'Evento',   clue:'Fiesta callejera con disfraces y comparsas, famosa en Brasil.',
+    hint:'En Colombia el más célebre es el de Barranquilla.' },
+  { word:'GUITARRA',  display:'GUITARRA',  cat:'Objeto',   clue:'Instrumento musical de seis cuerdas.',
+    hint:'Es protagonista en el flamenco y el rock.' },
+  { word:'JIRAFA',    display:'JIRAFA',    cat:'Animal',   clue:'Mamífero africano con el cuello más largo del mundo.',
+    hint:'Su lengua es azul oscuro y puede medir 50 cm.' },
+  { word:'ELEFANTE',  display:'ELEFANTE',  cat:'Animal',   clue:'Mamífero terrestre más grande, con trompa y colmillos.',
+    hint:'Tiene memoria prodigiosa y vive en manadas.' },
+  { word:'PIRAMIDES', display:'PIRÁMIDES', cat:'Lugar',    clue:'Construcciones triangulares milenarias del antiguo Egipto.',
+    hint:'Las más famosas están en Guiza, cerca de El Cairo.' },
+  { word:'MARIACHI',  display:'MARIACHI',  cat:'Cultura',  clue:'Conjunto musical típico de México, con trompetas y violines.',
+    hint:'Suelen vestir de charro y cantan rancheras.' },
+  { word:'TANGO',     display:'TANGO',     cat:'Cultura',  clue:'Baile sensual y melancólico nacido en el Río de la Plata.',
+    hint:'Carlos Gardel fue su gran ícono.' },
+  { word:'PINGUINO',  display:'PINGÜINO',  cat:'Animal',   clue:'Ave acuática no voladora que vive en el Polo Sur.',
+    hint:'Es nadador experto y su esmoquin natural lo distingue.' },
+  { word:'AREPA',     display:'AREPA',     cat:'Comida',   clue:'Pan plano de maíz típico de Colombia y Venezuela.',
+    hint:'Puede ser de queso, con huevo o sola al desayuno.' }
 ];
-const ROULETTE_ROUNDS = 5;
-const ROULETTE_PTS_PER = 50;
-const ROULETTE_MAX_PTS = ROULETTE_ROUNDS * ROULETTE_PTS_PER;   // 250
-const ROULETTE_TIME_BONUS = 50;                                // bono más generoso
-const ROULETTE_MAX = ROULETTE_MAX_PTS + ROULETTE_TIME_BONUS;   // 300
 
+const HANG_ROUNDS     = 5;
+const HANG_MAX_ERRORS = 6;
+const HANG_PTS_PER    = 50;
+const HANG_MAX_PTS    = HANG_ROUNDS * HANG_PTS_PER;   // 250
+const HANG_TIME_BONUS = 50;
+const HANG_MAX        = HANG_MAX_PTS + HANG_TIME_BONUS; // 300
+
+/* Alias para no romper referencias a ROULETTE_MAX en otros lados */
+const ROULETTE_MAX = HANG_MAX;
 
 /* DATOS · BANDERAS — t: texto descriptivo representativo (sin decir el nombre) */
 /* r: descriptor de región (siempre visible, ayuda a ubicar)
@@ -789,8 +787,9 @@ const PASS_SCORE = Math.ceil(MAX_TOTAL * PASS_PCT / 100);
 /* ESTADO */
 const G = {
   player:{name:'',cedula:'',cargo:''},
-  roulette:{score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null,
-            lifelines:{letra:3, pista:3, cambio:3}, revealed:''},
+  hang:    {score:0,started:0,ended:0,roundIdx:0,results:[],currentWord:null,used:null,
+            lifelines:{letra:3, pista:3, cambio:3},
+            revealed:[],guessed:[],errors:0,won:false},
   flag:    {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
             lifelines:{fifty:3, hint:3}, timeLeft:90},
   maze:    {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT},
@@ -845,8 +844,9 @@ btnStart.addEventListener('click', ()=>{
   G.startedAt = Date.now();
   document.getElementById('mhMax').textContent = MAX_TOTAL;
 
-  G.roulette = {score:0,started:0,ended:0,roundIdx:0,results:[],currentChallenge:null,used:null,
-                lifelines:{letra:3, pista:3, cambio:3}, revealed:''};
+  G.hang     = {score:0,started:0,ended:0,roundIdx:0,results:[],currentWord:null,used:null,
+                lifelines:{letra:3, pista:3, cambio:3},
+                revealed:[],guessed:[],errors:0,won:false};
   G.flag     = {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
                 lifelines:{fifty:3, hint:3}, timeLeft:FLAG_TIME_LIMIT};
   G.maze     = {score:0,started:0,ended:0,won:false,steps:0,timeLeft:MAZE_TIME_LIMIT};
@@ -857,7 +857,7 @@ btnStart.addEventListener('click', ()=>{
     b.querySelector('.fill').style.width='0%';
   });
 
-  startRoulette();
+  startHang();
   goToSlide(1);
 });
 
@@ -881,362 +881,384 @@ function normalize(str){
     .replace(/[^a-z0-9 ]/g,'').trim();
 }
 
-/* JUEGO 1 · RULETA */
-let rouletteHeaderTimer = null;
-function startRoulette(){
-  G.roulette.started = Date.now();
+/* ================================================================
+   JUEGO 1 · AHORCADO
+================================================================ */
+let hangHeaderTimer = null;
+const HANG_ABECEDARIO = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+
+function startHang(){
+  G.hang.started = Date.now();
+  G.hang.roundIdx = 0;
+  G.hang.results = [];
+  G.hang.used = new Set();
   document.getElementById('mhBadge').className = 'mh-badge gold';
   document.getElementById('mhBadge').textContent = 'JUEGO 1 · 1 de 3';
-  document.getElementById('mhTitle').textContent = 'RULETA DE PISTAS';
+  document.getElementById('mhTitle').textContent = 'AHORCADO';
 
   const html = `
     <div class="mission-intro gold" style="margin-bottom:18px">
       <div class="m-num">Juego I</div>
-      <h2>RULETA DE PISTAS</h2>
-      <p>La ruleta te entrega <strong>${ROULETTE_ROUNDS} retos</strong> con emojis. Cada acierto suma <strong>${ROULETTE_PTS_PER} pts</strong>. Si terminas en menos de 2 min recibes un bono de hasta <strong>${ROULETTE_TIME_BONUS} pts</strong>. Tienes <strong>9 comodines</strong> para apoyarte.</p>
+      <h2>AHORCADO</h2>
+      <p>Adivina la palabra oculta letra por letra. Tienes <strong>${HANG_MAX_ERRORS} intentos</strong> antes de perder. Cada palabra acertada suma <strong>${HANG_PTS_PER} pts</strong>. Si terminas en menos de 2 min recibes un bono de hasta <strong>${HANG_TIME_BONUS} pts</strong>. Cuentas con <strong>9 comodines</strong> para apoyarte.</p>
       <div class="m-rules">
-        <span class="pill gold">${ROULETTE_MAX} pts máx</span>
-        <span class="pill">${ROULETTE_ROUNDS} rondas</span>
+        <span class="pill gold">${HANG_MAX} pts máx</span>
+        <span class="pill">${HANG_ROUNDS} rondas</span>
         <span class="pill gray">9 comodines</span>
       </div>
-      <button class="btn-primary" id="rouletteGoBtn">Empezar Ruleta
+      <button class="btn-primary" id="hangGoBtn">Empezar
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
     </div>
-    <div class="roulette-stage" id="rouletteStage" style="display:none">
-      <div class="roulette-side">
-        <div class="roulette-wrap">
-          <div class="pointer"></div>
-          <canvas id="wheelCanvas" width="300" height="300"></canvas>
+    <div class="hang-stage" id="hangStage" style="display:none">
+      <div class="hang-main">
+        <div class="hang-top">
+          <span class="hang-round-pill"><span class="dot"></span><span id="hangRoundText">RONDA 1 / ${HANG_ROUNDS}</span></span>
+          <span class="hang-cat-pill" id="hangCatPill">CATEGORÍA · —</span>
         </div>
-        <button class="btn-gold" id="spinBtn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Girar Ruleta
-        </button>
-        <div class="round-tracker" id="rTracker"></div>
+        <svg class="hang-figure" id="hangFigure" viewBox="0 0 170 170">
+          <!-- horca -->
+          <line class="show" data-step="0" x1="15"  y1="160" x2="120" y2="160"/>
+          <line class="show" data-step="0" x1="40"  y1="160" x2="40"  y2="15"/>
+          <line class="show" data-step="0" x1="40"  y1="15"  x2="110" y2="15"/>
+          <line class="show" data-step="0" x1="110" y1="15"  x2="110" y2="35"/>
+          <!-- cabeza -->
+          <circle data-step="1" cx="110" cy="50" r="15"/>
+          <!-- cuerpo -->
+          <line data-step="2" x1="110" y1="65"  x2="110" y2="105"/>
+          <!-- brazo izq -->
+          <line data-step="3" x1="110" y1="75"  x2="90"  y2="92"/>
+          <!-- brazo der -->
+          <line data-step="4" x1="110" y1="75"  x2="130" y2="92"/>
+          <!-- pierna izq -->
+          <line data-step="5" x1="110" y1="105" x2="92"  y2="130"/>
+          <!-- pierna der -->
+          <line data-step="6" x1="110" y1="105" x2="128" y2="130"/>
+        </svg>
+        <div class="hang-clue" id="hangClue">
+          <strong>PISTA</strong>
+          <span id="hangClueTxt">—</span>
+        </div>
+        <div class="hang-word" id="hangWord"></div>
+        <div class="reveal-bar" id="hangExtra"></div>
+        <div class="lifelines-row" id="hangLifelines">
+          <div class="ll-title">Comodines · 9 ayudas (3 + 3 + 3)</div>
+          <button class="ll-btn" id="hangLLLetra" type="button" disabled>
+            🔤 Letra <span class="ll-count" id="hangLLLetraN">3</span>
+          </button>
+          <button class="ll-btn" id="hangLLPista" type="button" disabled>
+            💡 Pista <span class="ll-count" id="hangLLPistaN">3</span>
+          </button>
+          <button class="ll-btn" id="hangLLCambio" type="button" disabled>
+            🔄 Cambio <span class="ll-count" id="hangLLCambioN">3</span>
+          </button>
+        </div>
+        <div class="hang-keyboard" id="hangKeyboard"></div>
+        <div class="hang-fb" id="hangFb"></div>
       </div>
-      <div class="roulette-main">
-        <div class="roulette-stat-row">
-          <span class="roulette-cat" id="rCat"><span class="dot"></span><span id="rCatText">— ESPERANDO GIRO —</span></span>
-          <span class="roulette-cat" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)">
-            <span class="dot" style="background:#fff"></span>
-            <span id="rRoundText">RONDA 1 / ${ROULETTE_ROUNDS}</span>
-          </span>
+      <aside class="hang-side">
+        <div class="hang-card">
+          <h5>Estado</h5>
+          <div class="hang-stats">
+            <div class="hang-stat"><div class="hs-num" id="hangErrors">0/${HANG_MAX_ERRORS}</div><div class="hs-lbl">Errores</div></div>
+            <div class="hang-stat"><div class="hs-num" id="hangScoreCur">0</div><div class="hs-lbl">Puntos</div></div>
+          </div>
         </div>
-        <div class="emoji-display" id="emojiDisplay">❓ ❓ ❓ ❓</div>
-        <p class="roulette-q-text" id="rInstr">Pulsa <strong style="color:var(--gold)">Girar Ruleta</strong> para obtener tu pista.</p>
-        <div class="reveal-bar" id="rRevealBar"></div>
-        <div class="lifelines-row" id="rLifelines">
-          <div class="ll-title">Comodines · 9 ayudas disponibles (3 + 3 + 3)</div>
-          <button class="ll-btn" id="llLetra" type="button" disabled>
-            🔤 Letra <span class="ll-count" id="llLetraN">3</span>
-          </button>
-          <button class="ll-btn" id="llPista" type="button" disabled>
-            💡 Pista <span class="ll-count" id="llPistaN">3</span>
-          </button>
-          <button class="ll-btn" id="llCambio" type="button" disabled>
-            🔄 Cambio <span class="ll-count" id="llCambioN">3</span>
-          </button>
+        <div class="hang-card">
+          <h5>Rondas</h5>
+          <div class="hang-rounds-list" id="hangRoundsList"></div>
         </div>
-        <div class="roulette-input-row">
-          <input type="text" id="guessInput" placeholder="Escribe tu respuesta…" disabled autocomplete="off">
-          <button class="btn-gold" id="guessBtn" disabled>Adivinar</button>
-        </div>
-        <div class="roulette-fb" id="rouletteFb"></div>
-      </div>
+      </aside>
     </div>
   `;
   document.getElementById('missionContainer').innerHTML = html;
 
-  document.getElementById('rouletteGoBtn').addEventListener('click', ()=>{
+  document.getElementById('hangGoBtn').addEventListener('click', ()=>{
     document.querySelector('.mission-intro').style.display='none';
-    document.getElementById('rouletteStage').style.display='grid';
-    G.roulette.started = Date.now();
-    setupWheel();
-    renderRouletteTracker();
-    if(rouletteHeaderTimer) clearInterval(rouletteHeaderTimer);
-    rouletteHeaderTimer = setInterval(()=>{
+    document.getElementById('hangStage').style.display='grid';
+    G.hang.started = Date.now();
+    if(hangHeaderTimer) clearInterval(hangHeaderTimer);
+    hangHeaderTimer = setInterval(()=>{
       document.getElementById('mhTime').textContent =
-        fmtMS((Date.now()-G.roulette.started)/1000);
+        fmtMS((Date.now()-G.hang.started)/1000);
     }, 500);
+    bindHangLifelines();
+    bindHangKeyboard();
+    renderHangRoundsList();
+    startHangRound(0);
+    window.addEventListener('keydown', hangKeyHandler);
   });
 }
 
-function renderRouletteTracker(){
-  const t = document.getElementById('rTracker');
-  let html='';
-  for(let i=0;i<ROULETTE_ROUNDS;i++){
-    const res = G.roulette.results[i];
-    let cls='';
-    if(i === G.roulette.roundIdx) cls='current';
-    else if(res === true) cls='ok';
-    else if(res === false) cls='bad';
-    html += `<div class="rt-dot ${cls}">${i+1}</div>`;
+function renderHangRoundsList(){
+  const c = document.getElementById('hangRoundsList');
+  if(!c) return;
+  let html = '';
+  for(let i=0;i<HANG_ROUNDS;i++){
+    const r = G.hang.results[i];
+    let cls = '';
+    if(i === G.hang.roundIdx) cls = 'current';
+    else if(r && r.won) cls = 'done';
+    else if(r) cls = 'fail';
+    const pts = r ? r.pts : (i === G.hang.roundIdx ? '—' : '');
+    html += `<div class="hr-step ${cls}"><span class="hr-n">RONDA ${i+1}</span><span class="hr-p">${pts}</span></div>`;
   }
-  t.innerHTML = html;
-  document.getElementById('rRoundText').textContent =
-    'RONDA '+(G.roulette.roundIdx+1)+' / '+ROULETTE_ROUNDS;
+  c.innerHTML = html;
 }
 
-let wheelCtx = null;
-const wheelSegments = ["País","Película","País","Película","País","Película","País","Película"];
-const wheelColors   = ["#F2C75C","#0FBF8B","#02A683","#E89B4A","#F2C75C","#0FBF8B","#02A683","#E89B4A"];
-let startAngle = 0;
-const arc = Math.PI / (wheelSegments.length / 2);
-let spinTimeout = null;
-let spinAngleStart = 0;
-let spinTime = 0;
-let spinTimeTotal = 0;
-let spinning = false;
+function pickHangWord(){
+  const used = G.hang.used;
+  let pool = HANG_WORDS.filter(w => !used.has(w.word));
+  if(!pool.length){ used.clear(); pool = HANG_WORDS.slice(); }
+  const pick = pool[Math.floor(Math.random()*pool.length)];
+  used.add(pick.word);
+  return pick;
+}
 
-function setupWheel(){
-  const c = document.getElementById('wheelCanvas');
-  wheelCtx = c.getContext('2d');
-  drawWheel();
-  document.getElementById('spinBtn').addEventListener('click', spin);
-  document.getElementById('guessBtn').addEventListener('click', checkRouletteAnswer);
-  document.getElementById('guessInput').addEventListener('keydown', e=>{
-    if(e.key==='Enter') checkRouletteAnswer();
+function startHangRound(idx){
+  G.hang.roundIdx = idx;
+  G.hang.currentWord = pickHangWord();
+  G.hang.guessed = [];
+  G.hang.errors = 0;
+  G.hang.won = false;
+
+  const w = G.hang.currentWord;
+  // revealed[] arranca todo false (sólo para letras; espacios siempre revelados)
+  G.hang.revealed = Array.from(w.word).map(ch => ch === ' ');
+
+  document.getElementById('hangRoundText').textContent = 'RONDA '+(idx+1)+' / '+HANG_ROUNDS;
+  document.getElementById('hangCatPill').textContent  = 'CATEGORÍA · '+w.cat.toUpperCase();
+  document.getElementById('hangClueTxt').textContent  = w.clue;
+  document.getElementById('hangErrors').textContent   = '0/'+HANG_MAX_ERRORS;
+  document.getElementById('hangErrors').classList.remove('danger');
+  document.getElementById('hangFb').className = 'hang-fb';
+  document.getElementById('hangFb').innerHTML = '';
+  const extra = document.getElementById('hangExtra');
+  if(extra){ extra.classList.remove('show'); extra.textContent = ''; }
+
+  // figura: sólo la horca visible
+  document.querySelectorAll('#hangFigure [data-step]').forEach(el => {
+    const step = parseInt(el.dataset.step, 10);
+    if(step === 0) el.classList.add('show');
+    else el.classList.remove('show');
   });
-  const bl = document.getElementById('llLetra');
-  const bp = document.getElementById('llPista');
-  const bc = document.getElementById('llCambio');
-  if(bl) bl.addEventListener('click', useLifelineLetra);
-  if(bp) bp.addEventListener('click', useLifelinePista);
-  if(bc) bc.addEventListener('click', useLifelineCambio);
-  refreshRouletteLifelines();
+
+  renderHangWord();
+  renderHangKeyboard();
+  renderHangRoundsList();
+  refreshHangLifelines();
 }
 
-function drawWheel(){
-  const ctx = wheelCtx;
-  ctx.clearRect(0,0,300,300);
-  const outsideRadius=140, textRadius=92, insideRadius=18;
-  for(let i=0;i<wheelSegments.length;i++){
-    const angle = startAngle + i*arc;
-    ctx.fillStyle = wheelColors[i];
-    ctx.beginPath();
-    ctx.arc(150,150,outsideRadius,angle,angle+arc,false);
-    ctx.arc(150,150,insideRadius,angle+arc,angle,true);
-    ctx.fill();
-    ctx.save();
-    ctx.fillStyle='#fff';
-    ctx.translate(150+Math.cos(angle+arc/2)*textRadius, 150+Math.sin(angle+arc/2)*textRadius);
-    ctx.rotate(angle+arc/2 + Math.PI/2);
-    const text = wheelSegments[i];
-    ctx.font='bold 14px sans-serif';
-    ctx.fillText(text, -ctx.measureText(text).width/2, 0);
-    ctx.restore();
+function renderHangWord(){
+  const w = G.hang.currentWord;
+  const c = document.getElementById('hangWord');
+  let html = '';
+  for(let i=0;i<w.word.length;i++){
+    const ch = w.word[i];
+    if(ch === ' '){
+      html += `<div class="hang-letter space"></div>`;
+    } else if(G.hang.revealed[i]){
+      // si la palabra tiene "display" con tildes, usar el display correspondiente
+      const dCh = (w.display && w.display[i]) ? w.display[i] : ch;
+      html += `<div class="hang-letter revealed">${dCh}</div>`;
+    } else {
+      html += `<div class="hang-letter empty">_</div>`;
+    }
   }
-  ctx.beginPath();
-  ctx.arc(150,150,16,0,Math.PI*2);
-  ctx.fillStyle = '#fff';
-  ctx.fill();
-  ctx.strokeStyle = '#0B1E3F';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  c.innerHTML = html;
 }
 
-function spin(){
-  if(spinning) return;
-  if(G.roulette.roundIdx >= ROULETTE_ROUNDS) return;
-  spinning = true;
-  document.getElementById('spinBtn').disabled = true;
-  document.getElementById('guessInput').disabled = true;
-  document.getElementById('guessBtn').disabled = true;
-  document.getElementById('emojiDisplay').textContent = '🎲 GIRANDO…';
-  document.getElementById('rCatText').textContent = '— SUSPENSO —';
-  document.getElementById('rInstr').textContent = 'Esperando la pista…';
-  document.getElementById('rouletteFb').className = 'roulette-fb';
-
-  spinAngleStart = Math.random()*10 + 12;
-  spinTime = 0;
-  spinTimeTotal = Math.random()*1500 + 2200;
-  rotateWheel();
+function renderHangKeyboard(){
+  const c = document.getElementById('hangKeyboard');
+  let html = '';
+  HANG_ABECEDARIO.forEach(L => {
+    let cls = '';
+    if(G.hang.guessed.includes(L)){
+      const inWord = G.hang.currentWord.word.includes(L);
+      cls = inWord ? 'ok' : 'bad';
+    }
+    const disabled = (G.hang.guessed.includes(L) || G.hang.won || G.hang.errors >= HANG_MAX_ERRORS) ? 'disabled' : '';
+    html += `<button type="button" class="hang-key ${cls}" data-letter="${L}" ${disabled}>${L}</button>`;
+  });
+  c.innerHTML = html;
 }
 
-function rotateWheel(){
-  spinTime += 30;
-  if(spinTime >= spinTimeTotal){ stopRotateWheel(); return; }
-  const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
-  startAngle += (spinAngle * Math.PI/180);
-  drawWheel();
-  spinTimeout = setTimeout(rotateWheel, 30);
+function bindHangKeyboard(){
+  document.getElementById('hangKeyboard').addEventListener('click', e => {
+    const btn = e.target.closest('.hang-key');
+    if(!btn || btn.disabled) return;
+    guessLetter(btn.dataset.letter);
+  });
 }
 
-function easeOut(t,b,c,d){
-  const ts=(t/=d)*t, tc=ts*t;
-  return b+c*(tc + -3*ts + 3*t);
+function hangKeyHandler(e){
+  if(!G.hang.currentWord) return;
+  const k = e.key.toUpperCase();
+  if(HANG_ABECEDARIO.includes(k)) guessLetter(k);
 }
 
-function stopRotateWheel(){
-  clearTimeout(spinTimeout); spinTimeout=null;
-  spinning = false;
+function guessLetter(L){
+  if(G.hang.won || G.hang.errors >= HANG_MAX_ERRORS) return;
+  if(G.hang.guessed.includes(L)) return;
+  G.hang.guessed.push(L);
 
-  const norm = ((Math.PI*1.5 - startAngle) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
-  const idx = Math.floor(norm / arc) % wheelSegments.length;
-  const pickedCat = wheelSegments[idx];
-
-  const pool = ROULETTE_DB.filter(d => d.cat === pickedCat);
-  const list = pool.length ? pool : ROULETTE_DB;
-  const ch = list[Math.floor(Math.random()*list.length)];
-  G.roulette.currentChallenge = ch;
-
-  document.getElementById('emojiDisplay').textContent = ch.emojis;
-  document.getElementById('rCatText').textContent = 'CATEGORÍA · '+ch.cat.toUpperCase();
-  document.getElementById('rInstr').innerHTML = 'Lee los emojis y escribe el <strong>'+ch.cat.toLowerCase()+'</strong> oculto.';
-
-  const inp = document.getElementById('guessInput');
-  inp.disabled = false; inp.value = ''; inp.focus();
-  document.getElementById('guessBtn').disabled = false;
-
-  // reset reveal bar de comodín "Letra"
-  G.roulette.revealed = '';
-  const rb = document.getElementById('rRevealBar');
-  if(rb){ rb.classList.remove('show'); rb.textContent = ''; }
-  refreshRouletteLifelines();
-}
-
-/* === Comodines · Ruleta === */
-function refreshRouletteLifelines(){
-  const ch = G.roulette.currentChallenge;
-  const ll = G.roulette.lifelines;
-  const byId = id => document.getElementById(id);
-  const btnL = byId('llLetra'),  nL = byId('llLetraN');
-  const btnP = byId('llPista'),  nP = byId('llPistaN');
-  const btnC = byId('llCambio'), nC = byId('llCambioN');
-  if(!btnL || !btnP || !btnC) return;
-  const active = !!ch && !document.getElementById('guessInput').disabled;
-  btnL.disabled = !active || ll.letra  <= 0;
-  btnP.disabled = !active || ll.pista  <= 0;
-  btnC.disabled = !active || ll.cambio <= 0;
-  nL.textContent = ll.letra;
-  nP.textContent = ll.pista;
-  nC.textContent = ll.cambio;
-}
-
-function useLifelineLetra(){
-  const ch = G.roulette.currentChallenge;
-  if(!ch || G.roulette.lifelines.letra <= 0) return;
-  const ans = (ch.ans || '').replace(/\s+/g,' ');
-  const cur = G.roulette.revealed || ' '.repeat(ans.length);
-  const hidden = [];
-  for(let i=0;i<ans.length;i++){
-    if(ans[i] === ' ') continue;
-    if(cur[i] === ' ' || cur[i] === undefined) hidden.push(i);
+  const w = G.hang.currentWord;
+  let hit = false;
+  for(let i=0;i<w.word.length;i++){
+    if(w.word[i] === L){ G.hang.revealed[i] = true; hit = true; }
   }
-  if(hidden.length === 0) return;
-  const pick = hidden[Math.floor(Math.random()*hidden.length)];
-  const arr = cur.split('');
-  while(arr.length < ans.length) arr.push(' ');
-  arr[pick] = ans[pick];
-  G.roulette.revealed = arr.join('');
-  G.roulette.lifelines.letra--;
-  let display = '';
-  for(let i=0;i<ans.length;i++){
-    if(ans[i] === ' ') display += '  ·  ';
-    else if(G.roulette.revealed[i] && G.roulette.revealed[i] !== ' ') display += G.roulette.revealed[i].toUpperCase()+' ';
-    else display += '_ ';
-  }
-  const rb = document.getElementById('rRevealBar');
-  rb.textContent = display.trim();
-  rb.classList.add('show');
-  popScore('LETRA','gold');
-  refreshRouletteLifelines();
-}
 
-function useLifelinePista(){
-  const ch = G.roulette.currentChallenge;
-  if(!ch || G.roulette.lifelines.pista <= 0) return;
-  G.roulette.lifelines.pista--;
-  const fb = document.getElementById('rouletteFb');
-  fb.className = 'roulette-fb ok show';
-  fb.innerHTML = '<strong>💡 Pista</strong>'+ (ch.desc || 'Sin descripción disponible.');
-  popScore('PISTA','gold');
-  refreshRouletteLifelines();
-}
-
-function useLifelineCambio(){
-  const ch = G.roulette.currentChallenge;
-  if(!ch || G.roulette.lifelines.cambio <= 0) return;
-  G.roulette.lifelines.cambio--;
-  // marcar la actual como usada para no repetirla
-  const used = G.roulette.used || (G.roulette.used = new Set());
-  used.add(ch.ans);
-  // buscar otro reto en la misma categoría que no esté usado
-  let pool = ROULETTE_DB.filter(d => d.cat === ch.cat && !used.has(d.ans));
-  if(!pool.length) pool = ROULETTE_DB.filter(d => !used.has(d.ans));
-  if(!pool.length){ used.clear(); pool = ROULETTE_DB.filter(d => d.cat === ch.cat); if(!pool.length) pool = ROULETTE_DB.slice(); }
-  const nu = pool[Math.floor(Math.random()*pool.length)];
-  used.add(nu.ans);
-  G.roulette.currentChallenge = nu;
-  // reset visual del reto
-  G.roulette.revealed = '';
-  const rb = document.getElementById('rRevealBar');
-  if(rb){ rb.classList.remove('show'); rb.textContent = ''; }
-  document.getElementById('emojiDisplay').textContent = nu.emojis;
-  document.getElementById('rCatText').textContent = 'CATEGORÍA · '+nu.cat.toUpperCase();
-  document.getElementById('rInstr').innerHTML = 'Lee los emojis y escribe el <strong>'+nu.cat.toLowerCase()+'</strong> oculto.';
-  const fb = document.getElementById('rouletteFb');
-  fb.className = 'roulette-fb';
-  fb.innerHTML = '';
-  const inp = document.getElementById('guessInput');
-  inp.value = ''; inp.focus();
-  popScore('CAMBIO','gold');
-  refreshRouletteLifelines();
-}
-
-function checkRouletteAnswer(){
-  const ch = G.roulette.currentChallenge;
-  if(!ch) return;
-  const inp = document.getElementById('guessInput');
-  const val = normalize(inp.value);
-  if(!val) return;
-  const ans = normalize(ch.ans);
-  const ok = val === ans || val.includes(ans) || (ans.includes(val) && val.length >= Math.min(4, ans.length));
-
-  const fb = document.getElementById('rouletteFb');
-  if(ok){
-    G.roulette.score += ROULETTE_PTS_PER;
-    G.totalScore += ROULETTE_PTS_PER;
-    G.roulette.results.push(true);
-    fb.className = 'roulette-fb ok show';
-    fb.innerHTML = '<strong>+'+ROULETTE_PTS_PER+' pts · ¡Correcto!</strong>Era <strong>'+ch.display+'</strong>. '+ch.desc;
-    popScore('+'+ROULETTE_PTS_PER, 'gold');
+  if(hit){
+    renderHangWord();
+    const allDone = G.hang.revealed.every(Boolean);
+    if(allDone) winHangRound();
   } else {
-    G.roulette.results.push(false);
-    fb.className = 'roulette-fb no show';
-    fb.innerHTML = '<strong>Incorrecto</strong>La respuesta era <strong>'+ch.display+'</strong>. '+ch.desc;
-    popScore('+0', 'bad');
+    G.hang.errors++;
+    document.getElementById('hangErrors').textContent = G.hang.errors+'/'+HANG_MAX_ERRORS;
+    if(G.hang.errors >= 4) document.getElementById('hangErrors').classList.add('danger');
+    // dibuja siguiente parte
+    const piece = document.querySelector('#hangFigure [data-step="'+G.hang.errors+'"]');
+    if(piece) piece.classList.add('show');
+    if(G.hang.errors >= HANG_MAX_ERRORS) loseHangRound();
   }
+  renderHangKeyboard();
+  refreshHangLifelines();
+}
+
+function winHangRound(){
+  G.hang.won = true;
+  G.hang.score += HANG_PTS_PER;
+  G.totalScore += HANG_PTS_PER;
   updateHeader();
-  inp.disabled = true;
-  document.getElementById('guessBtn').disabled = true;
-  refreshRouletteLifelines();
-  G.roulette.roundIdx++;
-  document.querySelector('#mpBar1 .fill').style.width = (G.roulette.roundIdx/ROULETTE_ROUNDS*100)+'%';
-
-  if(G.roulette.roundIdx >= ROULETTE_ROUNDS){
-    setTimeout(endRoulette, 1500);
-  } else {
-    renderRouletteTracker();
-    document.getElementById('spinBtn').disabled = false;
-  }
+  document.getElementById('hangScoreCur').textContent = G.hang.score;
+  popScore('+'+HANG_PTS_PER, 'gold');
+  const fb = document.getElementById('hangFb');
+  fb.className = 'hang-fb ok show';
+  fb.innerHTML = '<strong>+'+HANG_PTS_PER+' · ¡Adivinaste!</strong>Era <strong>'+G.hang.currentWord.display+'</strong>. '+G.hang.currentWord.hint;
+  G.hang.results.push({won:true, pts:HANG_PTS_PER, word:G.hang.currentWord.display});
+  nextHangRound();
 }
 
-function endRoulette(){
-  if(rouletteHeaderTimer){ clearInterval(rouletteHeaderTimer); rouletteHeaderTimer=null; }
-  G.roulette.ended = Date.now();
+function loseHangRound(){
+  // revelar palabra completa
+  G.hang.revealed = Array.from(G.hang.currentWord.word).map(()=>true);
+  renderHangWord();
+  const fb = document.getElementById('hangFb');
+  fb.className = 'hang-fb no show';
+  fb.innerHTML = '<strong>Se acabó · 0 pts</strong>La palabra era <strong>'+G.hang.currentWord.display+'</strong>. '+G.hang.currentWord.hint;
+  popScore('0','bad');
+  G.hang.results.push({won:false, pts:0, word:G.hang.currentWord.display});
+  nextHangRound();
+}
 
-  const sec = (G.roulette.ended - G.roulette.started)/1000;
-  // bono generoso: bono completo si termina en <=120s, decae a 0 en 240s
-  const bonus = Math.round(Math.max(0, Math.min(1, (240 - sec)/120)) * ROULETTE_TIME_BONUS);
-  G.roulette.score += bonus;
+function nextHangRound(){
+  document.querySelector('#mpBar1 .fill').style.width = ((G.hang.roundIdx+1)/HANG_ROUNDS*100)+'%';
+  renderHangRoundsList();
+  setTimeout(()=>{
+    if(G.hang.roundIdx + 1 >= HANG_ROUNDS){
+      endHang();
+    } else {
+      startHangRound(G.hang.roundIdx + 1);
+    }
+  }, 2000);
+}
+
+function endHang(){
+  if(hangHeaderTimer){ clearInterval(hangHeaderTimer); hangHeaderTimer = null; }
+  window.removeEventListener('keydown', hangKeyHandler);
+  G.hang.ended = Date.now();
+  // bono por tiempo (mismo formato generoso que la ruleta original)
+  const sec = (G.hang.ended - G.hang.started)/1000;
+  const bonus = Math.round(Math.max(0, Math.min(1, (240 - sec)/120)) * HANG_TIME_BONUS);
+  G.hang.score += bonus;
   G.totalScore += bonus;
   updateHeader();
-  if(bonus>0) popScore('+'+bonus+' BONO', 'gold');
-
+  if(bonus > 0) popScore('+'+bonus+' BONO', 'gold');
   document.getElementById('mpBar1').classList.add('done');
   setTimeout(startFlag, 1100);
+}
+
+/* === Comodines · Ahorcado === */
+function bindHangLifelines(){
+  const bl = document.getElementById('hangLLLetra');
+  const bp = document.getElementById('hangLLPista');
+  const bc = document.getElementById('hangLLCambio');
+  if(bl) bl.addEventListener('click', hangUseLetra);
+  if(bp) bp.addEventListener('click', hangUsePista);
+  if(bc) bc.addEventListener('click', hangUseCambio);
+  refreshHangLifelines();
+}
+
+function refreshHangLifelines(){
+  const ll = G.hang.lifelines;
+  const active = !!G.hang.currentWord && !G.hang.won && G.hang.errors < HANG_MAX_ERRORS;
+  const set = (id, n, ok) => {
+    const b = document.getElementById(id);
+    if(b) b.disabled = !active || !ok;
+    const nEl = document.getElementById(id+'N');
+    if(nEl) nEl.textContent = n;
+  };
+  set('hangLLLetra',  ll.letra,  ll.letra  > 0);
+  set('hangLLPista',  ll.pista,  ll.pista  > 0);
+  set('hangLLCambio', ll.cambio, ll.cambio > 0);
+}
+
+function hangUseLetra(){
+  if(G.hang.lifelines.letra <= 0) return;
+  const w = G.hang.currentWord;
+  const hidden = [];
+  for(let i=0;i<w.word.length;i++){
+    if(w.word[i] === ' ') continue;
+    if(!G.hang.revealed[i]) hidden.push(i);
+  }
+  if(!hidden.length) return;
+  const pick = hidden[Math.floor(Math.random()*hidden.length)];
+  G.hang.revealed[pick] = true;
+  const L = w.word[pick];
+  // marca la tecla como acertada (sin contar como intento)
+  if(!G.hang.guessed.includes(L)) G.hang.guessed.push(L);
+  G.hang.lifelines.letra--;
+  renderHangWord();
+  renderHangKeyboard();
+  popScore('LETRA','gold');
+  refreshHangLifelines();
+  if(G.hang.revealed.every(Boolean)) winHangRound();
+}
+
+function hangUsePista(){
+  if(G.hang.lifelines.pista <= 0) return;
+  G.hang.lifelines.pista--;
+  const extra = document.getElementById('hangExtra');
+  extra.textContent = G.hang.currentWord.hint || 'Sin pista adicional.';
+  extra.classList.add('show');
+  popScore('PISTA','gold');
+  refreshHangLifelines();
+}
+
+function hangUseCambio(){
+  if(G.hang.lifelines.cambio <= 0) return;
+  G.hang.lifelines.cambio--;
+  // marca la actual como usada y entrega otra
+  const newWord = pickHangWord();
+  G.hang.currentWord = newWord;
+  G.hang.guessed = [];
+  G.hang.errors = 0;
+  G.hang.revealed = Array.from(newWord.word).map(ch => ch === ' ');
+  document.getElementById('hangCatPill').textContent  = 'CATEGORÍA · '+newWord.cat.toUpperCase();
+  document.getElementById('hangClueTxt').textContent  = newWord.clue;
+  document.getElementById('hangErrors').textContent   = '0/'+HANG_MAX_ERRORS;
+  document.getElementById('hangErrors').classList.remove('danger');
+  const extra = document.getElementById('hangExtra');
+  if(extra){ extra.classList.remove('show'); extra.textContent = ''; }
+  document.querySelectorAll('#hangFigure [data-step]').forEach(el => {
+    const step = parseInt(el.dataset.step, 10);
+    if(step === 0) el.classList.add('show');
+    else el.classList.remove('show');
+  });
+  renderHangWord();
+  renderHangKeyboard();
+  popScore('CAMBIO','gold');
+  refreshHangLifelines();
 }
 
 /* ================================================================
@@ -1894,10 +1916,10 @@ function finishGame(){
   document.getElementById('rTotal').textContent = G.totalScore+'/'+MAX_TOTAL;
   document.getElementById('rPct').textContent   = G.percent+'%';
   document.getElementById('rTime').textContent  = fmtMS(totalSec);
-  document.getElementById('rQuiz').textContent  = G.roulette.score+'/'+ROULETTE_MAX;
+  document.getElementById('rQuiz').textContent  = G.hang.score+'/'+HANG_MAX;
   document.getElementById('rMaze').textContent  = G.flag.score+'/'+FLAG_PTS_MAX;
   document.getElementById('rHang').textContent  = G.maze.score+'/'+MAZE_MAX;
-  document.getElementById('rQuizTime').textContent = fmtMS((G.roulette.ended - G.roulette.started)/1000);
+  document.getElementById('rQuizTime').textContent = fmtMS((G.hang.ended - G.hang.started)/1000);
   document.getElementById('rMazeTime').textContent = fmtMS((G.flag.ended     - G.flag.started)/1000);
   document.getElementById('rHangTime').textContent = fmtMS((G.maze.ended     - G.maze.started)/1000);
   document.getElementById('rName').textContent = G.player.name;
@@ -1948,7 +1970,7 @@ document.getElementById('btnGoCert').addEventListener('click', ()=>{
   const payload = {
     folio:folio,
     nombre:G.player.name, cedula:G.player.cedula, cargo:G.player.cargo,
-    quizScore: G.roulette.score,  quizTime: fmtMS((G.roulette.ended - G.roulette.started)/1000),
+    quizScore: G.hang.score,      quizTime: fmtMS((G.hang.ended - G.hang.started)/1000),
     mazeScore: G.flag.score,      mazeTime: fmtMS((G.flag.ended     - G.flag.started)/1000),
     hangScore: G.maze.score,      hangTime: fmtMS((G.maze.ended     - G.maze.started)/1000),
     totalScore:G.totalScore, maxScore:MAX_TOTAL, percent:G.percent,
