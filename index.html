@@ -1920,8 +1920,8 @@ function finishGame(){
   document.getElementById('rMaze').textContent  = G.flag.score+'/'+FLAG_PTS_MAX;
   document.getElementById('rHang').textContent  = G.maze.score+'/'+MAZE_MAX;
   document.getElementById('rQuizTime').textContent = fmtMS((G.hang.ended - G.hang.started)/1000);
-  document.getElementById('rMazeTime').textContent = fmtMS((G.flag.ended     - G.flag.started)/1000);
-  document.getElementById('rHangTime').textContent = fmtMS((G.maze.ended     - G.maze.started)/1000);
+  document.getElementById('rMazeTime').textContent = fmtMS((G.flag.ended - G.flag.started)/1000);
+  document.getElementById('rHangTime').textContent = fmtMS((G.maze.ended - G.maze.started)/1000);
   document.getElementById('rName').textContent = G.player.name;
 
   const card  = document.getElementById('resultCard');
@@ -1940,24 +1940,18 @@ function finishGame(){
     card.classList.add('fail');
     title.textContent = 'No aprobaste';
     msg.innerHTML = 'Obtuviste <strong>'+G.totalScore+'/'+MAX_TOTAL+' ('+G.percent+
-      '%)</strong> y se requieren mínimo <strong>'+PASS_PCT+'%</strong> para certificarte.';
+      '%)</strong> y se requieren mínimo <strong>'+PASS_PCT+'%</strong> para certificarte. '+
+      '<em>Tu intento queda registrado igualmente.</em>';
     btnCert.style.display='none';
   }
-  goToSlide(2);
-}
 
-/* CERTIFICADO + ENVÍO A SHEETS */
-document.getElementById('btnGoCert').addEventListener('click', ()=>{
-  if(!G.passed){
-    alert('No puedes acceder al certificado. Necesitas mínimo '+PASS_PCT+'%.');
-    return;
-  }
-  const totalSec = Math.floor((G.endedAt - G.startedAt)/1000);
+  // Genera folio único y prellena el certificado (por si aprueba)
   const today = new Date();
   const dd = String(today.getDate()).padStart(2,'0');
   const mm = String(today.getMonth()+1).padStart(2,'0');
   const yyyy = today.getFullYear();
-  const folio = 'PS-' + yyyy + '-' + Math.floor(10000 + Math.random()*90000);
+  G.folio = 'PS-' + yyyy + '-' + Math.floor(10000 + Math.random()*90000);
+  G.estado = G.passed ? 'Aprobado' : 'Reprobado';
 
   document.getElementById('certName').textContent   = G.player.name.toUpperCase();
   document.getElementById('certCedula').textContent = G.player.cedula;
@@ -1965,19 +1959,30 @@ document.getElementById('btnGoCert').addEventListener('click', ()=>{
   document.getElementById('certPct').textContent    = G.percent+'%';
   document.getElementById('certTime').textContent   = fmtMS(totalSec);
   document.getElementById('certDate').textContent   = dd+'/'+mm+'/'+yyyy;
-  document.getElementById('certFolio').textContent  = folio;
+  document.getElementById('certFolio').textContent  = G.folio;
 
+  // SIEMPRE envía al backend — aprueba o no
   const payload = {
-    folio:folio,
+    folio: G.folio,
     nombre:G.player.name, cedula:G.player.cedula, cargo:G.player.cargo,
-    quizScore: G.hang.score,      quizTime: fmtMS((G.hang.ended - G.hang.started)/1000),
-    mazeScore: G.flag.score,      mazeTime: fmtMS((G.flag.ended     - G.flag.started)/1000),
-    hangScore: G.maze.score,      hangTime: fmtMS((G.maze.ended     - G.maze.started)/1000),
+    quizScore: G.hang.score, quizTime: fmtMS((G.hang.ended - G.hang.started)/1000),
+    mazeScore: G.flag.score, mazeTime: fmtMS((G.flag.ended - G.flag.started)/1000),
+    hangScore: G.maze.score, hangTime: fmtMS((G.maze.ended - G.maze.started)/1000),
     totalScore:G.totalScore, maxScore:MAX_TOTAL, percent:G.percent,
     totalTime: fmtMS(totalSec),
-    estado: 'Aprobado'
+    estado: G.estado
   };
   sendViaFetch(payload);
+
+  goToSlide(2);
+}
+
+/* CERTIFICADO — sólo cambia de slide; el envío ya se hizo en finishGame() */
+document.getElementById('btnGoCert').addEventListener('click', ()=>{
+  if(!G.passed){
+    alert('No puedes acceder al certificado. Necesitas mínimo '+PASS_PCT+'%.');
+    return;
+  }
   goToSlide(3);
 });
 
