@@ -438,7 +438,7 @@ img{max-width:100%;display:block}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 5h10a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4H4"/><circle cx="14" cy="9" r="1.5"/></svg>
           </div>
           <h4>Ahorcado</h4>
-          <p>Adivina la palabra oculta letra por letra antes de que se complete el ahorcado. 5 rondas con 9 comodines.</p>
+          <p>Adivina la palabra oculta letra por letra antes de que se complete el ahorcado. 5 rondas con 14 comodines.</p>
           <div class="mp-pts">300 PTS · 5 rondas</div>
         </div>
         <div class="mp-card teal">
@@ -446,8 +446,8 @@ img{max-width:100%;display:block}
           <div class="mp-ico">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
           </div>
-          <h4>Adivina la Bandera</h4>
-          <p>Reconoce 20 banderas del mundo. Cada acierto suma puntos, y las rachas valen el doble. ¡Demuestra tu cultura general!</p>
+          <h4>Banderas de América</h4>
+          <p>Reconoce 20 banderas del continente americano. Cada acierto suma puntos y la pista bajo la bandera te ayuda a ubicar el país.</p>
           <div class="mp-pts">300 PTS · 20 banderas</div>
         </div>
         <div class="mp-card field">
@@ -701,69 +701,71 @@ const HANG_MAX        = HANG_MAX_PTS + HANG_TIME_BONUS; // 300
 const ROULETTE_MAX = HANG_MAX;
 
 /* DATOS · BANDERAS — t: texto descriptivo representativo (sin decir el nombre) */
-/* r: descriptor de región (siempre visible, ayuda a ubicar)
-   t: pista cultural (solo con comodín)
-   am: true = país americano (para ordenar el inicio del quiz) */
+/* r: pista corta siempre visible (mezcla región + cosas típicas)
+   t: pista cultural más larga (sólo con comodín 💡)
+   Sólo banderas americanas — Sudamérica, Centroamérica, Caribe y Norteamérica */
 const FLAG_COUNTRIES = [
-  /* === AMÉRICA (primeros 10–14 del quiz) === */
-  {n:'Brasil',         c:'br', am:true, r:'Sudamérica · costa atlántica',          t:'Selva amazónica, samba y carnaval interminable.'},
-  {n:'México',         c:'mx', am:true, r:'Norteamérica · al sur de EE.UU.',       t:'Tacos, mariachi, sombrero charro y Día de Muertos.'},
-  {n:'Colombia',       c:'co', am:true, r:'Noroeste de Sudamérica · Caribe',       t:'Café de altura, vallenato y biodiversidad caribeña.'},
-  {n:'Argentina',      c:'ar', am:true, r:'Sudamérica · cono sur',                 t:'Mate, tango, asado y la Patagonia austral.'},
-  {n:'Perú',           c:'pe', am:true, r:'Sudamérica · andino occidental',        t:'Ciudad inca en la montaña, llamas y ceviche.'},
-  {n:'Chile',          c:'cl', am:true, r:'Sudamérica · cono sur pacífico',        t:'País larguísimo entre Andes y Pacífico, famoso por su vino.'},
-  {n:'Venezuela',      c:'ve', am:true, r:'Norte de Sudamérica · Caribe',          t:'Petróleo, salto de agua más alto del mundo y arepas.'},
-  {n:'Canadá',         c:'ca', am:true, r:'Norteamérica · norte',                  t:'Hoja de arce, hockey, alces y miel de jarabe.'},
-  {n:'Estados Unidos', c:'us', am:true, r:'Norteamérica · centro',                 t:'Hollywood, hamburguesas, rascacielos y NFL.'},
-  {n:'Cuba',           c:'cu', am:true, r:'Caribe · isla mayor de las Antillas',   t:'Salsa, ron, tabaco y autos clásicos de los 50.'},
-  {n:'Uruguay',        c:'uy', am:true, r:'Sudamérica · cono sur atlántico',       t:'Mate, asado y el origen del tango compartido.'},
-  {n:'Ecuador',        c:'ec', am:true, r:'Sudamérica · pacífico ecuatorial',      t:'Mitad del mundo, Galápagos y volcanes andinos.'},
-  {n:'Bolivia',        c:'bo', am:true, r:'Sudamérica · andino central',           t:'Salar gigantesco, altiplano andino y lago navegable más alto.'},
-  {n:'Paraguay',       c:'py', am:true, r:'Sudamérica · central interior',         t:'Lengua guaraní, río Paraná y la represa de Itaipú.'},
+  /* === SUDAMÉRICA === */
+  {n:'Brasil',         c:'br', r:'Sudamérica · samba, carnaval, fútbol y selva amazónica',
+                                t:'Selva amazónica más grande del mundo, Río de Janeiro, samba, carnaval, caipirinha y Pelé.'},
+  {n:'Colombia',       c:'co', r:'Sudamérica · café, vallenato, arepas y biodiversidad',
+                                t:'Tres cordilleras andinas, café de altura, vallenato, cumbia, arepas y Shakira.'},
+  {n:'Argentina',      c:'ar', r:'Cono sur · mate, tango, asado y Messi',
+                                t:'Mate, tango, asado, Patagonia austral, vino malbec y leyendas como Maradona y Messi.'},
+  {n:'Perú',           c:'pe', r:'Sudamérica andina · Machu Picchu, llamas y ceviche',
+                                t:'Ciudad inca de Machu Picchu, llamas y alpacas, ceviche, pisco sour y lengua quechua.'},
+  {n:'Chile',          c:'cl', r:'Sudamérica · cordillera, desierto de Atacama y vino',
+                                t:'País largo y delgado, desierto más seco del mundo, vino, Pablo Neruda e Isla de Pascua.'},
+  {n:'Venezuela',      c:'ve', r:'Caribe sudamericano · petróleo, arepas y Salto Ángel',
+                                t:'Salto de agua más alto del planeta, petróleo, arepas, joropo y Simón Bolívar.'},
+  {n:'Uruguay',        c:'uy', r:'Cono sur atlántico · mate, asado y futbolistas',
+                                t:'Cuna del mate y el tango compartido con Argentina, asado, fútbol y playas en Punta del Este.'},
+  {n:'Ecuador',        c:'ec', r:'Sudamérica · mitad del mundo y Galápagos',
+                                t:'Línea ecuatorial atraviesa el país, islas Galápagos, volcanes activos y panama hat real.'},
+  {n:'Bolivia',        c:'bo', r:'Sudamérica andina · salar y altiplano',
+                                t:'Salar de Uyuni gigantesco, altiplano alto, lago Titicaca y wiphala multicolor indígena.'},
+  {n:'Paraguay',       c:'py', r:'Sudamérica interior · guaraní, represa Itaipú',
+                                t:'Lengua guaraní oficial, tereré frío, represa Itaipú y bandera con escudo en ambos lados.'},
+  {n:'Guyana',         c:'gy', r:'Sudamérica · única angloparlante del continente',
+                                t:'Antigua colonia británica, selva, cataratas Kaieteur y bandera con flecha verde.'},
+  {n:'Surinam',        c:'sr', r:'Sudamérica · neerlandesa y selvática',
+                                t:'Única hispano-vecina que habla neerlandés, selva amazónica y diversidad cultural.'},
 
-  /* === EUROPA === */
-  {n:'España',         c:'es', am:false, r:'Europa · península ibérica',           t:'Flamenco, paella, toros y la siesta.'},
-  {n:'Francia',        c:'fr', am:false, r:'Europa occidental',                    t:'Torre de hierro, baguette, queso y vino.'},
-  {n:'Alemania',       c:'de', am:false, r:'Europa central',                       t:'Cerveza, salchichas, autos potentes y castillos góticos.'},
-  {n:'Italia',         c:'it', am:false, r:'Europa · mediterráneo (forma de bota)',t:'Pizza, pasta, Vaticano y arte renacentista.'},
-  {n:'Reino Unido',    c:'gb', am:false, r:'Europa · islas británicas',            t:'Big Ben, té de las cinco, lluvia y la corona real.'},
-  {n:'Portugal',       c:'pt', am:false, r:'Europa · península ibérica (atlántica)',t:'Fado, azulejos, bacalao y costa atlántica.'},
-  {n:'Países Bajos',   c:'nl', am:false, r:'Europa noroccidental · Mar del Norte', t:'Tulipanes, bicicletas, molinos y canales.'},
-  {n:'Suecia',         c:'se', am:false, r:'Europa · escandinavia',                t:'IKEA, Volvo, ABBA y noches de aurora boreal.'},
-  {n:'Noruega',        c:'no', am:false, r:'Europa · escandinavia (fiordos)',      t:'Fiordos profundos, vikingos y salmón.'},
-  {n:'Suiza',          c:'ch', am:false, r:'Europa central · Alpes',               t:'Alpes, chocolate, relojes precisos y neutralidad.'},
-  {n:'Rusia',          c:'ru', am:false, r:'Eurasia · país más extenso del mundo', t:'Estepas, ballet, vodka y catedrales doradas.'},
-  {n:'Polonia',        c:'pl', am:false, r:'Europa centro-oriental',               t:'Pierogis, Chopin y casco histórico de su capital.'},
-  {n:'Grecia',         c:'gr', am:false, r:'Europa · sureste mediterráneo',        t:'Mitología, Acrópolis, islas blancas y mar Egeo.'},
-  {n:'Ucrania',        c:'ua', am:false, r:'Europa oriental',                      t:'Trigales dorados y campanas ortodoxas en Kiev.'},
-  {n:'Bélgica',        c:'be', am:false, r:'Europa noroccidental',                 t:'Chocolate, gofres, cervezas trapenses y cómics.'},
-  {n:'Austria',        c:'at', am:false, r:'Europa central · Alpes',               t:'Mozart, vals, Alpes y el café vienés.'},
+  /* === NORTEAMÉRICA === */
+  {n:'México',         c:'mx', r:'Norteamérica · tacos, mariachi, aztecas y picante',
+                                t:'Pirámides aztecas y mayas, tacos, mariachi, sombrero charro, Día de Muertos y tequila.'},
+  {n:'Estados Unidos', c:'us', r:'Norteamérica · Hollywood, NFL y rascacielos',
+                                t:'Hollywood, hamburguesas, NFL y NBA, Estatua de la Libertad y bandera con 50 estrellas.'},
+  {n:'Canadá',         c:'ca', r:'Norteamérica norte · arce, hockey y bosques',
+                                t:'Hoja de arce icónica, hockey sobre hielo, alces, miel de jarabe y cataratas del Niágara.'},
 
-  /* === ASIA === */
-  {n:'Turquía',        c:'tr', am:false, r:'Entre Europa y Asia · Anatolia',       t:'Puente entre dos continentes, kebab y mezquitas.'},
-  {n:'Japón',          c:'jp', am:false, r:'Asia oriental · archipiélago',         t:'Sushi, samuráis, robots y flores de cerezo.'},
-  {n:'China',          c:'cn', am:false, r:'Asia oriental · país más poblado',     t:'Gran muralla, pandas, dragones y la dinastía milenaria.'},
-  {n:'India',          c:'in', am:false, r:'Asia · subcontinente',                 t:'Curry picante, Taj Mahal, elefantes y Bollywood.'},
-  {n:'Corea del Sur',  c:'kr', am:false, r:'Asia oriental · península',            t:'K-pop, kimchi, tecnología puntera y dramas románticos.'},
-  {n:'Arabia Saudita', c:'sa', am:false, r:'Medio Oriente · península arábiga',    t:'Desierto, camellos, peregrinación y oro negro.'},
-  {n:'Indonesia',      c:'id', am:false, r:'Sudeste asiático · archipiélago',      t:'Archipiélago de volcanes, batik y orangutanes.'},
-  {n:'Tailandia',      c:'th', am:false, r:'Sudeste asiático · continental',       t:'Templos dorados, Pad Thai, elefantes y playas paradisíacas.'},
-  {n:'Filipinas',      c:'ph', am:false, r:'Sudeste asiático · 7000+ islas',       t:'Más de 7000 islas, mangos y mar tropical.'},
-  {n:'Pakistán',       c:'pk', am:false, r:'Asia del sur · vecino de India',       t:'Cordillera del Karakórum, especias y cricket.'},
-  {n:'Irán',           c:'ir', am:false, r:'Medio Oriente · antigua Persia',       t:'Persia antigua, alfombras tejidas y poesía sufí.'},
-  {n:'Israel',         c:'il', am:false, r:'Medio Oriente · mediterráneo oriental',t:'Jerusalén sagrada, Mar Muerto y desierto del Néguev.'},
+  /* === CENTROAMÉRICA === */
+  {n:'Guatemala',      c:'gt', r:'Centroamérica · maya, volcanes y textiles',
+                                t:'Ruinas mayas de Tikal, textiles indígenas coloridos, volcán de fuego y quetzal nacional.'},
+  {n:'Costa Rica',     c:'cr', r:'Centroamérica · pura vida, selva y café',
+                                t:'"Pura vida" como saludo, selva tropical, sin ejército desde 1948 y café de calidad.'},
+  {n:'Panamá',         c:'pa', r:'Centroamérica · canal interoceánico y sombrero',
+                                t:'Canal que une Atlántico y Pacífico, sombrero pintao, polleras y mola guna.'},
+  {n:'Honduras',       c:'hn', r:'Centroamérica · ruinas mayas y banano',
+                                t:'Ruinas mayas de Copán, banano, garífuna y bandera con cinco estrellas azules.'},
+  {n:'Nicaragua',      c:'ni', r:'Centroamérica · lagos, volcanes y Rubén Darío',
+                                t:'Lago de Nicaragua, volcanes en cadena, gallo pinto y poeta Rubén Darío.'},
+  {n:'El Salvador',    c:'sv', r:'Centroamérica · pupusas, volcanes y surf',
+                                t:'Pupusas, volcanes, surf en La Libertad y país más pequeño de Centroamérica continental.'},
+  {n:'Belice',         c:'bz', r:'Centroamérica · anglocaribeña con arrecife',
+                                t:'Único país centroamericano que habla inglés, segunda barrera de coral del planeta.'},
 
-  /* === ÁFRICA === */
-  {n:'Egipto',         c:'eg', am:false, r:'Norte de África · Nilo',               t:'Pirámides, faraones, Nilo y esfinge milenaria.'},
-  {n:'Sudáfrica',      c:'za', am:false, r:'Sur de África · punta austral',        t:'Safari del Big Five, diamantes y la herencia de Mandela.'},
-  {n:'Nigeria',        c:'ng', am:false, r:'África occidental',                    t:'Afrobeat, petróleo y la megaciudad de Lagos.'},
-  {n:'Marruecos',      c:'ma', am:false, r:'Norte de África · noroeste',           t:'Sahara, especias, zocos y la ciudad azul.'},
-  {n:'Kenia',          c:'ke', am:false, r:'África oriental · ecuador',            t:'Safari en la sabana, jirafas y monte ecuatorial nevado.'},
-  {n:'Etiopía',        c:'et', am:false, r:'África oriental · cuerno',             t:'Cuna del café, Nilo Azul y monasterios milenarios.'},
-
-  /* === OCEANÍA === */
-  {n:'Australia',      c:'au', am:false, r:'Oceanía · continente isla',            t:'Canguros, koalas, surf y desierto rojo.'},
-  {n:'Nueva Zelanda',  c:'nz', am:false, r:'Oceanía · islas al sureste de Australia',t:'Maoríes, paisajes de hobbits y el ave kiwi.'}
+  /* === CARIBE === */
+  {n:'Cuba',           c:'cu', r:'Caribe · salsa, ron, tabaco y autos clásicos',
+                                t:'Isla más grande del Caribe, salsa, mojito, ron, tabaco y Habana con autos de los 50.'},
+  {n:'República Dominicana', c:'do', r:'Caribe · merengue, bachata y béisbol',
+                                t:'Merengue y bachata como ritmos propios, béisbol y playas paradisíacas en Punta Cana.'},
+  {n:'Jamaica',        c:'jm', r:'Caribe · reggae, Bob Marley y atletismo',
+                                t:'Reggae, Bob Marley, atletas velocistas como Usain Bolt y bandera negra, amarilla y verde.'},
+  {n:'Haití',          c:'ht', r:'Caribe · primera república negra independiente',
+                                t:'Primera nación libre de esclavitud en América, vudú, criollo haitiano y cultura africana.'},
+  {n:'Puerto Rico',    c:'pr', r:'Caribe · estado libre asociado a EE.UU.',
+                                t:'Isla caribeña ligada a EE.UU., reggaetón, salsa, coquí y bandera similar a Cuba (invertidos).'}
 ];
 const FLAG_URL        = c => 'https://flagcdn.com/w320/'+c+'.png';
 const FLAG_TOTAL      = 20;          // preguntas
@@ -788,7 +790,7 @@ const PASS_SCORE = Math.ceil(MAX_TOTAL * PASS_PCT / 100);
 const G = {
   player:{name:'',cedula:'',cargo:''},
   hang:    {score:0,started:0,ended:0,roundIdx:0,results:[],currentWord:null,used:null,
-            lifelines:{letra:3, pista:3, cambio:3},
+            lifelines:{letra:9, pista:3, cambio:2},
             revealed:[],guessed:[],errors:0,won:false},
   flag:    {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
             lifelines:{fifty:3, hint:3}, timeLeft:90},
@@ -845,7 +847,7 @@ btnStart.addEventListener('click', ()=>{
   document.getElementById('mhMax').textContent = MAX_TOTAL;
 
   G.hang     = {score:0,started:0,ended:0,roundIdx:0,results:[],currentWord:null,used:null,
-                lifelines:{letra:3, pista:3, cambio:3},
+                lifelines:{letra:9, pista:3, cambio:2},
                 revealed:[],guessed:[],errors:0,won:false};
   G.flag     = {score:0,started:0,ended:0,qIdx:0,cor:0,wrg:0,streak:0,maxStreak:0,qs:[],done:false,
                 lifelines:{fifty:3, hint:3}, timeLeft:FLAG_TIME_LIMIT};
@@ -900,11 +902,11 @@ function startHang(){
     <div class="mission-intro gold" style="margin-bottom:18px">
       <div class="m-num">Juego I</div>
       <h2>AHORCADO</h2>
-      <p>Adivina la palabra oculta letra por letra. Tienes <strong>${HANG_MAX_ERRORS} intentos</strong> antes de perder. Cada palabra acertada suma <strong>${HANG_PTS_PER} pts</strong>. Si terminas en menos de 2 min recibes un bono de hasta <strong>${HANG_TIME_BONUS} pts</strong>. Cuentas con <strong>9 comodines</strong> para apoyarte.</p>
+      <p>Adivina la palabra oculta letra por letra. Tienes <strong>${HANG_MAX_ERRORS} intentos</strong> antes de perder. Cada palabra acertada suma <strong>${HANG_PTS_PER} pts</strong>. Si terminas en menos de 2 min recibes un bono de hasta <strong>${HANG_TIME_BONUS} pts</strong>. Cuentas con <strong>14 comodines</strong> para apoyarte.</p>
       <div class="m-rules">
         <span class="pill gold">${HANG_MAX} pts máx</span>
         <span class="pill">${HANG_ROUNDS} rondas</span>
-        <span class="pill gray">9 comodines</span>
+        <span class="pill gray">14 comodines</span>
       </div>
       <button class="btn-primary" id="hangGoBtn">Empezar
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -942,15 +944,15 @@ function startHang(){
         <div class="hang-word" id="hangWord"></div>
         <div class="reveal-bar" id="hangExtra"></div>
         <div class="lifelines-row" id="hangLifelines">
-          <div class="ll-title">Comodines · 9 ayudas (3 + 3 + 3)</div>
+          <div class="ll-title">Comodines · 14 ayudas (9 + 3 + 2)</div>
           <button class="ll-btn" id="hangLLLetra" type="button" disabled>
-            🔤 Letra <span class="ll-count" id="hangLLLetraN">3</span>
+            🔤 Letra <span class="ll-count" id="hangLLLetraN">9</span>
           </button>
           <button class="ll-btn" id="hangLLPista" type="button" disabled>
             💡 Pista <span class="ll-count" id="hangLLPistaN">3</span>
           </button>
           <button class="ll-btn" id="hangLLCambio" type="button" disabled>
-            🔄 Cambio <span class="ll-count" id="hangLLCambioN">3</span>
+            🔄 Pasar palabra <span class="ll-count" id="hangLLCambioN">2</span>
           </button>
         </div>
         <div class="hang-keyboard" id="hangKeyboard"></div>
@@ -1299,16 +1301,10 @@ function shuffleArr(a){ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=M
 function pickN(a,n){ return shuffleArr(a).slice(0,n); }
 
 function buildFlagQs(){
-  // Arranca con países americanos para "entrar en confianza"
-  const FIRST_AM = Math.min(10, FLAG_TOTAL);
-  const americas = shuffleArr(FLAG_COUNTRIES.filter(c => c.am));
-  const others   = shuffleArr(FLAG_COUNTRIES.filter(c => !c.am));
-  const ordered  = [
-    ...americas.slice(0, FIRST_AM),
-    ...others.slice(0, FLAG_TOTAL - FIRST_AM)
-  ];
-  return ordered.map(c => ({
-    c, opts: shuffleArr([c, ...pickN(FLAG_COUNTRIES.filter(x=>x.n!==c.n), FLAG_OPTS-1)])
+  // Sólo banderas americanas — shuffle simple, sin split de continentes
+  const pool = shuffleArr(FLAG_COUNTRIES).slice(0, FLAG_TOTAL);
+  return pool.map(c => ({
+    c, opts: shuffleArr([c, ...pickN(FLAG_COUNTRIES.filter(x => x.n !== c.n), FLAG_OPTS - 1)])
   }));
 }
 
@@ -1323,7 +1319,7 @@ function startFlag(){
     <div class="mission-intro teal" style="margin-bottom:18px">
       <div class="m-num">Juego II</div>
       <h2>ADIVINA LA BANDERA</h2>
-      <p>Identifica <strong>${FLAG_TOTAL} banderas</strong> del mundo. Cada acierto vale <strong>${FLAG_PTS_BASE} pts</strong>. Empiezas con países de América y luego pasas al resto del mundo. Tienes <strong>${FLAG_TIME_LIMIT}s (1 min 30)</strong> para responder todas.</p>
+      <p>Identifica <strong>${FLAG_TOTAL} banderas del continente americano</strong> (Sudamérica, Centroamérica, Caribe y Norteamérica). Cada acierto vale <strong>${FLAG_PTS_BASE} pts</strong>. Bajo cada bandera verás una pista corta con cosas típicas del país. Tienes <strong>${FLAG_TIME_LIMIT}s (1 min 30)</strong> en total.</p>
       <div class="m-rules">
         <span class="pill teal">${FLAG_PTS_MAX} pts máx</span>
         <span class="pill">${FLAG_TOTAL} preguntas</span>
